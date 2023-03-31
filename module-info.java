@@ -6,4 +6,5 @@
  *
  */
 module A_Tavola {
+    requires java.sql;
 }
