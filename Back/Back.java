@@ -1,11 +1,14 @@
 package Back;
-
+import Front.Fonction.*;
 import java.sql.Connection;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+
+import Front.Fonction.Employe;
 public abstract class Back {
     //methode permettant de se connecter à la base de donnée
     //ne prend aucun paramètre mais renvoie la connection qui nous permettra de faire des requetes
@@ -13,6 +16,7 @@ public abstract class Back {
         try {
             //Chargement driver
             Class.forName("com.mysql.jdbc.Driver");
+            System.out.println("DRIVER OK");
 
             //Créer connection
             String dbName = "atavola";
@@ -21,8 +25,11 @@ public abstract class Back {
             String dbPwd = "9F0";
 
             String url = "jdbc:mysql://" + dbIP + ":3306/" + dbName;
+            
+            System.out.println(url);
 
             Connection con = DriverManager.getConnection(url, dbUser, dbPwd);
+            System.out.println("Connection ok");
 
             //Etat de connection
             Statement st = con.createStatement();
@@ -106,4 +113,33 @@ public abstract class Back {
         }
         return null;
     }
+    
+    public static Employe getEmployer (Statement st,int id) {
+		try {
+		//La requête sql
+		String select = "SELECT nom,prenom,login,rang FROM Employer WHERE id =";
+		String query = select + id;
+		
+		//Execution de la requête sql
+		ResultSet result = st.executeQuery(query);
+		
+		//On stocke les résultats
+		 String nom = result.getString("nom");
+		 String prenom = result.getString("prenom");
+		 String login = result.getString("login");
+		 String rang = result.getString("rang");
+		 
+		 //Affichage sur la console
+		 String output = "User: %s - %s - %s - %s";
+		 System.out.println(String.format(output, nom, prenom, login, rang));
+		 
+		 Employe res = new Employe (nom,prenom,login,rang);
+		 return res;
+	
+		
+		} catch (SQLException ex) {
+		    ex.printStackTrace();
+		}
+		return null;
+	}
 }
