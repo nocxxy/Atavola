@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import Front.Fonction.Employe;
 public abstract class Back {
@@ -114,8 +115,8 @@ public abstract class Back {
     }
     
     
-    /*Methode qui permet de récupérer un employer  
-    	qui prend un statement et l'id de l'employer
+    /*Methode qui permet de récupérer un employé  
+    	qui prend un statement et l'id de l'employé
     	et renvoie un objet 
     */
     public static Employe getEmployer (Statement st,int id) {
@@ -140,7 +141,7 @@ public abstract class Back {
    		 	String login = rs.getString("login");
    		 	String rang = rs.getString("rang");
    		 	
-   		 	//On retourne l'employer
+   		 	//On retourne l'employé
    		 	Employe res = new Employe (nom,prenom,login,rang);
    		 	return res;
 		}
@@ -153,7 +154,7 @@ public abstract class Back {
 	}
 
     /* 
-     * Méthode pour insérer un employer dans la base de donnée
+     * Méthode pour insérer un employé dans la base de donnée
      * Prend un statement,le nom,le prenom,le login,le mot de passe et le rang 
      * et ne renvoie rien 
      * */
@@ -182,6 +183,52 @@ public abstract class Back {
 		    ex.printStackTrace();
 		}
  
+    	
+    }
+    /*
+     * Méthode qui permet de récupérer tous les employés 
+     * dans la base de donnée
+     * prend un statement et renvoie une liste (ArrayList) des employés
+     * */
+    public static ArrayList<Employe> getAllEmployer (Statement st){
+    	try {
+    		//La requête sql
+    		String query = "SELECT * FROM Employer";  		
+    		
+    		//Execution de la requête sql
+    		ResultSet rs = st.executeQuery(query);
+    		System.out.println(rs);
+    		
+    		//Traitement du résultat
+    		
+    		ArrayList<Employe> res = new ArrayList();
+    		while (rs.next()) {
+  
+                //On stocke les données
+                String nom = rs.getString("nom");
+       		 	String prenom = rs.getString("prenom");
+       		 	String login = rs.getString("login");
+       		 	String rang = rs.getString("rang");
+       		 	
+       		 	//On ajoute l'employé
+       		 	Employe e = new Employe (nom,prenom,login,rang);
+       		 	res.add(e);
+    		}
+    		
+    		
+    		
+    		for(Employe e : res) {
+    			//On affiche les éléments de la liste
+    			System.out.println(e.getNom());    			
+    		}
+    		return res;
+    		
+    		} catch (SQLException ex) {
+    			//Exceptions 
+    		    ex.printStackTrace();
+    		}
+    		return null;
+    	
     	
     }
     
