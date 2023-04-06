@@ -1,11 +1,12 @@
 package Back;
 
-import java.sql.Connection;
+import Front.Fonction.Creneau;
+import Front.Fonction.Employe;
+
+import java.sql.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+
 public abstract class Back {
     //methode permettant de se connecter à la base de donnée
     //ne prend aucun paramètre mais renvoie la connection qui nous permettra de faire des requetes
@@ -55,7 +56,9 @@ public abstract class Back {
                     + "    id INT NOT NULL AUTO_INCREMENT,\r\n"
                     + "    date_heure_debut DATETIME,\r\n"
                     + "    date_heure_fin DATETIME,\r\n"
-                    + "    CONSTRAINT pk_employe PRIMARY KEY (id)\r\n"
+                    + "    id_employer INT NOT NULL, \r\n"
+                    + "    CONSTRAINT pk_employe PRIMARY KEY (id),\r\n"
+                    + "    CONSTRAINT fk_creneau_employe FOREIGN KEY (id_employer) REFERENCES Employer (id)\r\n"
                     + ");";
             //Envoie de la requete
             st.executeUpdate(sql);
@@ -106,4 +109,5 @@ public abstract class Back {
         }
         return null;
     }
+
 }
