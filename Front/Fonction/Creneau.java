@@ -1,19 +1,23 @@
 package Front.Fonction;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 public class Creneau {
+    private String id;
     private Date heuredebut;
     private Date heurefin;
-    private Employe employe;
+    //private Employe employe;
+    private int employe;
     private boolean dispo;
 
     // ________________________________________________Constructeur/Setter_____________________________
-    public Creneau (Date hd, Date hf, Employe e, boolean dispo) {
+    public Creneau (String id,Date hd, Date hf, int e ){//, boolean dispo) {
+        this.id = id;
         this.heuredebut = hd;
         this.heurefin = hf;
         this.employe = e;
-        this.dispo = dispo;
+        //this.dispo = dispo;
     }
 
     //___________________________________________________getter/setter______________________________
@@ -46,13 +50,13 @@ public class Creneau {
         this.heurefin = heurefin;
     }
 
-    public Employe getEmploye() {
+    /*public Employe getEmploye() {
         return employe;
-    }
+    }*/
 
-    public void setEmploye(Employe employe) {
+    /*public void setEmploye(Employe employe) {
         this.employe = employe;
-    }
+    }*/
 
     public boolean isDispo() {
         return dispo;
@@ -88,11 +92,11 @@ public class Creneau {
     }
 
     public static void main(String[] args) {
-        Date d1 = new Date();
+        /*Date d1 = new Date();
         Employe e = new Employe("Prenom","nom","couc","blabal");
         Creneau c = new Creneau(d1,d1,e,true);
         System.out.println(c.getJourCreneau());
-        System.out.println(c.getNumSemaineCreneau());
+        System.out.println(c.getNumSemaineCreneau());*/
 
     }
 }
