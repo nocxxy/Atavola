@@ -1,8 +1,7 @@
 package Back;
-import Front.Fonction.*;
-import java.sql.Connection;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -116,7 +115,7 @@ public abstract class Back {
     
     
     /*Methode qui permet de récupérer un employer  
-    	qui prend en paramètre un statement et l'id de l'employer
+    	qui prend un statement et l'id de l'employer
     	et renvoie un objet 
     */
     public static Employe getEmployer (Statement st,int id) {
@@ -152,4 +151,64 @@ public abstract class Back {
 		}
 		return null;
 	}
+
+    /* 
+     * Méthode pour insérer un employer dans la base de donnée
+     * Prend un statement,le nom,le prenom,le login,le mot de passe et le rang 
+     * et ne renvoie rien 
+     * */
+    public static void insertEmployer(Statement st,String nom,String prenom,String login,String mdp
+    		,String rang) {
+    	try {
+    		//La requête sql
+    		String insert = "INSERT INTO Employer (nom,prenom,login,mdp,rang) VALUES (";
+    		String query = insert +(char)34 + nom  + (char)34 +",";
+    		query += (char)34 + prenom +(char)34 +",";
+    		query += (char)34 + login +(char)34 +",";
+    		query += (char)34 + mdp +(char)34 +",";
+    		query += (char)34 + rang +(char)34;
+    		query+= ")";
+    		
+    		//On affiche la requête
+    		
+    		System.out.println(query);
+    		
+    		//Execution de la requête
+    		
+    		st.executeUpdate(query);
+    		
+    	} catch (SQLException ex) {
+			//Exceptions 
+		    ex.printStackTrace();
+		}
+ 
+    	
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
