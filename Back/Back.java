@@ -21,8 +21,8 @@ public abstract class Back {
             //Créer connection
             String dbName = "atavola";
             String dbIP = "localhost";
-            String dbUser = "atavola";
-            String dbPwd = "9F0";
+            String dbUser = "root";
+            String dbPwd = "root";
 
             String url = "jdbc:mysql://" + dbIP + ":3306/" + dbName;
             
@@ -114,30 +114,40 @@ public abstract class Back {
         return null;
     }
     
+    
+    /*Methode qui permet de récupérer un employer  
+    	qui prend en paramètre un statement et l'id de l'employer
+    	et renvoie un objet 
+    */
     public static Employe getEmployer (Statement st,int id) {
 		try {
 		//La requête sql
-		String select = "SELECT nom,prenom,login,rang FROM Employer WHERE id =";
+		String select = "SELECT nom,prenom,login,rang FROM Employer WHERE id = ";
 		String query = select + id;
 		
-		//Execution de la requête sql
-		ResultSet result = st.executeQuery(query);
 		
-		//On stocke les résultats
-		 String nom = result.getString("nom");
-		 String prenom = result.getString("prenom");
-		 String login = result.getString("login");
-		 String rang = result.getString("rang");
-		 
-		 //Affichage sur la console
-		 String output = "User: %s - %s - %s - %s";
-		 System.out.println(String.format(output, nom, prenom, login, rang));
-		 
-		 Employe res = new Employe (nom,prenom,login,rang);
-		 return res;
-	
+		//Execution de la requête sql
+		ResultSet rs = st.executeQuery(query);
+		System.out.println(rs);
+		
+		//Traitement du résultat
+		while (rs.next()) {
+			//Affichage des données 
+            System.out.println(rs.getString("nom") + ", " + rs.getString("prenom") + ", " + rs.getString("login")
+                    + ", " + rs.getString("rang"));
+            //On stocke les données
+            String nom = rs.getString("nom");
+   		 	String prenom = rs.getString("prenom");
+   		 	String login = rs.getString("login");
+   		 	String rang = rs.getString("rang");
+   		 	
+   		 	//On retourne l'employer
+   		 	Employe res = new Employe (nom,prenom,login,rang);
+   		 	return res;
+		}
 		
 		} catch (SQLException ex) {
+			//Exceptions 
 		    ex.printStackTrace();
 		}
 		return null;
