@@ -50,7 +50,7 @@ public abstract class Back {
                     + "    nom VARCHAR(25),\r\n"
                     + "    prenom VARCHAR(25),\r\n"
                     + "    login VARCHAR(25),\r\n"
-                    + "    mdp VARCHAR(30),\r\n"
+                    + "    mdp VARCHAR(200),\r\n"
                     + "    rang VARCHAR(10),\r\n"
                     + "    CONSTRAINT pk_employe PRIMARY KEY (id)\r\n"
                     + ");";
@@ -166,7 +166,7 @@ public abstract class Back {
     		String query = insert +(char)34 + nom  + (char)34 +",";
     		query += (char)34 + prenom +(char)34 +",";
     		query += (char)34 + login +(char)34 +",";
-    		query += (char)34 + mdp +(char)34 +",";
+    		query += (char)34 + cryptePwd(mdp) +(char)34 +",";
     		query += (char)34 + rang +(char)34;
     		query+= ")";
     		
