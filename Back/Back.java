@@ -232,7 +232,36 @@ public abstract class Back {
     	
     }
     
+    /*
+     * Méthode pour faire une verification lors de la connexion d'un employer
+     * Prend un statement, le nom , le mot de passe
+     * Renvoie un booléen qui dit si l'employer est inscrit ou non
+     * */
     
+    public static boolean connexionEmployer (Statement st, String nom, String mdp) {
+    	
+    	//Initialisation de la varible pour executer la requête 
+    	ResultSet rs = null;
+    	try {
+    		//requête de vérification 
+    		String verif = "SELECT nom,prenom,login,rang FROM Employer WHERE nom = ";
+    		verif += (char)34 + nom + (char)34 + " AND mdp = ";
+    		String mot_de_passe = (char)34 + cryptePwd(mdp) + (char)34;
+    		verif += mot_de_passe;
+    		
+    		//execution de la requête
+    		rs = st.executeQuery(verif);
+    		
+    		//affiche de la requête
+    		System.out.println(verif);
+    		
+    		
+    	}catch(SQLException ex) {
+    		//Exception
+    		ex.printStackTrace();
+    	}
+    	return rs!= null;
+    }
     
     
     
