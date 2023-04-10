@@ -18,17 +18,17 @@ public class ConnexionButton extends JButton {
 		
 		this.setText(texte);
 		this.setFocusPainted(false);
-		this.setBorder(null);
 		this.setFont(new Font("Poppins", Font.PLAIN, 35));
 		this.setPreferredSize(new Dimension(200, 37));
 		this.setMargin(new Insets(10, 50, 50, 50));
+		this.setBorder(new RoundedBorder(10));
 		
-		updateButton();
+		updateButton(null, this);
 		
 		
 	}
 	
-	public void updateButton(){
+	public void updateButton(Graphics g, JComponent c){
 		if(selected) {
 			this.setBackground(Color.decode("#CC383B"));
 			this.setForeground(new Color(255, 255, 255));

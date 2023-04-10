@@ -55,7 +55,7 @@ public class ConnexionFrame extends JFrame {
 		signIn.setLayout(new FlowLayout(FlowLayout.CENTER, 1000, 50));
 		signIn.setBackground(Color.decode("#2D6A4F"));
 		
-		JTextField user = new JTextField();
+		/*JTextField user = new JTextField();
 		user.setText("Nom d'utilisateur...");
 		user.setPreferredSize(new Dimension(700,50));
 		user.setBorder(null);
@@ -73,7 +73,7 @@ public class ConnexionFrame extends JFrame {
 		password.setFont(new Font("Poppins",Font.PLAIN,35));
 		password.setBackground(Color.decode("#D9D9D9"));
 		password.setMargin(new Insets(0, 70, 0, 0));
-		signIn.add(password);
+		signIn.add(password);*/
 		
 		
 		panel.add(signIn);
@@ -81,6 +81,22 @@ public class ConnexionFrame extends JFrame {
 		connect2.setFont(new Font("Poppins", Font.PLAIN, 35));
 		connect2.setPreferredSize(new Dimension(200, 37));
 		connect2.setMargin(new Insets(10, 50, 50, 50));
+		
+		JTextField test = new RoundJTextField(25);
+		test.setText("Nom d'utilisateur...");
+		test.setPreferredSize(new Dimension(650,50));
+		test.setMargin(new Insets(0, 0, 0, 0));
+		test.setFont(new Font("Poppins",Font.PLAIN,35));
+		test.setBackground(Color.decode("#D9D9D9"));
+		signIn.add(test);
+		
+		JTextField test2 = new RoundJTextField(25);
+		test2.setText("Mot de Passe...");
+		test2.setPreferredSize(new Dimension(650,50));
+		test2.setMargin(new Insets(0, 0, 0, 0));
+		test2.setFont(new Font("Poppins",Font.PLAIN,35));
+		test2.setBackground(Color.decode("#D9D9D9"));
+		signIn.add(test2);
 		
 		
 		
