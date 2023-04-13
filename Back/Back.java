@@ -117,9 +117,8 @@ public abstract class Back {
     public static Creneau getCreneau(Statement st,int id) {
         try {
             //La requête sql
-            String select = "SELECT id, date_heure_debut, date_heure_fin, id_employer FROM Creneau WHERE id = ";
+            String select = "SELECT c.date_heure_debut, c.date_heure_fin FROM Creneau c INNER JOIN Employer e ON c.id_employer = e.id WHERE e.id = ";
             String query = select + id;
-
 
             //Execution de la requête sql
             ResultSet rs = st.executeQuery(query);
@@ -128,19 +127,14 @@ public abstract class Back {
             //Traitement du résultat
             while(rs.next()) {
                 //Affichage des données
-                System.out.println(rs.getString("id")
-                        + ", " + rs.getDate("date_heure_debut")
-                        + ", " + rs.getDate("date_heure_fin")
-                        + ", " + rs.getInt("id_employer"));
-
+                System.out.println(rs.getString("date_heure_debut")
+                        + ", " + rs.getString("date_heure_fin"));
                 //On stocke les données
-                String idCreneau = rs.getString("id");
                 Date hd = rs.getDate("date_heure_debut");
                 Date hf = rs.getDate("date_heure_fin");
-                int idEmploye = rs.getInt("id_employer");
 
                 //On retourne le creneau
-                Creneau res = new Creneau(idCreneau, hd, hf, idEmploye);
+                Creneau res = new Creneau(hd, hf);
                 return res;
             }
 

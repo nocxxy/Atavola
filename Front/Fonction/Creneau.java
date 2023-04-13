@@ -4,7 +4,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Creneau {
-    private String id;
     private Date heuredebut;
     private Date heurefin;
     //private Employe employe;
@@ -12,11 +11,10 @@ public class Creneau {
     private boolean dispo;
 
     // ________________________________________________Constructeur/Setter_____________________________
-    public Creneau (String id,Date hd, Date hf, int e ){//, boolean dispo) {
-        this.id = id;
+    public Creneau (Date hd, Date hf) {//, int e ){//, boolean dispo) {
         this.heuredebut = hd;
         this.heurefin = hf;
-        this.employe = e;
+        //this.employe = e;
         //this.dispo = dispo;
     }
 
