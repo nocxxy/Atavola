@@ -172,5 +172,25 @@ public abstract class Back {
         }
     }
 
+    /*
+     * Méthode pour supprimer un Creneau dans la base de donnée
+     * Prend un statement et l'id du creneau à supprimer
+     * et ne renvoie rien
+     */
+    public static void deleteCreneau(Statement st, int id) {
+        try {
+            //La requête sql
+            String sql = "DELETE FROM Creneau WHERE Creneau.id = ";
+            String query = sql + id;
 
+            System.out.println(query);
+
+            //Execution de la requête
+            st.executeUpdate(query);
+
+        } catch (SQLException ex) {
+            //Exceptions
+            ex.printStackTrace();
+        }
+    }
 }
