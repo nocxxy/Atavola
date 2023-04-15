@@ -144,4 +144,31 @@ public abstract class Back {
         }
         return null;
     }
+
+    /*
+     * Méthode pour insérer un Creneau dans la base de donnée
+     * Prend un statement, une heure de debut, une heure de fin et l'id d'un employer
+     * et ne renvoie rien
+     * */
+    public static void insertCreneau(Statement st, Date date_heure_debut, Date date_heure_fin, int id_employer) {
+        try {
+            //La requête sql
+            String sql = "INSERT INTO Creneau (date_heure_debut,date_heure_fin, id_employer) VALUES (";
+            String query = sql + date_heure_debut + ",";
+            query += date_heure_fin + ",";
+            query += id_employer;
+            query += ")";
+
+            /*
+            Besoin d'aide pour le format de la date, quand on appelle la foncton dans main.java
+             */
+            //Execution de la requête
+
+            st.executeUpdate(sql);
+
+        } catch (SQLException ex) {
+            //Exceptions
+            ex.printStackTrace();
+        }
+    }
 }
