@@ -14,6 +14,7 @@ public class Main {
 		Date hf = new Date(2002,11,31);
 		Back.insertCreneau(st, hd, hf, 5);*/
 		Back.deleteCreneau(st,2);
+		Back.getAllWeeklyCreneau(st,"2023-04-21 00:00:00", "2023-04-28 00:00:00");
 
 	}
 
