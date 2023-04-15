@@ -13,6 +13,8 @@ public class Main {
 		/*Date hd = new Date(2002,11,30); besoin d'aide pour le format Date sql
 		Date hf = new Date(2002,11,31);
 		Back.insertCreneau(st, hd, hf, 5);*/
+		Back.deleteCreneau(st,2);
+
 	}
 
 }
