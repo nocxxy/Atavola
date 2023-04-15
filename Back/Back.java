@@ -164,11 +164,13 @@ public abstract class Back {
              */
             //Execution de la requête
 
-            st.executeUpdate(sql);
+            st.executeUpdate(query);
 
         } catch (SQLException ex) {
             //Exceptions
             ex.printStackTrace();
         }
     }
+
+
 }
