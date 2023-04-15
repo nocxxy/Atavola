@@ -6,6 +6,7 @@ import Front.Fonction.Employe;
 import java.sql.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 public abstract class Back {
     //methode permettant de se connecter à la base de donnée
@@ -192,5 +193,47 @@ public abstract class Back {
             //Exceptions
             ex.printStackTrace();
         }
+    }
+
+    /*
+     * Méthode qui permet de récupérer tous les creneaux entre 2 dates dans la base de donnée
+     * prend un statement et renvoie une liste (ArrayList) des creneaux
+     * */
+    public static ArrayList<Creneau> getAllWeeklyCreneau (Statement st, String date1, String date2){
+        try {
+            //La requête sql
+            String sql = "SELECT * FROM Creneau WHERE date_heure_debut  >= ";
+            String query = sql + (char)34 + date1 + (char)34 + " AND date_heure_debut < ";
+            query += (char)34 + date2 + (char)34;
+
+            //Execution de la requête sql
+            ResultSet rs = st.executeQuery(query);
+
+            //Traitement du résultat
+            ArrayList<Creneau> res = new ArrayList();
+            while (rs.next()) {
+
+                //On stocke les données
+                Date hd = rs.getDate("date_heure_debut");
+                Date hf = rs.getDate("date_heure_fin");
+                //int id_employer = rs.getInt("id_employer");
+
+                //On ajoute l'employé
+                Creneau c = new Creneau(hd,hf);
+                res.add(c);
+            }
+
+            for(Creneau c : res) {
+                //On affiche les éléments de la liste
+                System.out.println("Creneau:");
+                System.out.println(c.getDateDebut() + ", " + c.getDateFin());
+            }
+            return res;
+
+        } catch (SQLException ex) {
+            //Exceptions
+            ex.printStackTrace();
+        }
+        return null;
     }
 }
