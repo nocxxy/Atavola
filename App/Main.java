@@ -10,9 +10,8 @@ public class Main {
 		Back.connectionBase();
 		WindowFrame f = new WindowFrame();
 		f.setVisible(true);
-		ConnexionFrame c = new ConnexionFrame();
-		c.setVisible(true);
-		System.out.println("Hello World!");
+		//ConnexionFrame c = new ConnexionFrame();
+		//c.setVisible(true);
 		
 	}
 

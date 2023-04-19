@@ -16,14 +16,18 @@ public class WindowFrame extends JFrame {
 		super();
 		this.utilisateur = "Polo";
 
+		//MENU
 		this.setBounds(100,100,WIDTH,HEIGHT);
 		this.setTitle("A Tavola !");
 		ImageIcon img = new ImageIcon("src/img/italie.png");
 		this.setIconImage(img.getImage());
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		MenuPanel menu = new MenuPanel(utilisateur);
+		MainContentContainer mainContent = new MainContentContainer(menu,utilisateur);
+		menu.setMain(mainContent);
 		
 		this.getContentPane().add(menu, BorderLayout.WEST);
+		this.getContentPane().add(mainContent,BorderLayout.CENTER);
 		
 	}
 

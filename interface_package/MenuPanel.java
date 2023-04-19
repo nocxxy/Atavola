@@ -12,15 +12,22 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+
+@SuppressWarnings("serial")
 public class MenuPanel extends JPanel {
 	//Attributs
 	final static int WIDTH = 230;
-	String utilisateur;
+	public String utilisateur;
+	private String selectedButton;
+	private MainContentContainer mainContent;
 	
 	//Constructeur
 	public MenuPanel(String utilisateur) {
 		super();
+
 		this.utilisateur = utilisateur;
 		this.setPreferredSize(new Dimension(WIDTH,10));
 		this.setBackground(new Color(238,238,238));
@@ -47,10 +54,7 @@ public class MenuPanel extends JPanel {
 		buttonscontainer.setOpaque(false);
 		buttonscontainer.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		MenuButton btnTable = new MenuButton("Gestion des tables", "maison",true);
-		MenuButton btnEdt = new MenuButton("Employés","utilisateur",false);
-		buttonscontainer.add(btnTable);
-		buttonscontainer.add(btnEdt);
+		createButtons(buttonscontainer);
 		
 		JPanel connection = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) connection.getLayout();
@@ -85,7 +89,73 @@ public class MenuPanel extends JPanel {
 		this.add(buttonscontainer, BorderLayout.CENTER);
 		this.add(brandname, BorderLayout.NORTH);
 		
-		
+	}
+	
+	public void createButtons(JPanel container) {
+		if(utilisateur == "Polo") {
+			//Creation des bouttons
+			MenuButton btnTable = new MenuButton("Gestion des tables", "maison",true,this);
+			this.selectedButton = "table";
+			MenuButton btnEdt = new MenuButton("Emplois du temps","utilisateur",false,this);
+			MenuButton btnEmploye = new MenuButton("Employés","utilisateur",false,this);
+			
+			//Actions des boutons
+			btnTable.addActionListener((ActionListener) new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					selectedButton = "table";
+					btnTable.setSelected(true);
+					btnEdt.setSelected(false);
+					btnEmploye.setSelected(false);
+					btnTable.updateButton();
+					btnEdt.updateButton();
+					btnEmploye.updateButton();
+					mainContent.updateMain();
+				}
+			});
+			
+			btnEdt.addActionListener((ActionListener) new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					selectedButton = "edt";
+					btnTable.setSelected(false);
+					btnEmploye.setSelected(false);
+					btnEdt.setSelected(true);
+					btnTable.updateButton();
+					btnEdt.updateButton();
+					btnEmploye.updateButton();
+					mainContent.updateMain();
+				}
+			});
+			
+			btnEmploye.addActionListener((ActionListener) new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					selectedButton = "employe";
+					btnTable.setSelected(false);
+					btnEmploye.setSelected(true);
+					btnEdt.setSelected(false);
+					btnTable.updateButton();
+					btnEdt.updateButton();
+					btnEmploye.updateButton();
+					mainContent.updateMain();
+				}
+			});
+			container.add(btnTable);
+			container.add(btnEdt);
+			container.add(btnEmploye);
+		} else {
+			
+		}
+	}
+
+	
+	public String getSelectedButton() {
+		return this.selectedButton;
+	}
+
+	public void setMain(MainContentContainer mainContent) {
+		this.mainContent = mainContent;
 		
 	}
 	
