@@ -3,13 +3,19 @@ package interface_package;
 import Front.Fonction.Employe;
 
 import javax.swing.*;
+import java.sql.Statement;
 import java.util.ArrayList;
 
-public class ListEmployePanel extends JScrollPane {
+public class ListEmployePanel extends JPanel {
 
-    public JScrollPane PaneTable(ArrayList<Employe> e)
+    public  ListEmployePanel(ArrayList<Employe> e,Statement st)
     {
         JTable table = new JTable(new ListEmployeModelTable(e));
-        return new JScrollPane(table);
+        JScrollPane tableau = new JScrollPane(table);
+        JButton addEmployer = new JButton("Ajouter Employer");
+        addEmployer.addActionListener(new AddEmployerFrameListener(st));
+
+        this.add(tableau);
+        this.add(addEmployer);
     }
 }
