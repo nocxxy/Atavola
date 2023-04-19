@@ -10,8 +10,8 @@ import java.sql.Statement;
 public class Main {
 
 	public static void main(String[] args) {
-		Back.connectionBase();
-		ConnexionFrame c = new ConnexionFrame();
+		Statement st = Back.connectionBase();
+		ConnexionFrame c = new ConnexionFrame(st);
 		c.setVisible(true);
 		
 	}
