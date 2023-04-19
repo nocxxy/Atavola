@@ -1,6 +1,7 @@
 package interface_package;
 
 import java.awt.*;
+import java.sql.Statement;
 
 import javax.swing.*;
 
@@ -10,7 +11,7 @@ public class ConnexionButton extends JButton {
 	private String texte;
 	private boolean selected;
 	
-	public ConnexionButton(String texte,boolean selected) {
+	public ConnexionButton(String texte, boolean selected) {
 		super();
 		this.texte = texte;
 		//this.icon = new MenuButtonIcon(icon,this,20,20);
@@ -22,6 +23,7 @@ public class ConnexionButton extends JButton {
 		this.setPreferredSize(new Dimension(200, 37));
 		this.setMargin(new Insets(10, 50, 50, 50));
 		this.setBorder(new RoundedBorder(10));
+
 		
 		updateButton(null, this);
 		

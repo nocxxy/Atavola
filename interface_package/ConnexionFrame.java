@@ -8,6 +8,7 @@ import java.awt.Insets;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.sql.Statement;
 
 import javax.swing.*;
 
@@ -17,7 +18,7 @@ public class ConnexionFrame extends JFrame {
 	final static int HEIGHT = 700;
 	
 	//Constructeur
-	public ConnexionFrame() {
+	public ConnexionFrame(Statement st) {
 		this.setBounds(100,100,WIDTH,HEIGHT);
 		this.setTitle("A Tavola ! | Connexion");
 		this.setOpacity(1);
@@ -101,6 +102,7 @@ public class ConnexionFrame extends JFrame {
 		
 		
 		ConnexionButton connect = new ConnexionButton("Connexion",true);
+		connect.addActionListener(new ConnexionListener(this,st));
 		signIn.add(connect);
 		
 		
