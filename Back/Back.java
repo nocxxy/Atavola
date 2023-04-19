@@ -238,14 +238,14 @@ public abstract class Back {
      * Renvoie un booléen qui dit si l'employer est inscrit ou non
      * */
     
-    public static boolean connexionEmployer (Statement st, String nom, String mdp) {
+    public static boolean connexionEmployer (Statement st, String login, String mdp) {
     	
     	//Initialisation de la varible pour executer la requête 
     	ResultSet rs = null;
     	try {
     		//requête de vérification 
-    		String verif = "SELECT nom,prenom,login,rang FROM Employer WHERE nom = ";
-    		verif += (char)34 + nom + (char)34 + " AND mdp = ";
+    		String verif = "SELECT nom,prenom,login,rang FROM Employer WHERE login = ";
+    		verif += (char)34 + login + (char)34 + " AND mdp = ";
     		String mot_de_passe = (char)34 + cryptePwd(mdp) + (char)34;
     		verif += mot_de_passe;
     		
