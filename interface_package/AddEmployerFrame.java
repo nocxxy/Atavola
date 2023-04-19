@@ -50,8 +50,7 @@ public class AddEmployerFrame extends JFrame {
         this.setLayout(new GridLayout(3, 1));
         this.add(panelForm);
         this.add(panelButton);
-
-        this.add(new ListEmployePanel(Back.getAllEmployer(st),st));
+        
 
         this.pack();
 
