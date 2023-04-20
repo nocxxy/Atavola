@@ -1,12 +1,18 @@
 package Back;
 
-import Front.Fonction.Creneau;
-import Front.Fonction.Employe;
-
-import java.sql.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
+import Front.Fonction.Creneau;
 
 public abstract class Back {
     //methode permettant de se connecter à la base de donnée
@@ -110,6 +116,24 @@ public abstract class Back {
         }
         return null;
     }
+    
+    /*
+     * Méthode qui convertit un string en date 
+     * Prend un string et renvoie une date 
+     * 
+     * */
+    
+    public static String convertStringToDate(String dateString) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            java.util.Date date = sdf.parse(dateString);
+            return sdf.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
 
     /*
        Methode qui recupere un creneau et prend un statement et l'id du creneau
