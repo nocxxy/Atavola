@@ -111,7 +111,5 @@ public class Creneau {
         this.id = id;
     }
 
-    public void setEmploye(int employe) {
-        this.employe = employe;
-    }
+  
 }
