@@ -1,5 +1,4 @@
 package App;
-import java.awt.Color;
 
 import Back.*;
 import Front.Fonction.Employe;

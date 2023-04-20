@@ -6,12 +6,10 @@ import javax.swing.*;
 @SuppressWarnings("serial")
 public class ConnexionButton extends JButton {
 	
-	private String texte;
 	private boolean selected;
 	
 	public ConnexionButton(String texte, boolean selected) {
 		super();
-		this.texte = texte;
 		//this.icon = new MenuButtonIcon(icon,this,20,20);
 		this.selected = selected;
 		
@@ -40,8 +38,5 @@ public class ConnexionButton extends JButton {
 		}
 	};
 	
-	public boolean isSelected() {
-		return selected;
-	}
 
 }

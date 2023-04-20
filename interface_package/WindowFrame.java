@@ -8,11 +8,11 @@ import java.sql.Statement;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
+@SuppressWarnings("serial")
 public class WindowFrame extends JFrame {
 	//Attributs
 	final static int WIDTH = 1150;
 	final static int HEIGHT = 700;
-	String utilisateur;
 
 	private Statement st;
 	private Employe e;
@@ -22,7 +22,6 @@ public class WindowFrame extends JFrame {
 		super();
 		this.st = st;
 		this.e = e;
-		this.utilisateur = "Polo";
 
 		//MENU
 		this.setBounds(100,100,WIDTH,HEIGHT);
@@ -30,8 +29,8 @@ public class WindowFrame extends JFrame {
 		ImageIcon img = new ImageIcon("src/img/italie.png");
 		this.setIconImage(img.getImage());
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		MenuPanel menu = new MenuPanel(utilisateur);
-		MainContentContainer mainContent = new MainContentContainer(menu,utilisateur);
+		MenuPanel menu = new MenuPanel(e);
+		MainContentContainer mainContent = new MainContentContainer(menu,e,st);
 		menu.setMain(mainContent);
 		
 		this.getContentPane().add(menu, BorderLayout.WEST);
