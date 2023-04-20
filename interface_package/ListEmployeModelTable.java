@@ -2,11 +2,10 @@ package interface_package;
 
 import Front.Fonction.Employe;
 
-import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
-import java.util.Objects;
 
+@SuppressWarnings("serial")
 public class ListEmployeModelTable extends AbstractTableModel {
 
     private ArrayList<Employe> listE;

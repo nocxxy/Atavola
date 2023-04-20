@@ -1,12 +1,11 @@
 package interface_package;
 
-import Back.Back;
-import Front.Fonction.Employe;
 
 import javax.swing.*;
 import java.awt.*;
 import java.sql.Statement;
 
+@SuppressWarnings("serial")
 public class AddEmployerFrame extends JFrame {
 
     final static int WIDTH = 350;
