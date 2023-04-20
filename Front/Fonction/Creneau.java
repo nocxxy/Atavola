@@ -1,19 +1,22 @@
 package Front.Fonction;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 public class Creneau {
     private Date heuredebut;
     private Date heurefin;
-    private Employe employe;
+    //private Employe employe;
+    private int employe;
     private boolean dispo;
+    private int id;
 
     // ________________________________________________Constructeur/Setter_____________________________
-    public Creneau (Date hd, Date hf, Employe e, boolean dispo) {
+    public Creneau (Date hd, Date hf) {//, int e ){//, boolean dispo) {
         this.heuredebut = hd;
         this.heurefin = hf;
-        this.employe = e;
-        this.dispo = dispo;
+        //this.employe = e;
+        //this.dispo = dispo;
     }
 
     //___________________________________________________getter/setter______________________________
@@ -46,14 +49,14 @@ public class Creneau {
         this.heurefin = heurefin;
     }
 
-    public Employe getEmploye() {
+    public int getEmploye() {
         return employe;
     }
 
-    public void setEmploye(Employe employe) {
+    public void setEmploye(int employe) {
         this.employe = employe;
     }
-
+    
     public boolean isDispo() {
         return dispo;
     }
@@ -86,13 +89,27 @@ public class Creneau {
         cal.setTime(this.heuredebut);
         return cal.get(Calendar.WEEK_OF_YEAR);
     }
+    
+    public int getTempCreneau() {
+    	int res =0;
+    	res += this.heurefin.getHours() * 60 - this.heuredebut.getHours() *60 ;
+    	res+= this.heurefin.getMinutes() * 60 - this.heuredebut.getMinutes() *60;
+    	
+    	return res;
+    }
 
     public static void main(String[] args) {
-        Date d1 = new Date();
+        /*Date d1 = new Date();
         Employe e = new Employe("Prenom","nom","couc","blabal");
         Creneau c = new Creneau(d1,d1,e,true);
         System.out.println(c.getJourCreneau());
-        System.out.println(c.getNumSemaineCreneau());
+        System.out.println(c.getNumSemaineCreneau());*/
 
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+  
 }

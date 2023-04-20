@@ -7,6 +7,8 @@ import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import EDT.EDTPanel;
+
 @SuppressWarnings("serial")
 public class MainContentContainer extends JPanel {
 	private MenuPanel menu;
@@ -43,23 +45,32 @@ public class MainContentContainer extends JPanel {
 
 	public void updateMain() {
 		String selected = menu.getSelectedButton();
+		BorderLayout layout = (BorderLayout) this.getLayout();
 		switch(selected) {
 			case "table":
 				titleText.setText("Tables");
+				if(layout.getLayoutComponent(BorderLayout.CENTER) != null) {
+					this.remove(layout.getLayoutComponent(BorderLayout.CENTER));
+				}
 				JPanel table = new JPanel();
 				table.setBackground(Color.RED);
 				this.add(table,BorderLayout.CENTER);
 				break;
 			case "employe":
 				titleText.setText("Gestion des employés");
+				if(layout.getLayoutComponent(BorderLayout.CENTER) != null) {
+					this.remove(layout.getLayoutComponent(BorderLayout.CENTER));
+				}
 				JPanel employe = new JPanel();
 				employe.setBackground(Color.BLUE);
 				this.add(employe,BorderLayout.CENTER);
 				break;
 			case "edt":
 				titleText.setText("Emplois du temps");
-				JPanel edt = new JPanel();
-				edt.setBackground(Color.GREEN);
+				if(layout.getLayoutComponent(BorderLayout.CENTER) != null) {
+					this.remove(layout.getLayoutComponent(BorderLayout.CENTER));
+				}
+				EDTPanel edt = new EDTPanel();
 				this.add(edt,BorderLayout.CENTER);
 				break;
 			default:
