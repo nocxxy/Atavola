@@ -48,14 +48,14 @@ public class Creneau {
         this.heurefin = heurefin;
     }
 
-    /*public Employe getEmploye() {
+    public int getEmploye() {
         return employe;
-    }*/
+    }
 
-    /*public void setEmploye(Employe employe) {
+    public void setEmploye(int employe) {
         this.employe = employe;
-    }*/
-
+    }
+    
     public boolean isDispo() {
         return dispo;
     }
@@ -87,6 +87,14 @@ public class Creneau {
         Calendar cal = Calendar.getInstance();
         cal.setTime(this.heuredebut);
         return cal.get(Calendar.WEEK_OF_YEAR);
+    }
+    
+    public int getTempCreneau() {
+    	int res =0;
+    	res += this.heurefin.getHours() * 60 - this.heuredebut.getHours() *60 ;
+    	res+= this.heurefin.getMinutes() * 60 - this.heuredebut.getMinutes() *60;
+    	
+    	return res;
     }
 
     public static void main(String[] args) {

@@ -8,9 +8,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Map;
 
 import Front.Fonction.Creneau;
 
@@ -247,4 +246,30 @@ public abstract class Back {
         }
         return null;
     }
+    
+    public String minuteToHeure(int min) {
+        int heur,minu ;
+        heur = min / 60;
+        minu = min % 60;
+        return heur + " Heure(s) "+ minu + " minute(s)";
+    }
+    
+    /*
+     * Méthode qui permet de calculer les heures d'un employé
+     * Prend un ArrayList de creneau et un integer
+     * renvoie un integer
+     * 
+     * */
+    public static int getAllCreneauxEmploye (ArrayList<Creneau>
+    creneau, int idEmploye){
+        
+        int cpt =0;
+        for (int i=0; i<creneau.size();i++) {
+            if (creneau.get(i).getEmploye() == idEmploye) {
+                cpt += (creneau.get(i).getTempCreneau());
+            }
+        }
+        return cpt;
+    }
+    
 }
