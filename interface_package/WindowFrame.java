@@ -1,6 +1,9 @@
 package interface_package;
 
+import Front.Fonction.Employe;
+
 import java.awt.BorderLayout;
+import java.sql.Statement;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -10,10 +13,15 @@ public class WindowFrame extends JFrame {
 	final static int WIDTH = 1150;
 	final static int HEIGHT = 700;
 	String utilisateur;
+
+	private Statement st;
+	private Employe e;
 	
 	//Constructeur
-	public WindowFrame() {
+	public WindowFrame(Statement st , Employe e) {
 		super();
+		this.st = st;
+		this.e = e;
 		this.utilisateur = "Polo";
 
 		//MENU

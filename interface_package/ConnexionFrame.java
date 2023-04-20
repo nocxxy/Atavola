@@ -16,6 +16,9 @@ public class ConnexionFrame extends JFrame {
 	//Attributs
 	final static int WIDTH = 650;
 	final static int HEIGHT = 800;
+
+	private JTextField jlogin;
+	private JTextField jmdp;
 	
 	//Constructeur
 	public ConnexionFrame(Statement st) {
@@ -83,21 +86,24 @@ public class ConnexionFrame extends JFrame {
 		connect2.setPreferredSize(new Dimension(200, 37));
 		connect2.setMargin(new Insets(10, 50, 50, 50));
 		
-		JTextField test = new RoundJTextField(25);
-		test.setText("Nom d'utilisateur...");
-		test.setPreferredSize(new Dimension(200,50));
-		test.setMargin(new Insets(0, 0, 0, 0));
-		test.setFont(new Font("Poppins",Font.PLAIN,15));
-		test.setBackground(Color.decode("#D9D9D9"));
-		signIn.add(test);
+		JTextField textFieldLogin = new RoundJTextField(25);
+		textFieldLogin.setText("Nom d'utilisateur...");
+		textFieldLogin.setPreferredSize(new Dimension(650,50));
+		textFieldLogin.setMargin(new Insets(0, 0, 0, 0));
+		textFieldLogin.setFont(new Font("Poppins",Font.PLAIN,15));
+		textFieldLogin.setBackground(Color.decode("#D9D9D9"));
+		signIn.add(textFieldLogin);
 		
-		JTextField test2 = new RoundJTextField(25);
-		test2.setText("Mot de Passe...");
-		test2.setPreferredSize(new Dimension(650,50));
-		test2.setMargin(new Insets(0, 0, 0, 0));
-		test2.setFont(new Font("Poppins",Font.PLAIN,15));
-		test2.setBackground(Color.decode("#D9D9D9"));
-		signIn.add(test2);
+		JTextField textFieldPwd = new RoundJTextField(25);
+		textFieldPwd.setText("Mot de Passe...");
+		textFieldPwd.setPreferredSize(new Dimension(650,50));
+		textFieldPwd.setMargin(new Insets(0, 0, 0, 0));
+		textFieldPwd.setFont(new Font("Poppins",Font.PLAIN,15));
+		textFieldPwd.setBackground(Color.decode("#D9D9D9"));
+		signIn.add(textFieldPwd);
+
+		this.jlogin = textFieldLogin;
+		this.jmdp = textFieldPwd;
 		
 		
 		
@@ -111,4 +117,11 @@ public class ConnexionFrame extends JFrame {
 		
 	}
 
+	public JTextField getJlogin() {
+		return jlogin;
+	}
+
+	public JTextField getJmdp() {
+		return jmdp;
+	}
 }

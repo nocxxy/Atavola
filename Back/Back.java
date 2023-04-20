@@ -116,15 +116,16 @@ public abstract class Back {
     
     
     /*Methode qui permet de récupérer un employé  
-    	qui prend un statement et l'id de l'employé
+    	qui prend un statement et le login de l'employé
     	et renvoie un objet 
     */
-    public static Employe getEmployer (Statement st,int id) {
+    public static Employe getEmployer (Statement st,String elogin) {
 		try {
 		//La requête sql
-		String select = "SELECT nom,prenom,login,rang FROM Employer WHERE id = ";
-		String query = select + id;
+		String select = "SELECT nom,prenom,login,rang FROM Employer WHERE login = ";
+		String query = select + (char)34 + elogin + (char)34;
 		
+		System.out.println(query);
 		
 		//Execution de la requête sql
 		ResultSet rs = st.executeQuery(query);
