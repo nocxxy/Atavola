@@ -14,8 +14,8 @@ import javax.swing.*;
 
 public class ConnexionFrame extends JFrame {
 	//Attributs
-	final static int WIDTH = 1150;
-	final static int HEIGHT = 700;
+	final static int WIDTH = 650;
+	final static int HEIGHT = 800;
 	
 	//Constructeur
 	public ConnexionFrame(Statement st) {
@@ -40,7 +40,7 @@ public class ConnexionFrame extends JFrame {
 		
 		JLabel brandname = new JLabel("A Tavola !");
 		brandname.setForeground(Color.decode("#FFFFFF"));
-		brandname.setFont(new Font("Times New Roman",Font.ITALIC,150));
+		brandname.setFont(new Font("Times New Roman",Font.ITALIC,100));
 		brandname.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
 		brandPanel.add(brandname);
@@ -85,9 +85,9 @@ public class ConnexionFrame extends JFrame {
 		
 		JTextField test = new RoundJTextField(25);
 		test.setText("Nom d'utilisateur...");
-		test.setPreferredSize(new Dimension(650,50));
+		test.setPreferredSize(new Dimension(200,50));
 		test.setMargin(new Insets(0, 0, 0, 0));
-		test.setFont(new Font("Poppins",Font.PLAIN,35));
+		test.setFont(new Font("Poppins",Font.PLAIN,15));
 		test.setBackground(Color.decode("#D9D9D9"));
 		signIn.add(test);
 		
@@ -95,7 +95,7 @@ public class ConnexionFrame extends JFrame {
 		test2.setText("Mot de Passe...");
 		test2.setPreferredSize(new Dimension(650,50));
 		test2.setMargin(new Insets(0, 0, 0, 0));
-		test2.setFont(new Font("Poppins",Font.PLAIN,35));
+		test2.setFont(new Font("Poppins",Font.PLAIN,15));
 		test2.setBackground(Color.decode("#D9D9D9"));
 		signIn.add(test2);
 		
