@@ -4,27 +4,23 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.sql.Statement;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import Front.Fonction.Employe;
 
 @SuppressWarnings("serial")
 public class MainContentContainer extends JPanel {
 	private MenuPanel menu;
-	private Employe e;
-	private Statement st;
+	private String utilisateur;
+	
 	
 	private JPanel title; //Titre du main
 	private JLabel titleText;
+	private JPanel content;
 	
-	public MainContentContainer(MenuPanel menu,Employe e,Statement st) {
+	public MainContentContainer(MenuPanel menu,String utilisateur) {
 		super();
 		this.menu = menu;
-		this.e = e;
-		this.st = st;
+		this.utilisateur = utilisateur;
 
 		this.setBackground(new Color(245, 245, 245));
 		this.setLayout(new BorderLayout());
@@ -51,13 +47,13 @@ public class MainContentContainer extends JPanel {
 			case "table":
 				titleText.setText("Tables");
 				JPanel table = new JPanel();
-				table.setBackground(Color.GRAY);
+				table.setBackground(Color.RED);
 				this.add(table,BorderLayout.CENTER);
 				break;
 			case "employe":
 				titleText.setText("Gestion des employés");
-				ListEmployePanel employe = new ListEmployePanel(st);
-				employe.setBackground(new Color(245, 245, 245));
+				JPanel employe = new JPanel();
+				employe.setBackground(Color.BLUE);
 				this.add(employe,BorderLayout.CENTER);
 				break;
 			case "edt":

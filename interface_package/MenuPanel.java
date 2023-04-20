@@ -11,9 +11,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import Front.Fonction.Employe;
-
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,15 +20,15 @@ import java.awt.event.ActionListener;
 public class MenuPanel extends JPanel {
 	//Attributs
 	final static int WIDTH = 230;
-	public Employe e;
+	public String utilisateur;
 	private String selectedButton;
 	private MainContentContainer mainContent;
 	
 	//Constructeur
-	public MenuPanel(Employe e) {
+	public MenuPanel(String utilisateur) {
 		super();
 
-		this.e = e;
+		this.utilisateur = utilisateur;
 		this.setPreferredSize(new Dimension(WIDTH,10));
 		this.setBackground(new Color(238,238,238));
 		this.setLayout(new BorderLayout(0,0));
@@ -70,7 +67,7 @@ public class MenuPanel extends JPanel {
 		/*
 		 * Deconnection
 		 * */
-		JLabel lblNewLabel_2 = new JLabel(e.getPrenom()+" "+e.getNom());
+		JLabel lblNewLabel_2 = new JLabel(this.utilisateur);
 		lblNewLabel_2.setFocusTraversalKeysEnabled(false);
 		lblNewLabel_2.setForeground(new Color(255, 255, 255));
 		lblNewLabel_2.setFont(new Font("Nirmala UI", Font.PLAIN, 16));
@@ -95,8 +92,7 @@ public class MenuPanel extends JPanel {
 	}
 	
 	public void createButtons(JPanel container) {
-		System.out.println(e.getRang().equals("chef"));
-		if(e.getRang().equals("chef")) {
+		if(utilisateur == "Polo") {
 			//Creation des bouttons
 			MenuButton btnTable = new MenuButton("Gestion des tables", "maison",true,this);
 			this.selectedButton = "table";
@@ -149,39 +145,7 @@ public class MenuPanel extends JPanel {
 			container.add(btnEdt);
 			container.add(btnEmploye);
 		} else {
-			//Creation des bouttons
-			MenuButton btnTable = new MenuButton("Gestion des tables", "maison",true,this);
-			this.selectedButton = "table";
-			MenuButton btnEdt = new MenuButton("Emplois du temps","utilisateur",false,this);
 			
-			//Actions des boutons
-			btnTable.addActionListener((ActionListener) new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					selectedButton = "table";
-					btnTable.setSelected(true);
-					btnEdt.setSelected(false);
-					btnTable.updateButton();
-					btnEdt.updateButton();
-					mainContent.updateMain();
-				}
-			});
-			
-			btnEdt.addActionListener((ActionListener) new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					selectedButton = "edt";
-					btnEdt.setSelected(true);
-					btnTable.setSelected(false);
-					btnTable.updateButton();
-					btnEdt.updateButton();
-					mainContent.updateMain();
-				}
-			});
-			
-
-			container.add(btnTable);
-			container.add(btnEdt);
 		}
 	}
 
