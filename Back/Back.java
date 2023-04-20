@@ -239,7 +239,7 @@ public abstract class Back {
      * Renvoie un booléen qui dit si l'employer est inscrit ou non
      * */
     
-    public static boolean connexionEmployer (Statement st, String login, String mdp) {
+    public static boolean connexionEmployer (Statement st, String login, String mdp) throws SQLException {
     	
     	//Initialisation de la varible pour executer la requête 
     	ResultSet rs = null;
@@ -255,13 +255,14 @@ public abstract class Back {
     		
     		//affiche de la requête
     		System.out.println(verif);
-    		
+            return (rs.next());
     		
     	}catch(SQLException ex) {
     		//Exception
     		ex.printStackTrace();
+            return false;
     	}
-    	return rs!= null;
+
     }
     
     

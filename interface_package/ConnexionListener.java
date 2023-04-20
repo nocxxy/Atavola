@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public class ConnexionListener implements ActionListener {
@@ -28,11 +29,20 @@ public class ConnexionListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String login = this.jlogin.getText();
         String mdp = this.jmdp.getText();
-        if (Back.connexionEmployer(this.st,login,mdp)){
-            this.f.dispose();
-            Employe employe = Back.getEmployer(this.st,login);
-            WindowFrame frame = new WindowFrame(this.st, employe);
-            frame.setVisible(true);
+
+
+        try {
+            if (Back.connexionEmployer(this.st,login,mdp)){
+                this.f.dispose();
+                Employe employe = Back.getEmployer(this.st,login);
+                WindowFrame frame = new WindowFrame(this.st, employe);
+                frame.setVisible(true);
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
         }
+
+
+
     }
 }

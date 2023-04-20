@@ -110,8 +110,8 @@ public class ConnexionFrame extends JFrame {
 		ConnexionButton connect = new ConnexionButton("Connexion",true);
 		connect.addActionListener(new ConnexionListener(this,st));
 		signIn.add(connect);
-		
-		
+
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().add(panel,BorderLayout.CENTER);
 		
 		
