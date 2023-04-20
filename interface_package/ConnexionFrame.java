@@ -24,6 +24,8 @@ public class ConnexionFrame extends JFrame {
 	public ConnexionFrame(Statement st) {
 		this.setBounds(100,100,WIDTH,HEIGHT);
 		this.setTitle("A Tavola ! | Connexion");
+		ImageIcon img = new ImageIcon("src/img/italie.png");
+		this.setIconImage(img.getImage());
 		this.setOpacity(1);
 		
 		/*
