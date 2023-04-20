@@ -9,6 +9,7 @@ public class Creneau {
     //private Employe employe;
     private int employe;
     private boolean dispo;
+    private int id;
 
     // ________________________________________________Constructeur/Setter_____________________________
     public Creneau (Date hd, Date hf) {//, int e ){//, boolean dispo) {
@@ -104,5 +105,13 @@ public class Creneau {
         System.out.println(c.getJourCreneau());
         System.out.println(c.getNumSemaineCreneau());*/
 
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setEmploye(int employe) {
+        this.employe = employe;
     }
 }

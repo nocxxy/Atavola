@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Calendar;
+
 
 import Front.Fonction.Creneau;
 
@@ -272,4 +274,17 @@ public abstract class Back {
         return cpt;
     }
     
+
+    public static String convertDatetoString(java.util.Date date){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(date);
+
+    }
+    public static ArrayList<Creneau> getAllCreneauWeek(Statement st,Date d){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(d);
+        cal.add(cal.DATE,6);
+        java.util.Date d1 = new java.util.Date (cal.YEAR-1900,cal.MONTH,cal.DATE);
+        return getAllWeeklyCreneau(st,convertDatetoString(d),convertDatetoString(d1));
+    }
 }
