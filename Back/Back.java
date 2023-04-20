@@ -259,7 +259,7 @@ public abstract class Back {
         Calendar cal = Calendar.getInstance();
         cal.setTime(d);
         cal.add(cal.DATE,6);
-        Date d1 = new Date (cal.YEAR-1900,cal.MONTH,cal.DATE);
+        java.util.Date d1 = new java.util.Date (cal.YEAR-1900,cal.MONTH,cal.DATE);
         return getAllWeeklyCreneau(st,convertDatetoString(d),convertDatetoString(d1));
     }
 }
