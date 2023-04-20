@@ -117,22 +117,7 @@ public abstract class Back {
         return null;
     }
     
-    /*
-     * Méthode qui convertit un string en date 
-     * Prend un string et renvoie une date 
-     * 
-     * */
     
-    public static String convertStringToDate(String dateString) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        try {
-            java.util.Date date = sdf.parse(dateString);
-            return sdf.format(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
     
 
     /*
