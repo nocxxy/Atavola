@@ -7,9 +7,8 @@ import interface_package.*;
 public class Main {
 
 	public static void main(String[] args) {
-		Back.connectionBase();
-		ConnexionFrame c = new ConnexionFrame();
-		c.setVisible(true);
+		WindowFrame f = new WindowFrame();
+		f.setVisible(true);
 		
 	}
 
