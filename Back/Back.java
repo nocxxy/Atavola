@@ -130,6 +130,7 @@ public abstract class Back {
                 //Affichage des données
                 System.out.println(rs.getString("date_heure_debut")
                         + ", " + rs.getString("date_heure_fin"));
+
                 //On stocke les données
                 Date hd = rs.getDate("date_heure_debut");
                 Date hf = rs.getDate("date_heure_fin");
@@ -161,12 +162,7 @@ public abstract class Back {
             query += ")";
             System.out.println(query);
 
-            /*
-            Besoin d'aide pour le format de la date, quand on appelle la foncton dans main.java
-
-             */
             //Execution de la requête
-
             st.executeUpdate(query);
 
         } catch (SQLException ex) {
@@ -220,7 +216,7 @@ public abstract class Back {
                 Date hf = rs.getDate("date_heure_fin");
                 //int id_employer = rs.getInt("id_employer");
 
-                //On ajoute l'employé
+                //On ajoute le creneau
                 Creneau c = new Creneau(hd,hf);
                 res.add(c);
             }
