@@ -7,10 +7,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import Front.Fonction.Employe;
 
@@ -28,7 +25,7 @@ public class MenuPanel extends JPanel {
 	private MainContentContainer mainContent;
 	
 	//Constructeur
-	public MenuPanel(Employe e) {
+	public MenuPanel(Employe e, JFrame f) {
 		super();
 
 		this.e = e;
@@ -86,6 +83,7 @@ public class MenuPanel extends JPanel {
 		Image newimg = image.getScaledInstance(15, 15,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
 		imageIcon = new ImageIcon(newimg);
 		btnNewButton_1.setIcon(imageIcon);
+		btnNewButton_1.addActionListener(new AnnulerListener(f));
 		connection.add(btnNewButton_1);
 		
 		

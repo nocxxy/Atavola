@@ -30,7 +30,7 @@ public class WindowFrame extends JFrame {
 		ImageIcon img = new ImageIcon("src/img/italie.png");
 		this.setIconImage(img.getImage());
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		MenuPanel menu = new MenuPanel(e);
+		MenuPanel menu = new MenuPanel(e,this);
 		MainContentContainer mainContent = new MainContentContainer(menu,e,st);
 		menu.setMain(mainContent);
 		
