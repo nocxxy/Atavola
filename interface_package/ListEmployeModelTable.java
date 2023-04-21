@@ -10,6 +10,7 @@ import java.util.Objects;
 public class ListEmployeModelTable extends AbstractTableModel {
 
     private ArrayList<Employe> listE;
+    private final String[] entetes = { "Nom", "Prénom"};
 
     public ListEmployeModelTable(ArrayList<Employe> listE)
     {
@@ -34,8 +35,16 @@ public class ListEmployeModelTable extends AbstractTableModel {
     public int getRowCount() {
         return listE.size(); // le nombre de lignes
     }
+
+
+
     @Override
     public int getColumnCount() {
-        return 2; // le nombre de colonnes
+        return entetes.length;
+    }
+
+    @Override
+    public String getColumnName(int columnIndex) {
+        return entetes[columnIndex];
     }
 }
