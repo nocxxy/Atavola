@@ -1,12 +1,19 @@
 package Back;
 
-import Front.Fonction.Creneau;
-import Front.Fonction.Employe;
-
-import java.sql.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Calendar;
+
+
+import Front.Fonction.Creneau;
 
 public abstract class Back {
     //methode permettant de se connecter à la base de donnée
@@ -110,6 +117,9 @@ public abstract class Back {
         }
         return null;
     }
+    
+    
+    
 
     /*
        Methode qui recupere un creneau et prend un statement et l'id du creneau
@@ -233,5 +243,44 @@ public abstract class Back {
             ex.printStackTrace();
         }
         return null;
+    }
+    
+    public String minuteToHeure(int min) {
+        int heur,minu ;
+        heur = min / 60;
+        minu = min % 60;
+        return heur + " Heure(s) "+ minu + " minute(s)";
+    }
+    
+    /*
+     * Méthode qui permet de calculer les heures d'un employé
+     * Prend un ArrayList de creneau et un integer
+     * renvoie un integer
+     * 
+     * */
+    public static int getAllCreneauxEmploye (ArrayList<Creneau>
+    creneau, int idEmploye){
+        
+        int cpt =0;
+        for (int i=0; i<creneau.size();i++) {
+            if (creneau.get(i).getEmploye() == idEmploye) {
+                cpt += (creneau.get(i).getTempCreneau());
+            }
+        }
+        return cpt;
+    }
+    
+
+    public static String convertDatetoString(java.util.Date date){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(date);
+
+    }
+    public static ArrayList<Creneau> getAllCreneauWeek(Statement st,Date d){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(d);
+        cal.add(cal.DATE,6);
+        java.util.Date d1 = new java.util.Date (cal.YEAR-1900,cal.MONTH,cal.DATE);
+        return getAllWeeklyCreneau(st,convertDatetoString(d),convertDatetoString(d1));
     }
 }
