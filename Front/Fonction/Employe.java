@@ -7,10 +7,19 @@ public class Employe {
     private String prenom;
     private String login;
     private String rg;
+    private int id;
 
     // ________________________Constructeur/getteur____________________________
 
-    public Employe(String nom, String prenom, String login, String rg) {
+    public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Employe(String nom, String prenom, String login, String rg) {
         this.nom = nom;
         this.prenom = prenom;
         this.login = login;

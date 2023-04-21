@@ -143,6 +143,7 @@ public abstract class Back {
    		 	
    		 	//On retourne l'employé
    		 	Employe res = new Employe (nom,prenom,login,rang);
+   		 	res.setId(id);
    		 	return res;
 		}
 		
@@ -205,6 +206,7 @@ public abstract class Back {
     		while (rs.next()) {
   
                 //On stocke les données
+    			int id = rs.getInt("id");
                 String nom = rs.getString("nom");
        		 	String prenom = rs.getString("prenom");
        		 	String login = rs.getString("login");
@@ -212,6 +214,7 @@ public abstract class Back {
        		 	
        		 	//On ajoute l'employé
        		 	Employe e = new Employe (nom,prenom,login,rang);
+       		 	e.setId(id);
        		 	res.add(e);
     		}
     		
