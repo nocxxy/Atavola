@@ -47,6 +47,7 @@ public class PoloPopUp extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Already there
 
 		this.setUndecorated(true); 
+		this.setLocationRelativeTo(null); 
 		
 		
 		
