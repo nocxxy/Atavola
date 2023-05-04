@@ -251,11 +251,11 @@ public abstract class Back {
         return null;
     }
     
-    public String minuteToHeure(int min) {
+    public static String minuteToHeure(int min) {
         int heur,minu ;
         heur = min / 60;
         minu = min % 60;
-        return heur + " Heure(s) "+ minu + " minute(s)";
+        return heur + "h"+ minu;
     }
     
     /*
@@ -264,7 +264,7 @@ public abstract class Back {
      * renvoie un integer
      * 
      * */
-    public static int getAllCreneauxEmploye (ArrayList<Creneau>
+    public static int getHeuresEmploye (ArrayList<Creneau>
     creneau, int idEmploye){
         
         int cpt =0;
@@ -279,7 +279,7 @@ public abstract class Back {
     public static Employe getEmployer (Statement st,String elogin) {
 		try {
 		//La requête sql
-		String select = "SELECT nom,prenom,login,rang FROM Employer WHERE login = ";
+		String select = "SELECT * FROM Employer WHERE login = ";
 		String query = select + (char)34 + elogin + (char)34;
 		
 		System.out.println(query);
@@ -294,13 +294,14 @@ public abstract class Back {
             System.out.println(rs.getString("nom") + ", " + rs.getString("prenom") + ", " + rs.getString("login")
                     + ", " + rs.getString("rang"));
             //On stocke les données
+            int id = rs.getInt("id");
             String nom = rs.getString("nom");
    		 	String prenom = rs.getString("prenom");
    		 	String login = rs.getString("login");
    		 	String rang = rs.getString("rang");
    		 	
    		 	//On retourne l'employé
-   		 	Employe res = new Employe (nom,prenom,login,rang);
+   		 	Employe res = new Employe (id,nom,prenom,login,rang);
    		 	return res;
 		}
 		
@@ -362,28 +363,22 @@ public abstract class Back {
     		
     		//Execution de la requête sql
     		ResultSet rs = st.executeQuery(query);
-    		System.out.println(rs);
     		
     		//Traitement du résultat
     		
     		ArrayList<Employe> res = new ArrayList();
     		while (rs.next()) {                //On stocke les données
+                int id = Integer.parseInt(rs.getString("id"));
                 String nom = rs.getString("nom");
        		 	String prenom = rs.getString("prenom");
        		 	String login = rs.getString("login");
        		 	String rang = rs.getString("rang");
        		 	
        		 	//On ajoute l'employé
-       		 	Employe e = new Employe (nom,prenom,login,rang);
+       		 	Employe e = new Employe (id,nom,prenom,login,rang);
        		 	res.add(e);
     		}
     		
-    		
-    		
-    		for(Employe e : res) {
-    			//On affiche les éléments de la liste
-    			System.out.println(e.getNom());    			
-    		}
     		return res;
     		
     		} catch (SQLException ex) {
@@ -399,7 +394,7 @@ public abstract class Back {
     	ResultSet rs = null;
     	try {
     		//requête de vérification 
-    		String verif = "SELECT nom,prenom,login,rang FROM Employer WHERE login = ";
+    		String verif = "SELECT * FROM Employer WHERE login = ";
     		verif += (char)34 + login + (char)34 + " AND mdp = ";
     		String mot_de_passe = (char)34 + cryptePwd(mdp) + (char)34;
     		verif += mot_de_passe;

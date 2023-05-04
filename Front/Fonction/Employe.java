@@ -10,7 +10,8 @@ public class Employe {
 
     // ________________________Constructeur/getteur____________________________
 
-    public Employe(String nom, String prenom, String login, String rg) {
+    public Employe(int id, String nom, String prenom, String login, String rg) {
+    	this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.login = login;

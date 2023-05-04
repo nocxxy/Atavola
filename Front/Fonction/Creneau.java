@@ -9,13 +9,20 @@ public class Creneau {
     private int employe;
     private boolean dispo;
     private int id;
-
+    
     // ________________________________________________Constructeur/Setter_____________________________
     public Creneau (Date hd, Date hf) {//, int e ){//, boolean dispo) {
         this.heuredebut = hd;
         this.heurefin = hf;
-        //this.employe = e;
-        //this.dispo = dispo;
+    }
+
+    // ________________________________________________Constructeur/Setter_____________________________
+    public Creneau (Date hd, Date hf,int e, boolean dispo,int id) {//, int e ){//, boolean dispo) {
+        this.heuredebut = hd;
+        this.heurefin = hf;
+        this.employe = e;
+        this.dispo = dispo;
+        this.id = id;
     }
 
     //___________________________________________________getter/setter______________________________
@@ -92,7 +99,7 @@ public class Creneau {
     public int getTempCreneau() {
     	int res =0;
     	res += this.heurefin.getHours() * 60 - this.heuredebut.getHours() *60 ;
-    	res+= this.heurefin.getMinutes() * 60 - this.heuredebut.getMinutes() *60;
+    	res+= this.heurefin.getMinutes() - this.heuredebut.getMinutes();
     	
     	return res;
     }

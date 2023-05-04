@@ -14,7 +14,6 @@ public class CreneauCanvas extends Canvas{
 	}
 	
 	public void paint(Graphics g) {
-		System.out.println("paint");
 		g.setColor(new Color(128, 0, 0));
 
 		g.fillRoundRect(0,(this.getHeight()/10)*2,this.getWidth(),(this.getHeight()/10)*2,10,10);
