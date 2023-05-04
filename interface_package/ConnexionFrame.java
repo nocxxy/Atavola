@@ -71,14 +71,15 @@ public class ConnexionFrame extends JFrame {
 		connect2.setPreferredSize(new Dimension(200, 37));
 		connect2.setMargin(new Insets(10, 50, 50, 50));
 		
-		JTextField textFieldLogin = new RoundJTextField(25);
+		JTextField textFieldLogin = new RoundJTextField(35);
 		textFieldLogin.setText("Nom d'utilisateur...");
 		textFieldLogin.setPreferredSize(new Dimension(650,50));
 		textFieldLogin.setMargin(new Insets(0, 0, 0, 0));
 		textFieldLogin.setFont(new Font("Poppins",Font.PLAIN,15));
 		textFieldLogin.setBackground(Color.decode("#D9D9D9"));
 		textFieldLogin.setForeground(Color.GRAY);
-		textFieldLogin.addFocusListener(new FocusListener() {
+		
+		textFieldLogin.addFocusListener(new FocusListener(){
 			@Override
 			public void focusGained(FocusEvent e) {
 				if (textFieldLogin.getText().equals("Nom d'utilisateur...")) {
@@ -96,7 +97,7 @@ public class ConnexionFrame extends JFrame {
 		});
 		signIn.add(textFieldLogin);
 		
-		RoundJPasswordField textFieldPwd = new RoundJPasswordField(25);
+		RoundJPasswordField textFieldPwd = new RoundJPasswordField(35);
 		textFieldPwd.setEchoChar((char)0);
 		textFieldPwd.setText("Mot de Passe...");
 		textFieldPwd.setPreferredSize(new Dimension(650,50));
@@ -105,10 +106,11 @@ public class ConnexionFrame extends JFrame {
 		textFieldPwd.setBackground(Color.decode("#D9D9D9"));
 		signIn.add(textFieldPwd);
 		textFieldPwd.setForeground(Color.GRAY);
+		
 		textFieldPwd.addFocusListener(new FocusListener() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				textFieldPwd.setEchoChar('*');
+				textFieldPwd.setEchoChar('•');
 				if (String.valueOf(textFieldPwd.getPassword()).equals("Mot de Passe...")) {
 					textFieldPwd.setText("");
 					textFieldPwd.setForeground(Color.BLACK);

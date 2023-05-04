@@ -13,16 +13,16 @@ public class RoundJPasswordField extends JPasswordField {
     }
     protected void paintComponent(Graphics g) {
          g.setColor(getBackground());
-         g.fillRoundRect(0, 0, 750, 50, 15, 15);
+         g.fillRoundRect(0, 0, 455, 50, 15, 15);
          super.paintComponent(g);
     }
     protected void paintBorder(Graphics g) {
          g.setColor(getBackground());
-         g.drawRoundRect(0, 0, 750, 50, 15, 15);
+         g.drawRoundRect(0, 0, 455, 50, 15, 15);
     }
     public boolean contains(int x, int y) {
          if (shape == null || !shape.getBounds().equals(getBounds())) {
-             shape = new RoundRectangle2D.Float(0, 0, 500, 50, 15, 15);
+             shape = new RoundRectangle2D.Float(0, 0, 455, 50, 15, 15);
          }
          return shape.contains(x, y);
     }
