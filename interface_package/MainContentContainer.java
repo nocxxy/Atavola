@@ -4,26 +4,28 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.sql.Statement;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import EDT.EDTPanel;
+import Front.Fonction.Employe;
 
 @SuppressWarnings("serial")
 public class MainContentContainer extends JPanel {
 	private MenuPanel menu;
-	private String utilisateur;
 	
 	
 	private JPanel title; //Titre du main
 	private JLabel titleText;
-	private JPanel content;
+	Statement st;
 	
-	public MainContentContainer(MenuPanel menu,String utilisateur) {
+	public MainContentContainer(MenuPanel menu,Employe e,Statement st) {
 		super();
 		this.menu = menu;
-		this.utilisateur = utilisateur;
-
+		this.st = st;
+		
 		this.setBackground(new Color(245, 245, 245));
 		this.setLayout(new BorderLayout());
 		
@@ -53,7 +55,7 @@ public class MainContentContainer extends JPanel {
 					this.remove(layout.getLayoutComponent(BorderLayout.CENTER));
 				}
 				JPanel table = new JPanel();
-				table.setBackground(Color.RED);
+				table.setBackground(new Color(255,255,255));
 				this.add(table,BorderLayout.CENTER);
 				break;
 			case "employe":
@@ -61,8 +63,9 @@ public class MainContentContainer extends JPanel {
 				if(layout.getLayoutComponent(BorderLayout.CENTER) != null) {
 					this.remove(layout.getLayoutComponent(BorderLayout.CENTER));
 				}
-				JPanel employe = new JPanel();
-				employe.setBackground(Color.BLUE);
+				//ListEmployePanel employe = new ListEmployePanel();
+				ListEmployePanel employe = new ListEmployePanel(st);
+				employe.setBackground(new Color(245, 245, 245));
 				this.add(employe,BorderLayout.CENTER);
 				break;
 			case "edt":

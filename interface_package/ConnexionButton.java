@@ -1,8 +1,6 @@
 package interface_package;
 
 import java.awt.*;
-import java.sql.Statement;
-
 import javax.swing.*;
 
 @SuppressWarnings("serial")

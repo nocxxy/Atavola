@@ -8,12 +8,14 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Calendar;
 
 
 import Front.Fonction.Creneau;
+import Front.Fonction.Employe;
 
 public abstract class Back {
     //methode permettant de se connecter à la base de donnée
@@ -22,16 +24,20 @@ public abstract class Back {
         try {
             //Chargement driver
             Class.forName("com.mysql.jdbc.Driver");
+            System.out.println("DRIVER OK");
 
             //Créer connection
             String dbName = "atavola";
             String dbIP = "localhost";
-            String dbUser = "atavola";
-            String dbPwd = "9F0";
+            String dbUser = "roor";
+            String dbPwd = "root";
 
             String url = "jdbc:mysql://" + dbIP + ":3306/" + dbName;
+            
+            System.out.println(url);
 
             Connection con = DriverManager.getConnection(url, dbUser, dbPwd);
+            System.out.println("Connection ok");
 
             //Etat de connection
             Statement st = con.createStatement();
@@ -52,7 +58,7 @@ public abstract class Back {
                     + "    nom VARCHAR(25),\r\n"
                     + "    prenom VARCHAR(25),\r\n"
                     + "    login VARCHAR(25),\r\n"
-                    + "    mdp VARCHAR(30),\r\n"
+                    + "    mdp VARCHAR(200),\r\n"
                     + "    rang VARCHAR(10),\r\n"
                     + "    CONSTRAINT pk_employe PRIMARY KEY (id)\r\n"
                     + ");";
@@ -270,6 +276,71 @@ public abstract class Back {
         return cpt;
     }
     
+    public static Employe getEmployer (Statement st,String elogin) {
+		try {
+		//La requête sql
+		String select = "SELECT nom,prenom,login,rang FROM Employer WHERE login = ";
+		String query = select + (char)34 + elogin + (char)34;
+		
+		System.out.println(query);
+		
+		//Execution de la requête sql
+		ResultSet rs = st.executeQuery(query);
+		System.out.println(rs);
+		
+		//Traitement du résultat
+		while (rs.next()) {
+			//Affichage des données 
+            System.out.println(rs.getString("nom") + ", " + rs.getString("prenom") + ", " + rs.getString("login")
+                    + ", " + rs.getString("rang"));
+            //On stocke les données
+            String nom = rs.getString("nom");
+   		 	String prenom = rs.getString("prenom");
+   		 	String login = rs.getString("login");
+   		 	String rang = rs.getString("rang");
+   		 	
+   		 	//On retourne l'employé
+   		 	Employe res = new Employe (nom,prenom,login,rang);
+   		 	return res;
+		}
+		
+		} catch (SQLException ex) {
+			//Exceptions 
+		    ex.printStackTrace();
+		}
+		return null;
+	}
+
+    /* 
+     * Méthode pour insérer un employé dans la base de donnée
+     * Prend un statement,le nom,le prenom,le login,le mot de passe et le rang 
+     * et ne renvoie rien 
+     * */
+    
+    public static void insertEmployer(Statement st,String nom,String prenom,String login,String mdp,String rang) {
+    	try {
+    		//La requête sql
+    		String insert = "INSERT INTO Employer (nom,prenom,login,mdp,rang) VALUES (";
+    		String query = insert +(char)34 + nom  + (char)34 +",";
+    		query += (char)34 + prenom +(char)34 +",";
+    		query += (char)34 + login +(char)34 +",";
+    		query += (char)34 + cryptePwd(mdp) +(char)34 +",";
+    		query += (char)34 + rang +(char)34;
+    		query+= ")";
+    		
+    		//On affiche la requête
+    		
+    		System.out.println(query);
+    		
+    		//Execution de la requête
+    		
+    		st.executeUpdate(query);
+    		
+    	} catch (SQLException ex) {
+			//Exceptions 
+		    ex.printStackTrace();
+		}
+    }
 
     public static String convertDatetoString(java.util.Date date){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -282,5 +353,68 @@ public abstract class Back {
         cal.add(cal.DATE,6);
         java.util.Date d1 = new java.util.Date (cal.YEAR-1900,cal.MONTH,cal.DATE);
         return getAllWeeklyCreneau(st,convertDatetoString(d),convertDatetoString(d1));
+    }
+    
+    public static ArrayList<Employe> getAllEmployer (Statement st){
+    	try {
+    		//La requête sql
+    		String query = "SELECT * FROM Employer";  		
+    		
+    		//Execution de la requête sql
+    		ResultSet rs = st.executeQuery(query);
+    		System.out.println(rs);
+    		
+    		//Traitement du résultat
+    		
+    		ArrayList<Employe> res = new ArrayList();
+    		while (rs.next()) {                //On stocke les données
+                String nom = rs.getString("nom");
+       		 	String prenom = rs.getString("prenom");
+       		 	String login = rs.getString("login");
+       		 	String rang = rs.getString("rang");
+       		 	
+       		 	//On ajoute l'employé
+       		 	Employe e = new Employe (nom,prenom,login,rang);
+       		 	res.add(e);
+    		}
+    		
+    		
+    		
+    		for(Employe e : res) {
+    			//On affiche les éléments de la liste
+    			System.out.println(e.getNom());    			
+    		}
+    		return res;
+    		
+    		} catch (SQLException ex) {
+    			//Exceptions 
+    		    ex.printStackTrace();
+    		}
+    		return null;
+    	}
+    
+    public static boolean connexionEmployer (Statement st, String login, String mdp) throws SQLException {
+    	
+    	//Initialisation de la varible pour executer la requête 
+    	ResultSet rs = null;
+    	try {
+    		//requête de vérification 
+    		String verif = "SELECT nom,prenom,login,rang FROM Employer WHERE login = ";
+    		verif += (char)34 + login + (char)34 + " AND mdp = ";
+    		String mot_de_passe = (char)34 + cryptePwd(mdp) + (char)34;
+    		verif += mot_de_passe;
+    		
+    		//execution de la requête
+    		rs = st.executeQuery(verif);
+    		
+    		//affiche de la requête
+    		System.out.println(verif);
+            return (rs.next());
+    		
+    	}catch(SQLException ex) {
+    		//Exception
+    		ex.printStackTrace();
+            return false;
+    	}
     }
 }
