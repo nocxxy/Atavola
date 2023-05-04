@@ -10,10 +10,12 @@ import java.util.Arrays;
 
 public class ChoixEmployer extends JPanel {
 
+	private JComboBox inputChoice;
     ChoixEmployer(Statement st) {
         ArrayList<Employe> listeEmployer = Back.getAllEmployer(st);
         String s1[] = this.getListEmploye(listeEmployer);
         JComboBox inputChoice = new JComboBox(s1);
+        this.inputChoice = inputChoice;
         this.add(inputChoice);
     }
 
@@ -33,11 +35,10 @@ public class ChoixEmployer extends JPanel {
         }
         return res;
     }
-
-    public static void main(String[] args) {
-        Statement st = Back.connectionBase();
-        ChoixEmployer e = new ChoixEmployer(st);
-
+    
+    public String getSelect() {
+    	return (String) this.inputChoice.getSelectedItem();
     }
+ 
 
 }
