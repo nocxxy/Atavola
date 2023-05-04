@@ -95,26 +95,31 @@ public class ConnexionFrame extends JFrame {
 		});
 		signIn.add(textFieldLogin);
 		
-		JTextField textFieldPwd = new RoundJPasswordField(25);
+		RoundJPasswordField textFieldPwd = new RoundJPasswordField(25);
+		textFieldPwd.setEchoChar((char)0);
 		textFieldPwd.setText("Mot de Passe...");
 		textFieldPwd.setPreferredSize(new Dimension(650,50));
 		textFieldPwd.setMargin(new Insets(0, 0, 0, 0));
 		textFieldPwd.setFont(new Font("Poppins",Font.PLAIN,15));
 		textFieldPwd.setBackground(Color.decode("#D9D9D9"));
 		signIn.add(textFieldPwd);
-		textFieldPwd.setForeground(Color.BLACK);
+		textFieldPwd.setForeground(Color.GRAY);
 		textFieldPwd.addFocusListener(new FocusListener() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				if (textFieldPwd.getText().equals("Mot de Passe...")) {
+				textFieldPwd.setEchoChar('*');
+				if (String.valueOf(textFieldPwd.getPassword()).equals("Mot de Passe...")) {
 					textFieldPwd.setText("");
+					textFieldPwd.setForeground(Color.BLACK);
 				}
 			}
 			@Override
 			public void focusLost(FocusEvent e) {
-				if (textFieldPwd.getText().isEmpty()) {
+				if (String.valueOf(textFieldPwd.getPassword()).equals("")) {
 
 					textFieldPwd.setText("Mot de Passe...");
+					textFieldPwd.setEchoChar((char)0);
+					textFieldPwd.setForeground(Color.GRAY);
 				}
 			}
 		});
