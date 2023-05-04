@@ -1,7 +1,6 @@
 package Front.Fonction;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class Creneau {
     private Date heuredebut;
@@ -107,9 +106,17 @@ public class Creneau {
 
         // test de la fonction getLundi()
         // resultat au format : EEE MMM dd HH:mm:ss zzz yyyy
-        Creneau creneau = new Creneau(new Date(), new Date());
-        Date lundi = creneau.getLundi();
+        Creneau c1 = new Creneau(new Date(), new Date());
+        Date lundi = c1.getLundi();
         System.out.println(lundi);
+
+        // test de la fonction jourSemaineAffichage()
+        // resultat pour lundi 8 mai :
+        //[lundi 8 mai, mardi 9 mai, mercredi 10 mai, jeudi 11 mai, vendredi 12 mai, samedi 13 mai, dimanche 14 mai]
+        Creneau c2 = new Creneau(new Date(), new Date());
+        Date debut = new GregorianCalendar(2023, Calendar.MAY, 8).getTime();
+        ArrayList<String> jours = c2.jourSemaineAffichage(debut);
+        System.out.println(jours);
 
     }
 
@@ -124,5 +131,17 @@ public class Creneau {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         return cal.getTime();
+    }
+
+    public ArrayList<String> jourSemaineAffichage(Date debut) {
+        ArrayList<String> jours = new ArrayList<String>();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(debut);
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE d MMMM", Locale.FRENCH);
+        for (int i = 0; i < 7; i++) {
+            jours.add(sdf.format(cal.getTime()));
+            cal.add(Calendar.DAY_OF_MONTH, 1);
+        }
+        return jours;
     }
 }
