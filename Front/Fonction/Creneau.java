@@ -127,9 +127,13 @@ public class Creneau {
         Date dateMoins3 = c3.jourPlusi(date, -3);
         System.out.println(dateMoins3);// affiche "Fri Apr 28 00:00:00 CEST 2023"
 
+        // test de la fonction getSemaineSuivante() et getSemainePrecedente()
         Creneau c4 = new Creneau(new Date(), new Date());
         Date lundiSemaineSuivante = c4.getSemaineSuivante(new Date());
-        System.out.println(lundiSemaineSuivante);
+        System.out.println(lundiSemaineSuivante); // Mon May 08 17:02:15 CEST 2023
+
+        Date lundiSemainePrecedente = c4.getSemainePrecedente(new Date());
+        System.out.println(lundiSemainePrecedente); // Mon Apr 24 17:02:15 CEST 2023
     }
 
     public void setId(int id) {
@@ -169,5 +173,9 @@ public class Creneau {
 
     public Date getSemaineSuivante(Date jour) {
         return jourPlusi(getLundi(), 7);
+    }
+
+    public Date getSemainePrecedente(Date jour) {
+        return jourPlusi(getLundi(), -7);
     }
 }
