@@ -107,7 +107,7 @@ public class ConnexionFrame extends JFrame {
 		signIn.add(textFieldPwd);
 		textFieldPwd.setForeground(Color.GRAY);
 		
-		textFieldPwd.addFocusListener(new FocusListener() {
+		textFieldPwd.addFocusListener(new FocusListener(){
 			@Override
 			public void focusGained(FocusEvent e) {
 				textFieldPwd.setEchoChar('•');
@@ -135,7 +135,8 @@ public class ConnexionFrame extends JFrame {
 		ConnexionButton connect = new ConnexionButton("Connexion",true);
 		connect.addActionListener(new ConnexionListener(this,st));
 		signIn.add(connect);
-
+		
+		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().add(panel,BorderLayout.CENTER);
 		
