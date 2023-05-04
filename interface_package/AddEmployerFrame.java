@@ -24,7 +24,6 @@ public class AddEmployerFrame extends JFrame {
         this.setBounds(100,100,WIDTH,HEIGHT);
         this.setTitle("Ajouter un Employer");
         this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JLabel n = new JLabel("Nom :");
         JLabel p = new JLabel("Prenom :");
         JLabel motdepasse = new JLabel("Mot de passe :");
