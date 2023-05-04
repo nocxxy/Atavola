@@ -27,7 +27,7 @@ public abstract class Back {
             //Créer connection
             String dbName = "atavola";
             String dbIP = "localhost";
-            String dbUser = "roor";
+            String dbUser = "root";
             String dbPwd = "root";
 
             String url = "jdbc:mysql://" + dbIP + ":3306/" + dbName;
@@ -59,6 +59,7 @@ public abstract class Back {
                     + "    mdp VARCHAR(200),\r\n"
                     + "    rang VARCHAR(10),\r\n"
                     + "    CONSTRAINT pk_employe PRIMARY KEY (id)\r\n"
+                    + "	   CONSTRAINT pk_employe PRIMARY KEY (login)\\r\\n	"
                     + ");";
             //on envoie la requete
             st.executeUpdate(sql);
@@ -278,24 +279,56 @@ public abstract class Back {
         return cpt;
     }
     
+
+    public static Employe getEmployer (Statement st,String nom,String prenom) {
+		try {
+		//La requête sql
+		String select = "SELECT * FROM Employer WHERE nom = ";
+		String query = select + (char)34 + nom + (char)34;
+		query+= (char)34 + prenom + (char)34;
+		
+		
+		//Execution de la requête sql
+		ResultSet rs = st.executeQuery(query);
+		
+		
+		//Traitement du résultat
+		while (rs.next()) {
+		   
+			//On stocke les données
+            
+   		 	String login = rs.getString("login");
+   		 	String rang = rs.getString("rang");
+   		 	int id = rs.getInt("id");
+   		 	//On retourne l'employé
+   		 	Employe res = new Employe (nom,prenom,login,rang);
+   		 	res.setId(id);
+   		 	return res;
+		}
+		
+		} catch (SQLException ex) {
+			//Exceptions 
+		    ex.printStackTrace();
+		}
+		return null;
+	}
+    
     public static Employe getEmployer (Statement st,String elogin) {
 		try {
 		//La requête sql
 		String select = "SELECT * FROM Employer WHERE login = ";
 		String query = select + (char)34 + elogin + (char)34;
 		
-		System.out.println(query);
+		
 		
 		//Execution de la requête sql
 		ResultSet rs = st.executeQuery(query);
-		System.out.println(rs);
+		
 		
 		//Traitement du résultat
 		while (rs.next()) {
-			//Affichage des données 
-            System.out.println(rs.getString("nom") + ", " + rs.getString("prenom") + ", " + rs.getString("login")
-                    + ", " + rs.getString("rang"));
-            //On stocke les données
+		   
+			//On stocke les données
             
             String nom = rs.getString("nom");
    		 	String prenom = rs.getString("prenom");
@@ -332,9 +365,6 @@ public abstract class Back {
     		query += (char)34 + rang +(char)34;
     		query+= ")";
     		
-    		//On affiche la requête
-    		
-    		System.out.println(query);
     		
     		//Execution de la requête
     		
@@ -366,7 +396,7 @@ public abstract class Back {
     		
     		//Execution de la requête sql
     		ResultSet rs = st.executeQuery(query);
-    		System.out.println(rs);
+    		
     		
     		//Traitement du résultat
     		
@@ -387,11 +417,6 @@ public abstract class Back {
     		}
     		
     		
-    		
-    		for(Employe e : res) {
-    			//On affiche les éléments de la liste
-    			System.out.println(e.getNom());    			
-    		}
     		return res;
     		
     		} catch (SQLException ex) {
@@ -506,6 +531,38 @@ public abstract class Back {
     		    return false;
         	}	
     }
+    
+    
+    public static int getIdCreneau(Statement st, String debut,String fin,int id) {
+    	int res = 0;
+    	try {
+    		 String getId = "SELECT id FROM Creneau WHERE date_heure_debut = ";
+             
+             getId += (char)34 + debut  + (char)34;
+             getId += " AND date_heure_fin = ";
+             getId += (char)34 + fin  + (char)34;
+             getId += " AND id_employer = ";
+             getId += id;
+             
+             //execution de la requête
+             ResultSet rs = st.executeQuery(getId);
+             
+             
+             while(rs.next()) {
+             	res = rs.getInt("id");          	              
+             } 
+			
+			 
+			 
+		}catch (SQLException ex) {
+			//Exceptions 
+		    ex.printStackTrace();
+		    
+		}return res;
+    }
+    
+    
+    
     /*
      * Ajoute un creneau d'indisponibilité d'un employé
      * Prend son id, le motif, l'heure de debut,l'heure de fin 
@@ -521,19 +578,9 @@ public abstract class Back {
     			//Si le créneau n'existe pas on l'ajoute dans la base
     			insertCreneau(st,debut,fin,id);
     		}
-    		//requête sql pour avoir l'id du créneau 
-            String getId = "SELECT id FROM Creneau WHERE date_heure_debut = ";
+    		 
+            int id_creneau = getIdCreneau(st,debut,fin,id);
             
-            getId += (char)34 + debut  + (char)34;
-            
-            //execution de la requête
-            ResultSet rs = st.executeQuery(getId);
-            
-            
-            int id_creneau = 0;
-            while(rs.next()) {
-            	id_creneau = rs.getInt("id");          	              
-            } 
             
             //la requête pour ajouter l'indisponibilité
             String indisp = "INSERT INTO Indisponible (id_creneau,id_employer,motif) VALUES (";
@@ -552,6 +599,77 @@ public abstract class Back {
     	}	
     }  
     
+    public static boolean estIndisponible (Statement st, int id,String debut,String fin) {
+    	ResultSet rs = null;
+    	try {
+    		if(employeExiste(st,id) && creneauExiste(st,debut,fin,id)) {
+    			int id_creneau = getIdCreneau(st,debut,fin,id);
+    			String query = "SELECT * FROM Indisponible WHERE id_creneau =";
+    			query += id_creneau + " AND id_employer = ";
+    			query += id;
+    			
+    			rs = st.executeQuery(query);
+   			 	return (rs.next());
+    		}
+    		
+    	}catch (SQLException ex) {
+			//Exceptions 
+		    ex.printStackTrace();
+    	}	return false;
+    	
+    }
+    
+    public static boolean sontDisponibles(Statement st,ArrayList<Employe> e ,String debut,String fin) {
+    	boolean res =false;
+     	int id_employer;
+    	for(Employe e1 : e) {
+    		 id_employer = e1.getId();
+    		 if(!estIndisponible(st,id_employer,debut,fin)) {
+   				 res = true;
+   			 }else {
+   				 res= false;
+   			 }
+   		}
+   		return res;
+    }
+    
+    public static void ajoutTravail (Statement st, ArrayList<Employe> e,String debut, String fin) {
+    	try {
+    		for (Employe e1 :e) {
+    			int id = e1.getId();
+    			//On fait l'ajout de creneau de travail sur un employé qui existe déjà 
+    			if(employeExiste(st,id)) {
+    			
+    				if(! creneauExiste(st,debut,fin,id)) {
+    					//Si le créneau n'existe pas on l'ajoute dans la base
+    					insertCreneau(st,debut,fin,id);
+    				}
+    		 
+    				int id_creneau = getIdCreneau(st,debut,fin,id);
+            
+            
+    				//la requête pour ajouter le creneau de travail
+    				String travail = "INSERT INTO travail (id_creneau,id_employer) VALUES (";
+    				travail += id_creneau +",";
+    				travail += id ;
+    				travail += ")";
+            
+            
+    				st.executeUpdate(travail);
+    			}
+    		}
+    	} catch (SQLException ex) {
+			//Exceptions 
+		    ex.printStackTrace();
+    	}	
+    }  
+    
+    public static void ajout_reunion (Statement st,ArrayList<Employe> e,String debut, String fin , boolean urgent) {
+    		if ((!urgent && sontDisponibles(st,e,debut,fin)) || urgent ) {
+    				ajoutTravail(st,e,debut,fin);
+    			}
+    		
+    }
     
     
      
