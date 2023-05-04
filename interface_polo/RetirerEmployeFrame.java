@@ -12,9 +12,14 @@ public class RetirerEmployeFrame extends JFrame {
 	final static int HEIGHT = 800;
 	
 	//Constructeur
-	public RetirerEmployeFrame(Statement st) {
+	public RetirerEmployeFrame() {
 		this.setBounds(100,100,WIDTH,HEIGHT);
-		this.setTitle("A Tavola ! | Connexion");
+		this.setTitle("A Tavola ! | Retirer Employe");
+		ImageIcon img = new ImageIcon("src/img/italie.png");
+		this.setIconImage(img.getImage());
+		this.setOpacity(1);
+		
+		
 		
 	}
 
