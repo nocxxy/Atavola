@@ -41,10 +41,17 @@ public class PoloPopUp extends JFrame {
 		
 		ConnexionButton cancel = new ConnexionButton("Annuler l'ajout",true);
 		
+		GreenRoundButton cre = new GreenRoundButton("Créneau","Green");
+		GreenRoundButton reu = new GreenRoundButton("Réunion","Green");
+		GreenRoundButton can = new GreenRoundButton("Annuler","Red");
+		
 		panel.add(text);
 		panel.add(addCren);
 		panel.add(reunion);
 		panel.add(cancel);
+		panel.add(cre);
+		panel.add(reu);
+		panel.add(can);
 		
 		this.getContentPane().add(panel,BorderLayout.CENTER);
 		

@@ -21,13 +21,14 @@ public class ConnexionButton extends JButton {
 		
 		this.setText(texte);
 		this.setFocusPainted(false);
-		this.setFont(new Font("Poppins", Font.PLAIN, 35));
+		this.setFont(new Font("Poppins", Font.PLAIN, 16));
 		this.setPreferredSize(new Dimension(250, 40));
 		this.setMargin(new Insets(10, 50, 50, 50));
 		this.setBorder(new RoundedBorder(10));
 		this.setContentAreaFilled(false);
+		this.setForeground(Color.decode("#FFFFFF"));
 		
-		updateButton(null, this);
+		//updateButton(null, this);
 		
 	}
 	    protected void paintComponent(Graphics g) {
@@ -41,7 +42,7 @@ public class ConnexionButton extends JButton {
 	    }
 	    
 	    protected void paintBorder(Graphics g) {
-	         g.setColor(Color.decode("#FFFFFF"));
+	         g.setColor(Color.decode("#CC383B"));
 	         g.drawRoundRect(0, 0, 249, 39, 15, 15);
 	    }
 	    public boolean contains(int x, int y) {
@@ -57,7 +58,7 @@ public class ConnexionButton extends JButton {
 		
 	
 	
-	public void updateButton(Graphics g, JComponent c){
+	/*public void updateButton(Graphics g, JComponent c){
 		if(selected) {
 			this.setBackground(Color.decode("#CC383B"));
 			this.setForeground(new Color(255, 255, 255));
@@ -71,6 +72,6 @@ public class ConnexionButton extends JButton {
 	
 	public boolean isSelected() {
 		return selected;
-	}
+	}*/
 
 }
