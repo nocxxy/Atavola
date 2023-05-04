@@ -14,10 +14,8 @@ public class Main {
 		
 		Statement st = Back.connectionBase();
 		ConnexionFrame c = new ConnexionFrame(st);
-		RetirerEmployeFrame e = new RetirerEmployeFrame();
 		PoloPopUp p = new PoloPopUp();
 		c.setVisible(true);
-		e.setVisible(true);
 		p.setVisible(true);
 		Back.retireEmploye(st, 1);
 		

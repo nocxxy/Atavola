@@ -37,6 +37,8 @@ public class PoloPopUp extends JFrame {
 		GreenRoundButton cancel = new GreenRoundButton("Annuler","Red");
 		
 		cancel.addActionListener(new AnnulerListener(this));
+		reunion.addActionListener(new ReunionListener(this));
+		creneau.addActionListener(new CreneauListener(this));
 		
 		panel.add(text);
 		panel.add(creneau);
@@ -46,7 +48,8 @@ public class PoloPopUp extends JFrame {
 		this.getContentPane().add(panel,BorderLayout.CENTER);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Already there
 
-		this.setUndecorated(true); 
+		this.setUndecorated(true);
+		this.setLocationRelativeTo(null);
 		
 		
 		
