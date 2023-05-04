@@ -105,11 +105,24 @@ public class Creneau {
         System.out.println(c.getJourCreneau());
         System.out.println(c.getNumSemaineCreneau());*/
 
+        // test de la fonction getLundi()
+        // resultat au format : EEE MMM dd HH:mm:ss zzz yyyy
+        Creneau creneau = new Creneau(new Date(), new Date());
+        Date lundi = creneau.getLundi();
+        System.out.println(lundi);
+
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
-  
+    /*
+     * Permet de récupérer le lundi de la semaine actuelle
+     */
+    public Date getLundi() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        return cal.getTime();
+    }
 }
