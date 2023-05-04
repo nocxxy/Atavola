@@ -7,21 +7,28 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import java.awt.Image;
+import javax.swing.*;
 
+import Front.Fonction.Employe;
+
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+
+@SuppressWarnings("serial")
 public class MenuPanel extends JPanel {
 	//Attributs
 	final static int WIDTH = 230;
-	String utilisateur;
+	public Employe e;
+	private String selectedButton;
+	private MainContentContainer mainContent;
 	
 	//Constructeur
-	public MenuPanel(String utilisateur) {
+	public MenuPanel(Employe e, JFrame f) {
 		super();
-		this.utilisateur = utilisateur;
+
+		this.e = e;
 		this.setPreferredSize(new Dimension(WIDTH,10));
 		this.setBackground(new Color(238,238,238));
 		this.setLayout(new BorderLayout(0,0));
@@ -47,10 +54,7 @@ public class MenuPanel extends JPanel {
 		buttonscontainer.setOpaque(false);
 		buttonscontainer.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		MenuButton btnTable = new MenuButton("Gestion des tables", "maison",true);
-		MenuButton btnEdt = new MenuButton("Employés","utilisateur",false);
-		buttonscontainer.add(btnTable);
-		buttonscontainer.add(btnEdt);
+		createButtons(buttonscontainer);
 		
 		JPanel connection = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) connection.getLayout();
@@ -63,7 +67,7 @@ public class MenuPanel extends JPanel {
 		/*
 		 * Deconnection
 		 * */
-		JLabel lblNewLabel_2 = new JLabel(this.utilisateur);
+		JLabel lblNewLabel_2 = new JLabel(e.getPrenom()+" "+e.getNom());
 		lblNewLabel_2.setFocusTraversalKeysEnabled(false);
 		lblNewLabel_2.setForeground(new Color(255, 255, 255));
 		lblNewLabel_2.setFont(new Font("Nirmala UI", Font.PLAIN, 16));
@@ -79,13 +83,112 @@ public class MenuPanel extends JPanel {
 		Image newimg = image.getScaledInstance(15, 15,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
 		imageIcon = new ImageIcon(newimg);
 		btnNewButton_1.setIcon(imageIcon);
+		btnNewButton_1.addActionListener(new AnnulerListener(f));
 		connection.add(btnNewButton_1);
 		
 		
 		this.add(buttonscontainer, BorderLayout.CENTER);
 		this.add(brandname, BorderLayout.NORTH);
 		
-		
+	}
+	
+	public void createButtons(JPanel container) {
+		if(e.getRang().equals("chef")) {
+			//Creation des bouttons
+			MenuButton btnTable = new MenuButton("Gestion des tables", "maison",true,this);
+			this.selectedButton = "table";
+			MenuButton btnEdt = new MenuButton("Emplois du temps","utilisateur",false,this);
+			MenuButton btnEmploye = new MenuButton("Employés","utilisateur",false,this);
+			
+			//Actions des boutons
+			btnTable.addActionListener((ActionListener) new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					selectedButton = "table";
+					btnTable.setSelected(true);
+					btnEdt.setSelected(false);
+					btnEmploye.setSelected(false);
+					btnTable.updateButton();
+					btnEdt.updateButton();
+					btnEmploye.updateButton();
+					mainContent.updateMain();
+				}
+			});
+			
+			btnEdt.addActionListener((ActionListener) new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					selectedButton = "edt";
+					btnTable.setSelected(false);
+					btnEmploye.setSelected(false);
+					btnEdt.setSelected(true);
+					btnTable.updateButton();
+					btnEdt.updateButton();
+					btnEmploye.updateButton();
+					mainContent.updateMain();
+				}
+			});
+			
+			btnEmploye.addActionListener((ActionListener) new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					selectedButton = "employe";
+					btnTable.setSelected(false);
+					btnEmploye.setSelected(true);
+					btnEdt.setSelected(false);
+					btnTable.updateButton();
+					btnEdt.updateButton();
+					btnEmploye.updateButton();
+					mainContent.updateMain();
+				}
+			});
+			container.add(btnTable);
+			container.add(btnEdt);
+			container.add(btnEmploye);
+		} else {
+			//Creation des bouttons
+			MenuButton btnTable = new MenuButton("Gestion des tables", "maison",true,this);
+			this.selectedButton = "table";
+			MenuButton btnEdt = new MenuButton("Emplois du temps","utilisateur",false,this);
+			
+			//Actions des boutons
+			btnTable.addActionListener((ActionListener) new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					selectedButton = "table";
+					btnTable.setSelected(true);
+					btnEdt.setSelected(false);
+					btnTable.updateButton();
+					btnEdt.updateButton();
+					mainContent.updateMain();
+				}
+			});
+			
+			btnEdt.addActionListener((ActionListener) new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					selectedButton = "edt";
+					btnEdt.setSelected(true);
+					btnTable.setSelected(false);
+					btnTable.updateButton();
+					btnEdt.updateButton();
+					mainContent.updateMain();
+				}
+			});
+			
+
+			container.add(btnTable);
+			container.add(btnEdt);
+		}
+	}
+
+	
+	public String getSelectedButton() {
+		return this.selectedButton;
+	}
+
+	public void setMain(MainContentContainer mainContent) {
+		this.mainContent = mainContent;
 		
 	}
 	

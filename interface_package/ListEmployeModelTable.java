@@ -35,9 +35,7 @@ public class ListEmployeModelTable extends AbstractTableModel {
     public int getRowCount() {
         return listE.size(); // le nombre de lignes
     }
-
-
-
+    
     @Override
     public int getColumnCount() {
         return entetes.length;

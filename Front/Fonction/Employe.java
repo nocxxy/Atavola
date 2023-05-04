@@ -2,7 +2,7 @@ package Front.Fonction;
 
 public class Employe {
     //_________________________Attribut_________________________________
-
+    private int id;
     private String nom;
     private String prenom;
     private String login;
@@ -37,5 +37,13 @@ public class Employe {
     }
     public String getRang() {
         return this.rg;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
