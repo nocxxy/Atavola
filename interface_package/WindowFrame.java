@@ -27,6 +27,7 @@ public class WindowFrame extends JFrame {
 		//MENU
 		this.setBounds(100,100,WIDTH,HEIGHT);
 		this.setTitle("A Tavola !");
+		this.setLocationRelativeTo(null);
 		ImageIcon img = new ImageIcon("src/img/italie.png");
 		this.setIconImage(img.getImage());
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
