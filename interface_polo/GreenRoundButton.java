@@ -43,10 +43,14 @@ public class GreenRoundButton extends JButton {
          super.paintComponent(g);
     }
     
-    protected void paintBorder(Graphics g) {
+    //
+    //Bordures
+    //
+    /*protected void paintBorder(Graphics g) {
          g.setColor(Color.decode("#FFFFFF"));
          g.drawRoundRect(0, 0, 249, 39, 15, 15);
-    }
+    }*/
+    
     public boolean contains(int x, int y) {
          if (shape == null || !shape.getBounds().equals(getBounds())) {
              shape = new RoundRectangle2D.Float(0, 0, 455, 50, 15, 15);
