@@ -1,6 +1,9 @@
 package interface_polo;
 import java.awt.*;
 import javax.swing.*;
+
+import interface_package.AnnulerListener;
+
 import java.sql.Statement;
 
 public class CreneauFrame extends JFrame {
@@ -21,7 +24,7 @@ public class CreneauFrame extends JFrame {
 		 * Panel Général qui va tout contenir
 		 */
 		JPanel panel = new JPanel();
-		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 200, 35));
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 500, 85));
 		
 		JLabel text = new JLabel("Sélectionner employé : ");
 		ChoixEmployer employe = new ChoixEmployer(st);
@@ -32,11 +35,11 @@ public class CreneauFrame extends JFrame {
 		JPanel pDate = new JPanel();
 		panel.setLayout(new FlowLayout());
 		JTextField dJour = new JTextField();
-		dJour.setPreferredSize(new Dimension(50,30));
+		dJour.setPreferredSize(new Dimension(55,30));
 		JTextField dMois = new JTextField();
-		dMois.setPreferredSize(new Dimension(50,30));
+		dMois.setPreferredSize(new Dimension(55,30));
 		JTextField dAn = new JTextField();
-		dAn.setPreferredSize(new Dimension(50,30));
+		dAn.setPreferredSize(new Dimension(55,30));
 		
 		pDate.add(dJour);
 		pDate.add(dMois);
@@ -68,6 +71,8 @@ public class CreneauFrame extends JFrame {
 		
 		panel.add(add);
 		panel.add(cancel);
+		
+		cancel.addActionListener(new AnnulerListener(this));
 		
 		
 		this.getContentPane().add(panel,BorderLayout.CENTER);
