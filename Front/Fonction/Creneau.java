@@ -118,6 +118,15 @@ public class Creneau {
         ArrayList<String> jours = c2.jourSemaineAffichage(debut);
         System.out.println(jours);
 
+        // test de la fonction jourPlusi()
+        Creneau c3 = new Creneau(new Date(), new Date());
+        Date date = new GregorianCalendar(2023, Calendar.MAY, 1).getTime();
+        System.out.println(date); // affiche "Mon May 01 00:00:00 CEST 2023"
+        Date datePlus2 = c3.jourPlusi(date, 2);
+        System.out.println(datePlus2); // affiche "Wed May 03 00:00:00 CEST 2023"
+        Date dateMoins3 = c3.jourPlusi(date, -3);
+        System.out.println(dateMoins3); // affiche "Fri Apr 28 00:00:00 CEST 2023"
+
     }
 
     public void setId(int id) {
@@ -133,6 +142,9 @@ public class Creneau {
         return cal.getTime();
     }
 
+    /*
+     * Renvoie liste des jours a afficher d'une semaine
+     */
     public ArrayList<String> jourSemaineAffichage(Date debut) {
         ArrayList<String> jours = new ArrayList<String>();
         Calendar cal = Calendar.getInstance();
@@ -143,5 +155,12 @@ public class Creneau {
             cal.add(Calendar.DAY_OF_MONTH, 1);
         }
         return jours;
+    }
+
+    public Date jourPlusi(Date jour, int i) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(jour);
+        cal.add(Calendar.DAY_OF_MONTH, i);
+        return cal.getTime();
     }
 }
