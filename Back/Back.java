@@ -10,9 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Calendar;
-
 
 import Front.Fonction.Creneau;
 import Front.Fonction.Employe;
@@ -298,6 +296,7 @@ public abstract class Back {
             System.out.println(rs.getString("nom") + ", " + rs.getString("prenom") + ", " + rs.getString("login")
                     + ", " + rs.getString("rang"));
             //On stocke les données
+            
             String nom = rs.getString("nom");
    		 	String prenom = rs.getString("prenom");
    		 	String login = rs.getString("login");
@@ -426,7 +425,11 @@ public abstract class Back {
             return false;
     	}
     }
-    
+    /*
+     * Methode qui supprime un employé dans la base
+     * Prend un statement et un id 
+     * 
+     * */
     
     
     public static void retireEmploye(Statement st, int id) {
@@ -448,8 +451,106 @@ public abstract class Back {
     	
     } 
     
+    /*
+     * Méthode qui vérifie si un employé existe 
+     * Prend un statement et son id
+     * Renvoie un booléen
+     * 
+     * */
+    public static boolean employeExiste(Statement st, int id) {
+    	ResultSet rs = null;
+		try {
+			//la requête sql
+			 String query = "SELECT * FROM Employer WHERE id = ";
+			
+			 query+= id;
+			 
+			 //execution de la requête
+			 rs = st.executeQuery(query);
+			 return (rs.next());
+			 
+			 
+			 
+		}catch (SQLException ex) {
+			//Exceptions 
+		    ex.printStackTrace();
+		    return false;
+    	}	
+    }
     
+    /*
+     * Méthode qui vérifie si un creneau existe 
+     * Prend un statement et son id
+     * Renvoie un booléen
+     * 
+     * */
     
+    public static boolean creneauExiste(Statement st, String debut,String fin,int id) {
+    		ResultSet rs = null;
+    		try {
+    			//la requête sql
+    			 String query = "SELECT * FROM Creneau WHERE date_heure_debut = ";
+    			
+    			 query+= (char)34 + debut  + (char)34 + "AND date_heure_fin = ";
+    			 query += (char)34 + fin  + (char)34 + "AND id_employer = " + id;
+    			 
+    			 //execution de la requête
+    			 rs = st.executeQuery(query);
+    			 return (rs.next());
+    			 
+    			 
+    			 
+    		}catch (SQLException ex) {
+    			//Exceptions 
+    		    ex.printStackTrace();
+    		    return false;
+        	}	
+    }
+    /*
+     * Ajoute un creneau d'indisponibilité d'un employé
+     * Prend son id, le motif, l'heure de debut,l'heure de fin 
+     * 
+     * 
+     * */
+    public static void ajoutIndisp (Statement st, int id, String motif,String debut, String fin) {
+    	try {
+    		//On fait l'ajout d'indisponibilité sur un employé qui existe déjà 
+    		if(employeExiste(st,id)) {
+    			
+    		if(! creneauExiste(st,debut,fin,id)) {
+    			//Si le créneau n'existe pas on l'ajoute dans la base
+    			insertCreneau(st,debut,fin,id);
+    		}
+    		//requête sql pour avoir l'id du créneau 
+            String getId = "SELECT id FROM Creneau WHERE date_heure_debut = ";
+            
+            getId += (char)34 + debut  + (char)34;
+            
+            //execution de la requête
+            ResultSet rs = st.executeQuery(getId);
+            
+            
+            int id_creneau = 0;
+            while(rs.next()) {
+            	id_creneau = rs.getInt("id");          	              
+            } 
+            
+            //la requête pour ajouter l'indisponibilité
+            String indisp = "INSERT INTO Indisponible (id_creneau,id_employer,motif) VALUES (";
+            indisp += id_creneau +",";
+            indisp += id +",";
+            indisp += (char)34 + motif + (char)34 ;
+            indisp += ")";
+            
+            
+            st.executeUpdate(indisp);
+    		}
+    		
+    	} catch (SQLException ex) {
+			//Exceptions 
+		    ex.printStackTrace();
+    	}	
+    }  
     
     
     
