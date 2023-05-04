@@ -8,6 +8,8 @@ import java.awt.Insets;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.sql.Statement;
 
 import javax.swing.*;
@@ -24,6 +26,7 @@ public class ConnexionFrame extends JFrame {
 	public ConnexionFrame(Statement st) {
 		this.setBounds(100,100,WIDTH,HEIGHT);
 		this.setTitle("A Tavola ! | Connexion");
+		this.setLocationRelativeTo(null);
 		ImageIcon img = new ImageIcon("src/img/italie.png");
 		this.setIconImage(img.getImage());
 		this.setOpacity(1);
@@ -60,27 +63,7 @@ public class ConnexionFrame extends JFrame {
 		JPanel signIn = new JPanel();
 		signIn.setLayout(new FlowLayout(FlowLayout.CENTER, 1000, 50));
 		signIn.setBackground(Color.decode("#2D6A4F"));
-		
-		/*JTextField user = new JTextField();
-		user.setText("Nom d'utilisateur...");
-		user.setPreferredSize(new Dimension(700,50));
-		user.setBorder(null);
-		user.setFont(new Font("Poppins",Font.PLAIN,35));
-		user.setBackground(Color.decode("#D9D9D9"));
-		user.setMargin(new Insets(0, 70, 0, 0));
-		signIn.add(user);
-		
-		
-		
-		JTextField password = new JTextField();
-		password.setText("Mot de Passe...");
-		password.setPreferredSize(new Dimension(700,50));
-		password.setBorder(null);
-		password.setFont(new Font("Poppins",Font.PLAIN,35));
-		password.setBackground(Color.decode("#D9D9D9"));
-		password.setMargin(new Insets(0, 70, 0, 0));
-		signIn.add(password);*/
-		
+
 		
 		panel.add(signIn);
 		JButton connect2 = new JButton("Connexion");
@@ -88,21 +71,61 @@ public class ConnexionFrame extends JFrame {
 		connect2.setPreferredSize(new Dimension(200, 37));
 		connect2.setMargin(new Insets(10, 50, 50, 50));
 		
-		JTextField textFieldLogin = new RoundJTextField(25);
+		JTextField textFieldLogin = new RoundJTextField(35);
 		textFieldLogin.setText("Nom d'utilisateur...");
 		textFieldLogin.setPreferredSize(new Dimension(650,50));
 		textFieldLogin.setMargin(new Insets(0, 0, 0, 0));
 		textFieldLogin.setFont(new Font("Poppins",Font.PLAIN,15));
 		textFieldLogin.setBackground(Color.decode("#D9D9D9"));
+		textFieldLogin.setForeground(Color.GRAY);
+		
+		textFieldLogin.addFocusListener(new FocusListener(){
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (textFieldLogin.getText().equals("Nom d'utilisateur...")) {
+					textFieldLogin.setText("");
+					textFieldLogin.setForeground(Color.BLACK);
+				}
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (textFieldLogin.getText().isEmpty()) {
+					textFieldLogin.setForeground(Color.GRAY);
+					textFieldLogin.setText("Nom d'utilisateur...");
+				}
+			}
+		});
 		signIn.add(textFieldLogin);
 		
-		JTextField textFieldPwd = new RoundJTextField(25);
+		RoundJPasswordField textFieldPwd = new RoundJPasswordField(35);
+		textFieldPwd.setEchoChar((char)0);
 		textFieldPwd.setText("Mot de Passe...");
 		textFieldPwd.setPreferredSize(new Dimension(650,50));
 		textFieldPwd.setMargin(new Insets(0, 0, 0, 0));
 		textFieldPwd.setFont(new Font("Poppins",Font.PLAIN,15));
 		textFieldPwd.setBackground(Color.decode("#D9D9D9"));
 		signIn.add(textFieldPwd);
+		textFieldPwd.setForeground(Color.GRAY);
+		
+		textFieldPwd.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				textFieldPwd.setEchoChar('•');
+				if (String.valueOf(textFieldPwd.getPassword()).equals("Mot de Passe...")) {
+					textFieldPwd.setText("");
+					textFieldPwd.setForeground(Color.BLACK);
+				}
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (String.valueOf(textFieldPwd.getPassword()).equals("")) {
+
+					textFieldPwd.setText("Mot de Passe...");
+					textFieldPwd.setEchoChar((char)0);
+					textFieldPwd.setForeground(Color.GRAY);
+				}
+			}
+		});
 
 		this.jlogin = textFieldLogin;
 		this.jmdp = textFieldPwd;
