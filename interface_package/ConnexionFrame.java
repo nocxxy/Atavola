@@ -102,19 +102,18 @@ public class ConnexionFrame extends JFrame {
 		textFieldPwd.setFont(new Font("Poppins",Font.PLAIN,15));
 		textFieldPwd.setBackground(Color.decode("#D9D9D9"));
 		signIn.add(textFieldPwd);
-
+		textFieldPwd.setForeground(Color.BLACK);
 		textFieldPwd.addFocusListener(new FocusListener() {
 			@Override
 			public void focusGained(FocusEvent e) {
 				if (textFieldPwd.getText().equals("Mot de Passe...")) {
 					textFieldPwd.setText("");
-					textFieldPwd.setForeground(Color.BLACK);
 				}
 			}
 			@Override
 			public void focusLost(FocusEvent e) {
 				if (textFieldPwd.getText().isEmpty()) {
-					textFieldPwd.setForeground(Color.GRAY);
+
 					textFieldPwd.setText("Mot de Passe...");
 				}
 			}
