@@ -106,16 +106,16 @@ public class ConnexionFrame extends JFrame {
 		textFieldPwd.addFocusListener(new FocusListener() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				if (textFieldLogin.getText().equals("Nom d'utilisateur...")) {
-					textFieldLogin.setText("");
-					textFieldLogin.setForeground(Color.BLACK);
+				if (textFieldPwd.getText().equals("Mot de Passe...")) {
+					textFieldPwd.setText("");
+					textFieldPwd.setForeground(Color.BLACK);
 				}
 			}
 			@Override
 			public void focusLost(FocusEvent e) {
-				if (textFieldLogin.getText().isEmpty()) {
-					textFieldLogin.setForeground(Color.GRAY);
-					textFieldLogin.setText("Nom d'utilisateur...");
+				if (textFieldPwd.getText().isEmpty()) {
+					textFieldPwd.setForeground(Color.GRAY);
+					textFieldPwd.setText("Mot de Passe...");
 				}
 			}
 		});
