@@ -6,10 +6,7 @@ import java.sql.Statement;
 import javax.swing.*;
 import javax.swing.border.Border;
 
-import interface_package.ConnexionButton;
-import interface_package.RoundedBorder;
-
-import interface_package.RoundedBorder;
+import interface_package.*;
 
 public class PoloPopUp extends JFrame {
 	
@@ -38,6 +35,8 @@ public class PoloPopUp extends JFrame {
 		GreenRoundButton creneau = new GreenRoundButton("Créneau","Green");
 		GreenRoundButton reunion = new GreenRoundButton("Réunion","Green");
 		GreenRoundButton cancel = new GreenRoundButton("Annuler","Red");
+		
+		cancel.addActionListener(new AnnulerListener(this));
 		
 		panel.add(text);
 		panel.add(creneau);
