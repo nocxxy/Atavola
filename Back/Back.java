@@ -29,7 +29,7 @@ public abstract class Back {
             //Créer connection
             String dbName = "atavola";
             String dbIP = "localhost";
-            String dbUser = "roor";
+            String dbUser = "root";
             String dbPwd = "root";
 
             String url = "jdbc:mysql://" + dbIP + ":3306/" + dbName;
@@ -426,4 +426,32 @@ public abstract class Back {
             return false;
     	}
     }
+    
+    
+    
+    public static void retireEmploye(Statement st, int id) {
+    	try {
+    		//La requête sql
+    		String insert = "DELETE FROM Employer WHERE id = ";
+    		String query = insert + id ;
+    		   		
+    		//Execution de la requête
+    		
+    		st.executeUpdate(query);
+    		
+    	} catch (SQLException ex) {
+			//Exceptions 
+		    ex.printStackTrace();
+		}
+    	
+    	
+    	
+    } 
+    
+    
+    
+    
+    
+    
+     
 }
