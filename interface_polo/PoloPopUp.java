@@ -15,7 +15,7 @@ public class PoloPopUp extends JFrame {
 	final static int HEIGHT = 274;
 	
 	//Constructeur
-	public PoloPopUp() {
+	public PoloPopUp(Statement st) {
 		this.setBounds(100,100,WIDTH,HEIGHT);
 		this.setTitle("A Tavola ! | PopUp");
 		ImageIcon img = new ImageIcon("src/img/italie.png");
@@ -32,13 +32,13 @@ public class PoloPopUp extends JFrame {
 		JLabel text = new JLabel("Que souhaitez vous rajouter ?");
 		
 		
-		GreenRoundButton creneau = new GreenRoundButton("Créneau","Green");
-		GreenRoundButton reunion = new GreenRoundButton("Réunion","Green");
-		GreenRoundButton cancel = new GreenRoundButton("Annuler","Red");
+		GreenRoundButton creneau = new GreenRoundButton("Créneau","Green",250,40,15);
+		GreenRoundButton reunion = new GreenRoundButton("Réunion","Green",250,40,15);
+		GreenRoundButton cancel = new GreenRoundButton("Annuler","Red",250,40,15);
 		
 		cancel.addActionListener(new AnnulerListener(this));
 		reunion.addActionListener(new ReunionListener(this));
-		creneau.addActionListener(new CreneauListener(this));
+		creneau.addActionListener(new CreneauListener(this,st));
 		
 		panel.add(text);
 		panel.add(creneau);

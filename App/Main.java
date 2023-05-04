@@ -14,11 +14,10 @@ public class Main {
 		
 		Statement st = Back.connectionBase();
 		ConnexionFrame c = new ConnexionFrame(st);
-		CreneauFrame e = new CreneauFrame();
-		PoloPopUp p = new PoloPopUp();
+		CreneauFrame e = new CreneauFrame(st);
+		PoloPopUp p = new PoloPopUp(st);
 		c.setVisible(true);
 		p.setVisible(true);
-		Back.retireEmploye(st, 1);
 		
 	}
 
