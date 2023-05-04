@@ -7,7 +7,6 @@ public class Employe {
     private String prenom;
     private String login;
     private String rg;
-    private int id;
 
     // ________________________Constructeur/getteur____________________________
 
@@ -39,11 +38,4 @@ public class Employe {
         return this.rg;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 }

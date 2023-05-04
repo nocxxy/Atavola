@@ -1,5 +1,7 @@
 package interface_polo;
 
+import Back.Back;
+
 import java.awt.*;
 import java.sql.Statement;
 
@@ -15,7 +17,6 @@ public class RetirerEmployeFrame extends JFrame {
 	public RetirerEmployeFrame(Statement st) {
 		this.setBounds(100,100,WIDTH,HEIGHT);
 		this.setTitle("A Tavola ! | Connexion");
-		
 	}
-
+	
 }

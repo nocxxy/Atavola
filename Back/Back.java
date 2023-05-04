@@ -29,7 +29,7 @@ public abstract class Back {
             //Créer connection
             String dbName = "atavola";
             String dbIP = "localhost";
-            String dbUser = "root";
+            String dbUser = "roor";
             String dbPwd = "root";
 
             String url = "jdbc:mysql://" + dbIP + ":3306/" + dbName;
@@ -283,7 +283,7 @@ public abstract class Back {
     public static Employe getEmployer (Statement st,String elogin) {
 		try {
 		//La requête sql
-		String select = "SELECT nom,prenom,login,rang FROM Employer WHERE login = ";
+		String select = "SELECT * FROM Employer WHERE login = ";
 		String query = select + (char)34 + elogin + (char)34;
 		
 		System.out.println(query);
@@ -302,7 +302,7 @@ public abstract class Back {
    		 	String prenom = rs.getString("prenom");
    		 	String login = rs.getString("login");
    		 	String rang = rs.getString("rang");
-   		 	
+   		 	int id = rs.getInt("id");
    		 	//On retourne l'employé
    		 	Employe res = new Employe (nom,prenom,login,rang);
    		 	res.setId(id);
