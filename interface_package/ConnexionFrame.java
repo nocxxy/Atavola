@@ -95,7 +95,7 @@ public class ConnexionFrame extends JFrame {
 		});
 		signIn.add(textFieldLogin);
 		
-		JTextField textFieldPwd = new RoundJTextField(25);
+		JTextField textFieldPwd = new RoundJPasswordField(25);
 		textFieldPwd.setText("Mot de Passe...");
 		textFieldPwd.setPreferredSize(new Dimension(650,50));
 		textFieldPwd.setMargin(new Insets(0, 0, 0, 0));
