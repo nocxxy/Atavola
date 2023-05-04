@@ -8,6 +8,8 @@ import java.awt.Insets;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.sql.Statement;
 
 import javax.swing.*;
@@ -60,27 +62,7 @@ public class ConnexionFrame extends JFrame {
 		JPanel signIn = new JPanel();
 		signIn.setLayout(new FlowLayout(FlowLayout.CENTER, 1000, 50));
 		signIn.setBackground(Color.decode("#2D6A4F"));
-		
-		/*JTextField user = new JTextField();
-		user.setText("Nom d'utilisateur...");
-		user.setPreferredSize(new Dimension(700,50));
-		user.setBorder(null);
-		user.setFont(new Font("Poppins",Font.PLAIN,35));
-		user.setBackground(Color.decode("#D9D9D9"));
-		user.setMargin(new Insets(0, 70, 0, 0));
-		signIn.add(user);
-		
-		
-		
-		JTextField password = new JTextField();
-		password.setText("Mot de Passe...");
-		password.setPreferredSize(new Dimension(700,50));
-		password.setBorder(null);
-		password.setFont(new Font("Poppins",Font.PLAIN,35));
-		password.setBackground(Color.decode("#D9D9D9"));
-		password.setMargin(new Insets(0, 70, 0, 0));
-		signIn.add(password);*/
-		
+
 		
 		panel.add(signIn);
 		JButton connect2 = new JButton("Connexion");
@@ -94,6 +76,23 @@ public class ConnexionFrame extends JFrame {
 		textFieldLogin.setMargin(new Insets(0, 0, 0, 0));
 		textFieldLogin.setFont(new Font("Poppins",Font.PLAIN,15));
 		textFieldLogin.setBackground(Color.decode("#D9D9D9"));
+		textFieldLogin.setForeground(Color.GRAY);
+		textFieldLogin.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (textFieldLogin.getText().equals("Nom d'utilisateur...")) {
+					textFieldLogin.setText("");
+					textFieldLogin.setForeground(Color.BLACK);
+				}
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (textFieldLogin.getText().isEmpty()) {
+					textFieldLogin.setForeground(Color.GRAY);
+					textFieldLogin.setText("Nom d'utilisateur...");
+				}
+			}
+		});
 		signIn.add(textFieldLogin);
 		
 		JTextField textFieldPwd = new RoundJTextField(25);
@@ -103,6 +102,23 @@ public class ConnexionFrame extends JFrame {
 		textFieldPwd.setFont(new Font("Poppins",Font.PLAIN,15));
 		textFieldPwd.setBackground(Color.decode("#D9D9D9"));
 		signIn.add(textFieldPwd);
+
+		textFieldPwd.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (textFieldLogin.getText().equals("Nom d'utilisateur...")) {
+					textFieldLogin.setText("");
+					textFieldLogin.setForeground(Color.BLACK);
+				}
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (textFieldLogin.getText().isEmpty()) {
+					textFieldLogin.setForeground(Color.GRAY);
+					textFieldLogin.setText("Nom d'utilisateur...");
+				}
+			}
+		});
 
 		this.jlogin = textFieldLogin;
 		this.jmdp = textFieldPwd;
