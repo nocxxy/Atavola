@@ -17,7 +17,7 @@ import javax.swing.*;
 public class ConnexionFrame extends JFrame {
 	//Attributs
 	final static int WIDTH = 650;
-	final static int HEIGHT = 800;
+	final static int HEIGHT = 750;
 
 	private JTextField jlogin;
 	private JTextField jmdp;
