@@ -9,7 +9,7 @@ import java.sql.Statement;
 public class CreneauFrame extends JFrame {
 	
 	//Attributs
-	final static int WIDTH = 288;
+	final static int WIDTH = 200;
 	final static int HEIGHT = 305;
 	
 	//Constructeur
@@ -24,7 +24,7 @@ public class CreneauFrame extends JFrame {
 		 * Panel Général qui va tout contenir
 		 */
 		JPanel panel = new JPanel();
-		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 500, 85));
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 500, 200));
 		
 		JLabel text = new JLabel("Sélectionner employé : ");
 		ChoixEmployer employe = new ChoixEmployer(st);
@@ -77,6 +77,7 @@ public class CreneauFrame extends JFrame {
 		
 		this.getContentPane().add(panel,BorderLayout.CENTER);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setResizable(false);
 		
 		
 	}

@@ -71,7 +71,7 @@ public class ConnexionFrame extends JFrame {
 		connect2.setPreferredSize(new Dimension(200, 37));
 		connect2.setMargin(new Insets(10, 50, 50, 50));
 		
-		JTextField textFieldLogin = new RoundJTextField(35);
+		JTextField textFieldLogin = new RoundJTextField(35,455,50,15);
 		textFieldLogin.setText("Nom d'utilisateur...");
 		textFieldLogin.setPreferredSize(new Dimension(650,50));
 		textFieldLogin.setMargin(new Insets(0, 0, 0, 0));
@@ -97,7 +97,7 @@ public class ConnexionFrame extends JFrame {
 		});
 		signIn.add(textFieldLogin);
 		
-		RoundJPasswordField textFieldPwd = new RoundJPasswordField(35);
+		RoundJPasswordField textFieldPwd = new RoundJPasswordField(35,455,50,15);
 		textFieldPwd.setEchoChar((char)0);
 		textFieldPwd.setText("Mot de Passe...");
 		textFieldPwd.setPreferredSize(new Dimension(650,50));
@@ -138,6 +138,7 @@ public class ConnexionFrame extends JFrame {
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().add(panel,BorderLayout.CENTER);
+		this.setResizable(false);
 		
 		
 	}

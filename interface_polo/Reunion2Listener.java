@@ -5,11 +5,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Statement;
 
-public class ReunionListener implements ActionListener {
+public class Reunion2Listener implements ActionListener {
     private JFrame f;
     private Statement st;
 
-    ReunionListener(JFrame f,Statement st){
+    Reunion2Listener(JFrame f,Statement st){
         this.f = f;
         this.st = st;
     }
