@@ -19,7 +19,7 @@ public class Reunion2Frame extends JFrame {
 		this.nb=nb;
 		
 		this.setBounds(100,100,WIDTH,HEIGHT);
-		this.setTitle("A Tavola ! | Reunion");
+		this.setTitle("A Tavola ! | Reunion2");
 		ImageIcon img = new ImageIcon("src/img/italie.png");
 		this.setIconImage(img.getImage());
 		this.setOpacity(1);
@@ -49,6 +49,9 @@ public class Reunion2Frame extends JFrame {
 		
 		nav.add(prec);
 		nav.add(suiv);
+		
+		prec.addActionListener(new Reunion1Listener(this,st));
+		suiv.addActionListener(new Reunion3Listener(this,st));
 		
 		panel.add(nav);
 		
