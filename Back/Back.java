@@ -58,8 +58,7 @@ public abstract class Back {
                     + "    login VARCHAR(25),\r\n"
                     + "    mdp VARCHAR(200),\r\n"
                     + "    rang VARCHAR(10),\r\n"
-                    + "    CONSTRAINT pk_employe PRIMARY KEY (id)\r\n"
-                    + "	   CONSTRAINT pk_employe PRIMARY KEY (login)\\r\\n	"
+                    + "    CONSTRAINT pk_employe PRIMARY KEY (id,login)\r\n"
                     + ");";
             //on envoie la requete
             st.executeUpdate(sql);
@@ -532,10 +531,16 @@ public abstract class Back {
         	}	
     }
     
-    
+    /*
+     * Méthode qui récupère l'id d'un creneau 
+     * Prend une heure de debut, une heure de fin et l'id de l'employé
+     * Renvoie un entier 
+     * 
+     * */
     public static int getIdCreneau(Statement st, String debut,String fin,int id) {
     	int res = 0;
     	try {
+    		//La requête pour récupérer l'id
     		 String getId = "SELECT id FROM Creneau WHERE date_heure_debut = ";
              
              getId += (char)34 + debut  + (char)34;
@@ -572,7 +577,7 @@ public abstract class Back {
     public static void ajoutIndisp (Statement st, int id, String motif,String debut, String fin) {
     	try {
     		//On fait l'ajout d'indisponibilité sur un employé qui existe déjà 
-    		if(employeExiste(st,id)) {
+    		if(employeExiste(st,id) && !estIndisponible(st,id,debut,fin)) {
     			
     		if(! creneauExiste(st,debut,fin,id)) {
     			//Si le créneau n'existe pas on l'ajoute dans la base
@@ -598,12 +603,23 @@ public abstract class Back {
 		    ex.printStackTrace();
     	}	
     }  
-    
+    /*
+     * Méthode pour savoir si un employé est indisponible
+     * Prend l'id de l'employé, une heure de début et de fin 
+     * Renvoie un booléen
+     * 
+     * 
+     * */
     public static boolean estIndisponible (Statement st, int id,String debut,String fin) {
     	ResultSet rs = null;
     	try {
+    		//On vérifie si l'employé existe et si le creneau existe
     		if(employeExiste(st,id) && creneauExiste(st,debut,fin,id)) {
+    			
+    			//On récupère l'id du creneau 
     			int id_creneau = getIdCreneau(st,debut,fin,id);
+    			
+    			//La requête pour verifier si l'employé est indisponible
     			String query = "SELECT * FROM Indisponible WHERE id_creneau =";
     			query += id_creneau + " AND id_employer = ";
     			query += id;
@@ -619,6 +635,13 @@ public abstract class Back {
     	
     }
     
+    /*
+     * Méthode pour vérifier que les employés sont disponibles
+     * Prend une liste de type arraylist,une heure de debut,de fin 
+     * Renvoie un booléen
+     * 
+     * */
+    
     public static boolean sontDisponibles(Statement st,ArrayList<Employe> e ,String debut,String fin) {
     	boolean res =false;
      	int id_employer;
@@ -633,12 +656,47 @@ public abstract class Back {
    		return res;
     }
     
+    /*
+     * Méthode pour vérifier si un employé travaille
+     * Prend l'id de l'employé, une heure de début, de fin
+     * Renvoie un booléen
+     * 
+     * */
+    public static boolean travail (Statement st, int id,String debut,String fin) {
+    	ResultSet rs = null;
+    	try {
+    		//Si l'employé existe et que le creneau existe
+    		if(employeExiste(st,id) && creneauExiste(st,debut,fin,id)) {
+    			
+    			int id_creneau = getIdCreneau(st,debut,fin,id);
+    			
+    			//On vérifie si l'employé travaille
+    			String query = "SELECT * FROM travail WHERE id_creneau =";
+    			query += id_creneau + " AND id_employer = ";
+    			query += id;
+    			
+    			rs = st.executeQuery(query);
+   			 	return (rs.next());
+    		}
+    		
+    	}catch (SQLException ex) {
+			//Exceptions 
+		    ex.printStackTrace();
+    	}	return false;
+    	
+    }
+    
+    /*
+     * Méthode pour ajouter un creneau de travail 
+     * Prend une liste de type arraylist, une heure de debut et de fin
+     *
+     * */
     public static void ajoutTravail (Statement st, ArrayList<Employe> e,String debut, String fin) {
     	try {
     		for (Employe e1 :e) {
     			int id = e1.getId();
     			//On fait l'ajout de creneau de travail sur un employé qui existe déjà 
-    			if(employeExiste(st,id)) {
+    			if(employeExiste(st,id) && ! travail(st,id,debut,fin)) {
     			
     				if(! creneauExiste(st,debut,fin,id)) {
     					//Si le créneau n'existe pas on l'ajoute dans la base
@@ -664,10 +722,56 @@ public abstract class Back {
     	}	
     }  
     
+    /*
+     * Méthode pour retirer l'indisponibilité d'un employé
+     * Prend une liste de type arraylist,une heure de type et de fin 
+     * 
+     * */
+    public static void retireIndisp (Statement st, ArrayList<Employe> e, String debut, String fin) {
+    	try {
+    		for (Employe e1 :e) {
+    			int id = e1.getId();
+	    		if(employeExiste(st,id) && estIndisponible(st,id,debut,fin)) {
+	    			
+	    		 
+	            int id_creneau = getIdCreneau(st,debut,fin,id);
+	            
+	            
+	            //la requête pour retirer l'indisponibilité
+	            String delete = "DELETE FROM Indisponible WHERE id_creneau = ";
+	            delete += id_creneau +" AND id_employer = ";
+	            delete += id ;
+	       
+	            
+	            
+	            st.executeUpdate(delete);
+	    		}
+    		}
+    		
+    	} catch (SQLException ex) {
+			//Exceptions 
+		    ex.printStackTrace();
+    	}	
+    }  
+    
+    /*
+     * Méthode pour ajouter une réunion
+     * Prend une liste de type arraylist, une heure de debut et de fin 
+     * 
+     * */
+    
     public static void ajout_reunion (Statement st,ArrayList<Employe> e,String debut, String fin , boolean urgent) {
-    		if ((!urgent && sontDisponibles(st,e,debut,fin)) || urgent ) {
+    		if (!urgent  ) {
+    			//si la réunion n'est pas urgente, on vérifie si les employés sont tous disponibles
+    			if (sontDisponibles(st,e,debut,fin)) {
     				ajoutTravail(st,e,debut,fin);
     			}
+    		}else {
+    			//si la réunion est urgente, on l'ajoute peu importe
+    			retireIndisp(st,e,debut,fin);
+    			ajoutTravail(st,e,debut,fin);
+    			
+    		}
     		
     }
     
