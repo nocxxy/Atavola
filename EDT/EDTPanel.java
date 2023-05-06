@@ -216,6 +216,7 @@ public class EDTPanel extends JPanel{
 		if(empConn.getRang().equals("chef")) {
 			//POUR CHEF
 			BouttonPanelBas.setText("Ajouter creneau");
+			BouttonPanelBas.addActionListener(new AjouterCreneauReunionListener(this.st));
 		} else {
 			//POUR EMPLOYE
 			BouttonPanelBas.setText("Signaler indisponibilité");
