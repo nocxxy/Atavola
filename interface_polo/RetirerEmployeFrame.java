@@ -1,6 +1,7 @@
 package interface_polo;
 
 import Back.Back;
+import interface_package.AnnulerListener;
 
 import java.awt.*;
 import java.sql.Statement;
@@ -12,6 +13,8 @@ public class RetirerEmployeFrame extends JFrame {
 	//Attributs
 	final static int WIDTH = 280;
 	final static int HEIGHT = 250;
+
+	private ChoixEmployer choix;
 	
 	//Constructeur
 	public RetirerEmployeFrame(Statement st) {
@@ -31,13 +34,16 @@ public class RetirerEmployeFrame extends JFrame {
 		JLabel text = new JLabel("Quel employé souhaitez vous retirer ?");
 		
 		
-		ChoixEmployer employe= new ChoixEmployer(st);
+		this.choix= new ChoixEmployer(st);
 		
 		GreenRoundButton del = new GreenRoundButton("Retirer l'employé","Green",175,30,30);
 		GreenRoundButton cancel = new GreenRoundButton("Annuler","Red",175,30,30);
-		
+
+		cancel.addActionListener(new AnnulerListener(this));
+		del.addActionListener(new RetirerListener(this,st));
+
 		panel.add(text);
-		panel.add(employe);
+		panel.add(this.choix);
 		panel.add(del);
 		panel.add(cancel);
 		
@@ -46,5 +52,8 @@ public class RetirerEmployeFrame extends JFrame {
 		
 		
 	}
-	
+
+	public ChoixEmployer getChoix() {
+		return choix;
+	}
 }
