@@ -1,4 +1,7 @@
 package interface_polo;
+import Back.Back;
+import Front.Fonction.Employe;
+
 import java.awt.*;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -11,11 +14,13 @@ public class Reunion2Frame extends JFrame {
 	final static int WIDTH = 238;
 	final static int HEIGHT = 300;
 	private int nb;
+	private ArrayList<ChoixEmployer> allChoice = new ArrayList<ChoixEmployer>();
+	private Statement st;
 	
 	//Constructeur
 	public Reunion2Frame(Statement st,int nb) {
 		
-		ArrayList<ChoixEmployer> allChoice = new ArrayList<ChoixEmployer>();
+		 this.st = st;
 		this.nb=nb;
 		
 		this.setBounds(100,100,WIDTH,HEIGHT);
@@ -37,7 +42,7 @@ public class Reunion2Frame extends JFrame {
 		for(int i=0; i<nb;i++) {
 			ChoixEmployer employe= new ChoixEmployer(st);
 			panel.add(employe);
-			allChoice.add(employe);
+			this.allChoice.add(employe);
 			
 		}
 		
@@ -57,8 +62,21 @@ public class Reunion2Frame extends JFrame {
 		
 		this.getContentPane().add(panel,BorderLayout.CENTER);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+
 		
 		
 	}
+
+	public ArrayList<Employe> getEmployeSelect(){
+		ArrayList<Employe> res = new ArrayList<Employe>();
+		String temp;
+		for(int i = 0; i< this.allChoice.size();i++){
+			temp = this.allChoice.get(i).getSelect();
+			res.add(Back.getEmployer(this.st,temp));
+		}
+		return res;
+	}
+
 
 }

@@ -15,6 +15,8 @@ public class Reunion1Frame extends JFrame {
 		final static int WIDTH = 288;
 		final static int HEIGHT = 274;
 		
+		private JTextField nb ;
+		
 		//Constructeur
 		public Reunion1Frame(Statement st) {
 			this.setBounds(100,100,WIDTH,HEIGHT);
@@ -44,7 +46,7 @@ public class Reunion1Frame extends JFrame {
 			number.setFont(new Font("Poppins",Font.PLAIN,15));
 			number.setBackground(Color.decode("#D9D9D9"));
 			number.setForeground(Color.GRAY);
-			
+
 			number.addFocusListener(new FocusListener(){
 				@Override
 				public void focusGained(FocusEvent e) {
@@ -61,7 +63,8 @@ public class Reunion1Frame extends JFrame {
 					}
 				}
 			});
-			panel.add(number);
+			this.nb = number;
+			panel.add(this.nb);
 			
 			JPanel nav = new JPanel();
 			nav.setLayout(new FlowLayout());
@@ -79,4 +82,9 @@ public class Reunion1Frame extends JFrame {
 			this.getContentPane().add(panel,BorderLayout.CENTER);
 			this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-}}
+}
+
+	public JTextField getNb() {
+		return nb;
+	}
+}

@@ -26,9 +26,7 @@ public class CreationCreneauListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String login  = this.f.getE().getSelect();
         String horraireDebut = this.f.getA().getText() + "-" + this.f.getM().getText() + "-" + this.f.getD().getText() + " " + getHeureSynthaxe(this.f.getHd().getText());
-        System.out.println(horraireDebut);
         String horraireFin = this.f.getA().getText() + "-" + this.f.getM().getText() + "-" + this.f.getD().getText() + " " + getHeureSynthaxe(this.f.getHf().getText());
-        System.out.println(horraireFin);
         int id = Back.getEmployer(this.st,login).getId();
         Back.insertCreneau(this.st,horraireDebut,horraireFin,id);
         this.f.dispose();

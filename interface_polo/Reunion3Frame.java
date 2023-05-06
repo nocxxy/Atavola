@@ -15,9 +15,17 @@ public class Reunion3Frame extends JFrame {
 	//Attributs
 		final static int WIDTH = 288;
 		final static int HEIGHT = 274;
+
+		private JTextField d;
+		private JTextField m;
+		private JTextField a;
+		private JTextField hd;
+		private JTextField hf;
+
 		
 		//Constructeur
-		public Reunion3Frame(Statement st) {
+		public Reunion3Frame(Statement st ,Reunion2Frame f2 ) {
+
 			this.setBounds(100,100,WIDTH,HEIGHT);
 			this.setTitle("A Tavola ! | Reunion3");
 			ImageIcon img = new ImageIcon("src/img/italie.png");
@@ -41,34 +49,38 @@ public class Reunion3Frame extends JFrame {
 			
 			JPanel pDate = new JPanel();
 			panel.setLayout(new FlowLayout());
-			JTextField dJour = new JTextField();
-			dJour.setPreferredSize(new Dimension(55,30));
-			JTextField dMois = new JTextField();
-			dMois.setPreferredSize(new Dimension(55,30));
-			JTextField dAn = new JTextField();
-			dAn.setPreferredSize(new Dimension(55,30));
+			this.d = new JTextField();
+			this.d.setPreferredSize(new Dimension(55,30));
+			this.m = new JTextField();
+			this.m.setPreferredSize(new Dimension(55,30));
+			this.a = new JTextField();
+			this.a.setPreferredSize(new Dimension(55,30));
 			
-			pDate.add(dJour);
-			pDate.add(dMois);
-			pDate.add(dAn);
+			pDate.add(this.d);
+			pDate.add(this.m);
+			pDate.add(this.a);
 			
 			JLabel horaire = new JLabel("Horaires : ");
 			
 			JPanel pHour = new JPanel();
 			panel.setLayout(new FlowLayout());
-			JTextField dBegin = new JTextField();
-			dBegin.setPreferredSize(new Dimension(50,30));
-			JTextField dEnd = new JTextField();
-			dEnd.setPreferredSize(new Dimension(50,30));
+			 this.hd = new JTextField();
+			this.hd.setPreferredSize(new Dimension(50,30));
+			this.hf = new JTextField();
+			this.hf.setPreferredSize(new Dimension(50,30));
 			
-			pHour.add(dBegin);
-			pHour.add(dEnd);
+			pHour.add(this.hd);
+			pHour.add(this.hf);
 			
 			JPanel nav = new JPanel();
 			nav.setLayout(new FlowLayout());
 			
 			GreenRoundButton suiv = new GreenRoundButton("➤","Green",75,30,30);
 			GreenRoundButton prec = new GreenRoundButton("⮜","Red",75,30,30);
+
+
+			prec.addActionListener(new Reunion3ListenerPrec(this,f2));
+			suiv.addActionListener(new CreationReunion(this,st,f2));
 			
 			nav.add(prec);
 			nav.add(suiv);
@@ -83,7 +95,7 @@ public class Reunion3Frame extends JFrame {
 			
 			panel.add(nav);
 			
-			prec.addActionListener(new Reunion2Listener(this,st));
+//			prec.addActionListener(new Reunion2Listener(this,st));
 			
 			
 			this.getContentPane().add(panel,BorderLayout.CENTER);
@@ -91,5 +103,25 @@ public class Reunion3Frame extends JFrame {
 			this.setResizable(false);
 			
 			
+		}
+
+		public JTextField getA() {
+			return a;
+		}
+
+		public JTextField getD() {
+			return d;
+		}
+
+		public JTextField getHd() {
+			return hd;
+		}
+
+		public JTextField getHf() {
+			return hf;
+		}
+
+		public JTextField getM() {
+			return m;
 		}
 }
