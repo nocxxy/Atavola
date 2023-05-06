@@ -32,5 +32,6 @@ public class CreationReunion implements ActionListener {
         ArrayList<Employe> le = f2.getEmployeSelect();
 //        System.out.println("test");
         Back.ajout_reunion(this.st,le,horraireDebut,horraireFin,false);
+        this.f3.dispose();
     }
 }
