@@ -29,7 +29,7 @@ public abstract class Back {
             //Créer connection
             String dbName = "atavola";
             String dbIP = "localhost";
-            String dbUser = "roor";
+            String dbUser = "root";
             String dbPwd = "root";
 
             String url = "jdbc:mysql://" + dbIP + ":3306/" + dbName;
@@ -522,6 +522,42 @@ public abstract class Back {
         }
         return null;
     }
+    
+    
+    public static boolean creneauExiste(Statement st, int id) {
+		ResultSet rs = null;
+		try {
+			//la requête sql
+			 String query = "SELECT * FROM Creneau WHERE id_employer = ";
+			
+			 query+= id;
+			 
+			 //execution de la requête
+			 rs = st.executeQuery(query);
+			 return (rs.next());
+			 
+			 
+			 
+		}catch (SQLException ex) {
+			//Exceptions 
+		    ex.printStackTrace();
+		    return false;
+    	}	
+    }
+    
+    public static void retireIndispOuTravail (Statement st,int id,String indispOuTravail) {
+    	try {
+	  	            
+	            String delete = "DELETE FROM " +indispOuTravail +" WHERE id_employer = "+id;
+	            st.executeUpdate(delete);
+    
+    		
+    	} catch (SQLException ex) {
+			//Exceptions 
+		    ex.printStackTrace();
+    	}	
+    }  
+   
     /*
      * Methode qui supprime un employé dans la base
      * Prend un statement et un id 
@@ -531,6 +567,13 @@ public abstract class Back {
     
     public static void retireEmploye(Statement st, int id) {
     	try {
+    		if(creneauExiste(st,id)) {
+    			retireIndispOuTravail(st,id,"Indisponible");
+    			retireIndispOuTravail(st,id,"Travail");
+    			String sql = "DELETE FROM Creneau WHERE id_employer = ";
+    			sql+= id;
+    			st.executeUpdate(sql);
+    		}
     		//La requête sql
     		String insert = "DELETE FROM Employer WHERE id = ";
     		String query = insert + id ;
@@ -547,6 +590,8 @@ public abstract class Back {
     	
     	
     } 
+    
+    
     
     /*
      * Méthode qui vérifie si un employé existe 
