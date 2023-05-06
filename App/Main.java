@@ -15,8 +15,7 @@ public class Main {
 		
 		Statement st = Back.connectionBase();
 		ConnexionFrame c = new ConnexionFrame(st);
-//		PoloPopUp p = new PoloPopUp(st);
-		CreneauFrame p = new CreneauFrame(st);
+		PoloPopUp p = new PoloPopUp(st);
 		c.setVisible(true);
 		p.setVisible(true);
 //

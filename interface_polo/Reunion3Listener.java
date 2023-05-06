@@ -6,10 +6,10 @@ import java.awt.event.ActionListener;
 import java.sql.Statement;
 
 public class Reunion3Listener implements ActionListener {
-    private JFrame f;
+    private Reunion2Frame f;
     private Statement st;
 
-    Reunion3Listener(JFrame f,Statement st){
+    Reunion3Listener(Reunion2Frame f,Statement st){
         this.f = f;
         this.st = st;
     }
@@ -17,7 +17,7 @@ public class Reunion3Listener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         this.f.dispose();
-        Reunion3Frame c = new Reunion3Frame(st);
+        Reunion3Frame c = new Reunion3Frame(st,this.f);
         c.setVisible(true);
     }
 }
