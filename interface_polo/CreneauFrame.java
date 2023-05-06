@@ -11,6 +11,13 @@ public class CreneauFrame extends JFrame {
 	//Attributs
 	final static int WIDTH = 200;
 	final static int HEIGHT = 305;
+
+	private ChoixEmployer e;
+	private JTextField d;
+	private JTextField m;
+	private JTextField a;
+	private JTextField hd;
+	private JTextField hf;
 	
 	//Constructeur
 	public CreneauFrame(Statement st) {
@@ -27,43 +34,44 @@ public class CreneauFrame extends JFrame {
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 500, 200));
 		
 		JLabel text = new JLabel("Sélectionner employé : ");
-		ChoixEmployer employe = new ChoixEmployer(st);
+		this.e = new ChoixEmployer(st);
 		
 		
 		JLabel date = new JLabel("Date : ");
 		
 		JPanel pDate = new JPanel();
 		panel.setLayout(new FlowLayout());
-		JTextField dJour = new JTextField();
-		dJour.setPreferredSize(new Dimension(55,30));
-		JTextField dMois = new JTextField();
-		dMois.setPreferredSize(new Dimension(55,30));
-		JTextField dAn = new JTextField();
-		dAn.setPreferredSize(new Dimension(55,30));
+		this.d = new JTextField();
+		this.d.setPreferredSize(new Dimension(55,30));
+		this.m = new JTextField();
+		this.m.setPreferredSize(new Dimension(55,30));
+		this.a = new JTextField();
+		this.a.setPreferredSize(new Dimension(55,30));
 		
-		pDate.add(dJour);
-		pDate.add(dMois);
-		pDate.add(dAn);
+		pDate.add(this.d);
+		pDate.add(this.m);
+		pDate.add(this.a);
 		
 		JLabel horaire = new JLabel("Horaires : ");
 		
 		JPanel pHour = new JPanel();
 		panel.setLayout(new FlowLayout());
-		JTextField dBegin = new JTextField();
-		dBegin.setPreferredSize(new Dimension(50,30));
-		JTextField dEnd = new JTextField();
-		dEnd.setPreferredSize(new Dimension(50,30));
+		this.hd = new JTextField();
+		this.hd.setPreferredSize(new Dimension(50,30));
+		this.hf = new JTextField();
+		this.hf.setPreferredSize(new Dimension(50,30));
 		
-		pHour.add(dBegin);
-		pHour.add(dEnd);
+		pHour.add(this.hd);
+		pHour.add(this.hf);
 		
 		GreenRoundButton add = new GreenRoundButton("Ajouter le créneau","Green",175,30,30);
 		GreenRoundButton cancel = new GreenRoundButton("Annuler","Red",175,30,30);
-		
-		
-		
+
+		cancel.addActionListener(new AnnulerListener(this));
+		add.addActionListener(new CreationCreneauListener(st,this));
+
 		panel.add(text);
-		panel.add(employe);
+		panel.add(this.e);
 		panel.add(date);
 		panel.add(pDate);
 		panel.add(horaire);
@@ -72,8 +80,7 @@ public class CreneauFrame extends JFrame {
 		panel.add(add);
 		panel.add(cancel);
 		
-		cancel.addActionListener(new AnnulerListener(this));
-		
+
 		
 		this.getContentPane().add(panel,BorderLayout.CENTER);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -82,4 +89,27 @@ public class CreneauFrame extends JFrame {
 		
 	}
 
+	public ChoixEmployer getE() {
+		return e;
+	}
+
+	public JTextField getA() {
+		return a;
+	}
+
+	public JTextField getD() {
+		return d;
+	}
+
+	public JTextField getHd() {
+		return hd;
+	}
+
+	public JTextField getHf() {
+		return hf;
+	}
+
+	public JTextField getM() {
+		return m;
+	}
 }

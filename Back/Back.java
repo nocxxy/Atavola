@@ -27,7 +27,7 @@ public abstract class Back {
             //Créer connection
             String dbName = "atavola";
             String dbIP = "localhost";
-            String dbUser = "root";
+            String dbUser = "roor";
             String dbPwd = "root";
 
             String url = "jdbc:mysql://" + dbIP + ":3306/" + dbName;
@@ -168,7 +168,7 @@ public abstract class Back {
     public static void insertCreneau(Statement st, String date_heure_debut, String date_heure_fin, int id_employer) {
         try {
             //La requête sql
-            String sql = "INSERT INTO Creneau (date_heure_debut,date_heure_fin, id_employer) VALUES (";
+            String sql = "INSERT INTO Creneau (date_heure_debut,date_heure_fin, id) VALUES (";
             String query = sql + (char)34 + date_heure_debut + (char)34 + ",";
             query += (char)34 + date_heure_fin + (char)34 + ",";
             query += id_employer;

@@ -26,7 +26,7 @@ public class ChoixEmployer extends JPanel {
         String test[];
         int len1, len2;
         for (int i = 0; i < l.size(); i++) {
-            nom = l.get(i).getPrenom() + " " + l.get(i).getNom();
+            nom = l.get(i).getLogin();
             temp = new String[]{nom};
             test = Arrays.copyOf(res, res.length + temp.length);
             System.arraycopy(temp,0,test,res.length,temp.length);
