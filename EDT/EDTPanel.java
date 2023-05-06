@@ -37,17 +37,26 @@ public class EDTPanel extends JPanel{
 	private Statement st;
 	private ArrayList<Employe> allEmp = new ArrayList<Employe>();
 	private ArrayList<Creneau> allCreneau = new ArrayList<Creneau>();
+	private ArrayList<Employe> empEDT = new ArrayList<Employe>();
 	
 	public EDTPanel(Statement st, Employe emp) {
 		this.setOpaque(false);
 		this.setLayout(new BorderLayout());
 		this.st = st;
 		this.empConn = emp;
-		allEmp = Back.getAllEmployer(st);
+		
+		//liste des employes
+		if(empConn.getRang().equals("chef")) {
+			allEmp = Back.getAllEmployer(st);	
+		} else {
+			allEmp.add(empConn);
+			empEDT.add(empConn);
+		}
 		for(int i = 0; i<allEmp.size(); i++){
 			System.out.println(allEmp.get(i).getId());
 		}
 		
+		//Couleurs par defauts
 		couleursEmp.add(new Color(84, 153, 73));
 		couleursEmp.add(new Color(0, 64, 128));
 		couleursEmp.add(new Color(128, 128, 192));
@@ -70,26 +79,176 @@ public class EDTPanel extends JPanel{
 		this.setLayout(new BorderLayout(0, 0));
 		
 		creePanelHaut();
+		creeCreneauxEDT(empEDT);
+		creePanelBas(empEDT);
+	}
+	
+	private void creePanelHaut() {
+		//contiendras
+		JPanel ButtonsPanel = new JPanel();
+		ButtonsPanel.setPreferredSize(new Dimension(10, 35));
+		ButtonsPanel.setOpaque(false);
+		this.add(ButtonsPanel, BorderLayout.NORTH);
+		ButtonsPanel.setLayout(new BorderLayout(0, 0));
 		
+		JPanel panel = new JPanel();
+		panel.setOpaque(false);
+		ButtonsPanel.add(panel, BorderLayout.WEST);
+		
+		//COMBO BOX
+		if(empConn.getRang().equals("chef")) {
+			String[] s1 = new String[allEmp.size()+1];
+			s1[0] = "Global";
+			for(int i = 0; i < allEmp.size(); i++) {
+				s1[i+1] = allEmp.get(i).getNom();
+			}
+			
+			JComboBox<String> comboBox = new JComboBox<String>(s1);
+			comboBox.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			comboBox.setPreferredSize(new Dimension(110, 20));
+			//Global par defaut
+			empEDT = allEmp;
+			
+			//Actualise l'EDT quand le combobox est modifé
+			comboBox.addActionListener(new ActionListener() {
+			    public void actionPerformed(ActionEvent e) {
+			        int selectedIndex = comboBox.getSelectedIndex();
+			        if(selectedIndex == 0) {
+			        	//tout les employes
+			        	empEDT = allEmp; 
+			        } else {
+			        	//l'employe selectionné
+			        	empEDT = new ArrayList<Employe>();
+			        	empEDT.add(allEmp.get(selectedIndex-1));
+			        }
+			        creePanelBas(empEDT);
+			        System.out.println(empEDT.get(0).getNom());
+			    }
+			});
+
+			panel.add(comboBox);
+		}
+		
+		JPanel panelBoutons = new JPanel();
+		panelBoutons.setOpaque(false);
+		ButtonsPanel.add(panelBoutons, BorderLayout.EAST);
+		panelBoutons.setLayout(new BorderLayout(0, 0));
+		
+		JPanel panelSemaine = new JPanel();
+		panelSemaine.setOpaque(false);
+		panelBoutons.add(panelSemaine, BorderLayout.CENTER);
+		panelSemaine.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		JLabel labelSemaine= new JLabel("Semaine");
+		labelSemaine.setFont(new Font("Nirmala UI", Font.PLAIN, 16));
+		panelSemaine.add(labelSemaine);
+		
+		JPanel panelBoutonGauche = new JPanel();
+		panelBoutonGauche.setOpaque(false);
+		panelBoutons.add(panelBoutonGauche, BorderLayout.WEST);
+		
+		JButton btnSemainePrecedente = new JButton("<");
+		btnSemainePrecedente.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnSemainePrecedente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				debut = Back.getSemainePrecedente(debut);
+			}
+		});
+		btnSemainePrecedente.setMargin(new Insets(0, 8, 0, 8));
+		btnSemainePrecedente.setBackground(new Color(45, 106, 79));
+		btnSemainePrecedente.setBorder(UIManager.getBorder("Button.border"));
+		btnSemainePrecedente.setBorderPainted(false);
+		btnSemainePrecedente.setFocusPainted(false);
+		btnSemainePrecedente.setForeground(new Color(255, 255, 255));
+		btnSemainePrecedente.setFont(new Font("Arial", Font.BOLD, 15));
+		panelBoutonGauche.add(btnSemainePrecedente);
+		
+		JPanel panelBoutonDroit = new JPanel();
+		panelBoutonDroit.setOpaque(false);
+		panelBoutons.add(panelBoutonDroit, BorderLayout.EAST);
+		
+		JButton btnSemaineSuivante = new JButton(">");
+		btnSemaineSuivante.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnSemaineSuivante.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				debut = Back.getSemaineSuivante(debut);
+			}
+		});
+		btnSemaineSuivante.setFocusPainted(false);
+		btnSemaineSuivante.setMargin(new Insets(0, 8, 0, 8));
+		btnSemaineSuivante.setBorderPainted(false);
+		btnSemaineSuivante.setBackground(new Color(45, 106, 79));
+		btnSemaineSuivante.setForeground(new Color(255, 255, 255));
+		btnSemaineSuivante.setFont(new Font("Arial", Font.BOLD, 15));
+		panelBoutonDroit.add(btnSemaineSuivante);
+
+	}
+	
+	/* Cree le panel du bas
+	 * Contiendras les horaires des employés
+	 * Ainsi que les boutons d'ajout de creneaux/indisponibilité
+	 */
+	private void creePanelBas(ArrayList<Employe> emp) {
+		JPanel PanelBas = new JPanel();
+		PanelBas.setLayout(new BorderLayout());
 		JPanel EmployePanel = new JPanel();
 		FlowLayout fl_EmployePanel = (FlowLayout) EmployePanel.getLayout();
 		fl_EmployePanel.setAlignment(FlowLayout.LEFT);
 		EmployePanel.setPreferredSize(new Dimension(10, 70));
 		EmployePanel.setOpaque(false);
-		this.add(EmployePanel, BorderLayout.SOUTH);
 		
 		JPanel empHeure;
 		Color empColor;
-		for(int i = 0; i < allEmp.size(); i++) {
+		for(int i = 0; i < emp.size(); i++) {
 			if(i > couleursEmp.size()-1) {
 				empColor = Color.GREEN;
 			} else {
 				empColor = couleursEmp.get(i);
 			}
-			empHeure = heureEmp(allEmp.get(i).getNom(),Back.minuteToHeure(Back.getHeuresEmploye(allCreneau, 1)),empColor);
+			empHeure = heureEmp(emp.get(i).getNom(),Back.minuteToHeure(Back.getHeuresEmploye(allCreneau, 1)),empColor);
 			EmployePanel.add(empHeure);
 		}
 		
+		PanelBas.add(EmployePanel,BorderLayout.CENTER);
+		JPanel BouttonContainer = new JPanel();
+		JButton BouttonPanelBas = new JButton();
+		BouttonContainer.setLayout(new FlowLayout());
+		if(empConn.getRang().equals("chef")) {
+			//POUR CHEF
+			BouttonPanelBas.setText("Ajouter creneau");
+		} else {
+			//POUR EMPLOYE
+			BouttonPanelBas.setText("Signaler indisponibilité");
+		}
+		BouttonContainer.add(BouttonPanelBas);
+		PanelBas.add(BouttonPanelBas, BorderLayout.EAST);
+		BorderLayout layout = (BorderLayout) this.getLayout();
+		if(layout.getLayoutComponent(BorderLayout.SOUTH) != null) {
+			this.remove(layout.getLayoutComponent(BorderLayout.SOUTH));
+		}
+		this.add(PanelBas, BorderLayout.SOUTH);
+	};
+	
+
+	private JPanel heureEmp(String nom, String heure, Color color) {
+		JPanel emp = new JPanel();
+		emp.setOpaque(false);
+	
+		JPanel colorPanel = new JPanel();
+		colorPanel.setPreferredSize(new Dimension(20, 20));
+		colorPanel.setBackground(color);
+		emp.add(colorPanel);
+		
+		JLabel nomHeures = new JLabel(nom+" ("+heure+")");
+		nomHeures.setFont(new Font("Nirmala UI", Font.BOLD, 14));
+		emp.add(nomHeures);
+		return emp;
+	};
+	
+	/*Affiche l'emploi du temps
+	 * En fonction de la liste d'employe en entrée
+	 */
+	private void creeCreneauxEDT(ArrayList<Employe> emp) {
 		Border grayline = BorderFactory.createLineBorder(new Color(190,190,190));
 		
 		JPanel EDT = new JPanel();
@@ -991,96 +1150,7 @@ public class EDTPanel extends JPanel{
 		Canvas canvas_20 = new Canvas();
 		canvas_20.setBackground(new Color(255, 255, 255));
 		CreneauxEmp3_6.add(canvas_20, BorderLayout.CENTER);
-		
-	}
-	
-	private void creePanelHaut() {
-		JPanel ButtonsPanel = new JPanel();
-		ButtonsPanel.setPreferredSize(new Dimension(10, 35));
-		ButtonsPanel.setOpaque(false);
-		this.add(ButtonsPanel, BorderLayout.NORTH);
-		ButtonsPanel.setLayout(new BorderLayout(0, 0));
-		
-		JPanel panel = new JPanel();
-		panel.setOpaque(false);
-		ButtonsPanel.add(panel, BorderLayout.WEST);
-		
-		//COMBO BOX
-		String[] s1 = new String[allEmp.size()+1];
-		s1[0] = "Global";
-		for(int i = 0; i < allEmp.size(); i++) {
-			s1[i+1] = allEmp.get(i).getNom();
-		}
-		
-		JComboBox comboBox = new JComboBox(s1);
-		comboBox.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		comboBox.setPreferredSize(new Dimension(110, 20));
-		panel.add(comboBox);
-		
-		JPanel panelBoutons = new JPanel();
-		panelBoutons.setOpaque(false);
-		ButtonsPanel.add(panelBoutons, BorderLayout.EAST);
-		panelBoutons.setLayout(new BorderLayout(0, 0));
-		
-		JPanel panelSemaine = new JPanel();
-		panelSemaine.setOpaque(false);
-		panelBoutons.add(panelSemaine, BorderLayout.CENTER);
-		panelSemaine.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
-		JLabel lblNewLabel_1 = new JLabel("Semaine");
-		lblNewLabel_1.setFont(new Font("Nirmala UI", Font.PLAIN, 16));
-		panelSemaine.add(lblNewLabel_1);
-		
-		JPanel panelBoutonGauche = new JPanel();
-		panelBoutonGauche.setOpaque(false);
-		panelBoutons.add(panelBoutonGauche, BorderLayout.WEST);
-		
-		JButton btnNewButton = new JButton("<");
-		btnNewButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnNewButton.setMargin(new Insets(0, 8, 0, 8));
-		btnNewButton.setBackground(new Color(45, 106, 79));
-		btnNewButton.setBorder(UIManager.getBorder("Button.border"));
-		btnNewButton.setBorderPainted(false);
-		btnNewButton.setFocusPainted(false);
-		btnNewButton.setForeground(new Color(255, 255, 255));
-		btnNewButton.setFont(new Font("Arial", Font.BOLD, 15));
-		panelBoutonGauche.add(btnNewButton);
-		
-		JPanel panelBoutonDroit = new JPanel();
-		panelBoutonDroit.setOpaque(false);
-		panelBoutons.add(panelBoutonDroit, BorderLayout.EAST);
-		
-		JButton btnNewButton_1 = new JButton(">");
-		btnNewButton_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnNewButton_1.setFocusPainted(false);
-		btnNewButton_1.setMargin(new Insets(0, 8, 0, 8));
-		btnNewButton_1.setBorderPainted(false);
-		btnNewButton_1.setBackground(new Color(45, 106, 79));
-		btnNewButton_1.setForeground(new Color(255, 255, 255));
-		btnNewButton_1.setFont(new Font("Arial", Font.BOLD, 15));
-		panelBoutonDroit.add(btnNewButton_1);
-
-	}
-
-	private JPanel heureEmp(String nom, String heure, Color color) {
-		JPanel emp = new JPanel();
-		emp.setOpaque(false);
-	
-		JPanel colorPanel = new JPanel();
-		colorPanel.setPreferredSize(new Dimension(20, 20));
-		colorPanel.setBackground(color);
-		emp.add(colorPanel);
-		
-		JLabel nomHeures = new JLabel(nom+" ("+heure+")");
-		nomHeures.setFont(new Font("Nirmala UI", Font.BOLD, 14));
-		emp.add(nomHeures);
-		return emp;
-	}
-	
+	};
 	
 	
 }
