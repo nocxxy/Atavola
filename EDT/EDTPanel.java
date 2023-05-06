@@ -29,6 +29,7 @@ import java.sql.Date;
 import Front.Fonction.Creneau;
 import Front.Fonction.Employe;
 import Back.*;
+import interface_polo.*;
 
 public class EDTPanel extends JPanel{
 	private Date debut;
@@ -211,7 +212,8 @@ public class EDTPanel extends JPanel{
 		
 		PanelBas.add(EmployePanel,BorderLayout.CENTER);
 		JPanel BouttonContainer = new JPanel();
-		JButton BouttonPanelBas = new JButton();
+		//JButton BouttonPanelBas = new JButton();
+		GreenRoundButton  BouttonPanelBas= new GreenRoundButton("", "Green", 150, 90, 5); 
 		BouttonContainer.setLayout(new FlowLayout());
 		if(empConn.getRang().equals("chef")) {
 			//POUR CHEF

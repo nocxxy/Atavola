@@ -20,10 +20,10 @@ public class Reunion2Frame extends JFrame {
 	//Constructeur
 	public Reunion2Frame(Statement st,int nb) {
 		
-		 this.st = st;
+		this.st = st;
 		this.nb=nb;
 		
-		this.setBounds(100,100,WIDTH,HEIGHT);
+		this.setBounds(100,100,WIDTH,HEIGHT + nb*40);
 		this.setTitle("A Tavola ! | Reunion2");
 		ImageIcon img = new ImageIcon("src/img/italie.png");
 		this.setIconImage(img.getImage());
