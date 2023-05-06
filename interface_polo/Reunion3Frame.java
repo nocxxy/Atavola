@@ -22,6 +22,8 @@ public class Reunion3Frame extends JFrame {
 		private JTextField hd;
 		private JTextField hf;
 
+		private JCheckBox urgent;
+
 		
 		//Constructeur
 		public Reunion3Frame(Statement st ,Reunion2Frame f2 ) {
@@ -46,7 +48,7 @@ public class Reunion3Frame extends JFrame {
 			panel.add(question);
 			
 			
-			JCheckBox urgent = new JCheckBox("Réunion Urgente");
+			this.urgent = new JCheckBox("Réunion Urgente");
 			
 			JPanel pMainDate = new JPanel();
 			JLabel date = new JLabel("Date : ");
@@ -92,7 +94,7 @@ public class Reunion3Frame extends JFrame {
 			
 			
 			
-			panel.add(urgent);
+			panel.add(this.urgent);
 			panel.add(date);
 			panel.add(pDate);
 			panel.add(horaire);
@@ -129,4 +131,8 @@ public class Reunion3Frame extends JFrame {
 		public JTextField getM() {
 			return m;
 		}
+
+	public JCheckBox getUrgent() {
+		return urgent;
+	}
 }

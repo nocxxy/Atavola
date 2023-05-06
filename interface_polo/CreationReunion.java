@@ -31,7 +31,7 @@ public class CreationReunion implements ActionListener {
         String horraireFin = this.f3.getA().getText() + "-" + this.f3.getM().getText() + "-" + this.f3.getD().getText() + " " + getHeureSynthaxe(this.f3.getHf().getText());
         ArrayList<Employe> le = f2.getEmployeSelect();
 //        System.out.println("test");
-        Back.ajout_reunion(this.st,le,horraireDebut,horraireFin,false);
+        Back.ajout_reunion(this.st,le,horraireDebut,horraireFin,this.f3.getUrgent().isSelected());
         this.f3.dispose();
     }
 }
