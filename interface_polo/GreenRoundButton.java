@@ -36,7 +36,17 @@ public class GreenRoundButton extends JButton {
 		
 	}
 	
-    protected void paintComponent(Graphics g) {
+    public void setHeight(int height) {
+		this.height = height;
+		this.setPreferredSize(new Dimension(width, height));
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+		this.setPreferredSize(new Dimension(width, height));
+	}
+
+	protected void paintComponent(Graphics g) {
     	if (this.getModel().isArmed()) {
     		g.setColor(Color.decode("#FFFFFF"));	    		
     	}else if (color=="Red"){

@@ -221,6 +221,7 @@ public class EDTPanel extends JPanel{
 			BouttonPanelBas.addActionListener(new AjouterCreneauReunionListener(this.st));
 		} else {
 			//POUR EMPLOYE
+			BouttonPanelBas.setWidth(200);
 			BouttonPanelBas.setText("Signaler indisponibilité");
 		}
 		BouttonContainer.add(BouttonPanelBas);
