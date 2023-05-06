@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Calendar;
-
+import java.util.Locale;
 
 import Front.Fonction.Creneau;
 import Front.Fonction.Employe;
@@ -411,5 +411,46 @@ public abstract class Back {
     		ex.printStackTrace();
             return false;
     	}
+    }
+    
+    /*
+     * Permet de récupérer le lundi de la semaine actuelle
+     */
+    public static Date getLundi() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        Date jour = new Date(cal.getTime().getTime());
+        return jour;
+    }
+
+    /*
+     * Renvoie liste des jours a afficher d'une semaine
+     */
+    public static ArrayList<String> jourSemaineAffichage(Date debut) {
+        ArrayList<String> jours = new ArrayList<String>();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(debut);
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE d MMMM", Locale.FRENCH);
+        for (int i = 0; i < 7; i++) {
+            jours.add(sdf.format(cal.getTime()));
+            cal.add(Calendar.DAY_OF_MONTH, 1);
+        }
+        return jours;
+    }
+
+    public static Date jourPlusi(Date jour, int i) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(jour);
+        cal.add(Calendar.DAY_OF_MONTH, i);
+        Date jourPlus = new Date(cal.getTime().getTime());
+        return jourPlus;
+    }
+
+    public static Date getSemaineSuivante(Date jour) {
+        return jourPlusi(getLundi(), 7);
+    }
+
+    public static Date getSemainePrecedente(Date jour) {
+        return jourPlusi(getLundi(), -7);
     }
 }

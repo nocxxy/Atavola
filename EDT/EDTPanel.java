@@ -24,14 +24,12 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 import java.sql.Statement;
-import java.util.Date;
+import java.sql.Date;
 
 import Front.Fonction.Creneau;
 import Front.Fonction.Employe;
 import Back.*;
 
-/*A FACTORISER
- */
 public class EDTPanel extends JPanel{
 	private Date debut;
 	private ArrayList<Color> couleursEmp = new ArrayList<Color>();
@@ -59,9 +57,13 @@ public class EDTPanel extends JPanel{
 		couleursEmp.add(new Color(157, 195, 227));
 		couleursEmp.add(new Color(160, 232, 171));
 		
-		Date db = new Date(123,5,4,8,30);
-		Date fin = new Date(123,5,4,9,40);
-		this.allCreneau.add(new Creneau(db,fin,1,true,10));
+		this.debut = Back.getLundi();
+		ArrayList<String> test = Back.jourSemaineAffichage(debut);
+		for(int i = 0; i < test.size(); i++) {
+			System.out.println(test.get(i));
+		}
+		
+		//this.allCreneau.add(new Creneau(db,fin,1,true,10));
 
 		//allCreneau = Back.getAllCreneauWeek(st, debut);
 		

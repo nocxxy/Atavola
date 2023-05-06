@@ -104,12 +104,13 @@ public class Creneau {
     	return res;
     }
 
+    /*
     public static void main(String[] args) {
-        /*Date d1 = new Date();
+        Date d1 = new Date();
         Employe e = new Employe("Prenom","nom","couc","blabal");
         Creneau c = new Creneau(d1,d1,e,true);
         System.out.println(c.getJourCreneau());
-        System.out.println(c.getNumSemaineCreneau());*/
+        System.out.println(c.getNumSemaineCreneau());
 
         // test de la fonction getLundi()
         // resultat au format : EEE MMM dd HH:mm:ss zzz yyyy
@@ -142,47 +143,11 @@ public class Creneau {
         Date lundiSemainePrecedente = c4.getSemainePrecedente(new Date());
         System.out.println(lundiSemainePrecedente); // Mon Apr 24 17:02:15 CEST 2023
     }
+    */
 
     public void setId(int id) {
         this.id = id;
     }
 
-    /*
-     * Permet de récupérer le lundi de la semaine actuelle
-     */
-    public Date getLundi() {
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-        return cal.getTime();
-    }
 
-    /*
-     * Renvoie liste des jours a afficher d'une semaine
-     */
-    public ArrayList<String> jourSemaineAffichage(Date debut) {
-        ArrayList<String> jours = new ArrayList<String>();
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(debut);
-        SimpleDateFormat sdf = new SimpleDateFormat("EEEE d MMMM", Locale.FRENCH);
-        for (int i = 0; i < 7; i++) {
-            jours.add(sdf.format(cal.getTime()));
-            cal.add(Calendar.DAY_OF_MONTH, 1);
-        }
-        return jours;
-    }
-
-    public Date jourPlusi(Date jour, int i) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(jour);
-        cal.add(Calendar.DAY_OF_MONTH, i);
-        return cal.getTime();
-    }
-
-    public Date getSemaineSuivante(Date jour) {
-        return jourPlusi(getLundi(), 7);
-    }
-
-    public Date getSemainePrecedente(Date jour) {
-        return jourPlusi(getLundi(), -7);
-    }
 }
