@@ -8,9 +8,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -29,7 +29,7 @@ public abstract class Back {
             //Créer connection
             String dbName = "atavola";
             String dbIP = "localhost";
-            String dbUser = "roor";
+            String dbUser = "root";
             String dbPwd = "root";
 
             String url = "jdbc:mysql://" + dbIP + ":3306/" + dbName;
@@ -452,5 +452,46 @@ public abstract class Back {
 
     public static Date getSemainePrecedente(Date jour) {
         return jourPlusi(getLundi(), -7);
+    }
+    public static ArrayList<Creneau> getCreneauxEmp(Statement st,Date jour, int id){
+        try {
+            //La requête sql
+        	String date = jour.getYear()+"-"+ jour.getMonth()+"-"+jour.getDate();
+            String sql = "SELECT * FROM Creneau WHERE DATE(date_heure_debut) = ";
+            String query = sql + (char)34 + date + (char)34 + " AND DATE(date_heure_fin) = "+
+                    (char)34 + date + (char)34 + " AND id_employer = " +id;
+            
+            System.out.println(query);
+            //Execution de la requête sql
+            ResultSet rs = st.executeQuery(query);
+
+            //Traitement du résultat
+            ArrayList<Creneau> res = new ArrayList();
+            while (rs.next()) {
+
+                //On stocke les données
+            	Timestamp hd = rs.getTimestamp("date_heure_debut");
+            	Timestamp hf = rs.getTimestamp("date_heure_fin");
+                
+                System.out.println(hd);
+                //int id_employer = rs.getInt("id_employer");
+
+                //On ajoute le creneau
+                Creneau c = new Creneau(hd,hf);
+                res.add(c);
+            }
+
+            for(Creneau c : res) {
+                //On affiche les éléments de la liste
+                System.out.println("Creneau:");
+                System.out.println(c.getDateDebut() + ", " + c.getDateFin());
+            }
+            return res;
+
+        } catch (SQLException ex) {
+            //Exceptions
+            ex.printStackTrace();
+        }
+        return null;
     }
 }
