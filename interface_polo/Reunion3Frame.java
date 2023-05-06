@@ -14,7 +14,7 @@ public class Reunion3Frame extends JFrame {
 	
 	//Attributs
 		final static int WIDTH = 288;
-		final static int HEIGHT = 274;
+		final static int HEIGHT = 350;
 
 		private JTextField d;
 		private JTextField m;
@@ -37,7 +37,7 @@ public class Reunion3Frame extends JFrame {
 			 * Panel Général qui va tout contenir
 			 */
 			JPanel panel = new JPanel();
-			panel.setLayout(new FlowLayout(FlowLayout.CENTER, 2000, 150));
+			panel.setLayout(new FlowLayout(FlowLayout.CENTER, 200, 10));
 			
 			
 			JLabel text = new JLabel("Création Réunion (3/3)");
@@ -45,10 +45,15 @@ public class Reunion3Frame extends JFrame {
 			JLabel question = new JLabel("Veuillez rentrer les informations de la réunion");
 			panel.add(question);
 			
+			
+			JCheckBox urgent = new JCheckBox("Réunion Urgente");
+			
+			JPanel pMainDate = new JPanel();
 			JLabel date = new JLabel("Date : ");
 			
+			
 			JPanel pDate = new JPanel();
-			panel.setLayout(new FlowLayout());
+			pDate.setLayout(new FlowLayout());
 			this.d = new JTextField();
 			this.d.setPreferredSize(new Dimension(55,30));
 			this.m = new JTextField();
@@ -63,7 +68,7 @@ public class Reunion3Frame extends JFrame {
 			JLabel horaire = new JLabel("Horaires : ");
 			
 			JPanel pHour = new JPanel();
-			panel.setLayout(new FlowLayout());
+			pHour.setLayout(new FlowLayout());
 			 this.hd = new JTextField();
 			this.hd.setPreferredSize(new Dimension(50,30));
 			this.hf = new JTextField();
@@ -87,7 +92,7 @@ public class Reunion3Frame extends JFrame {
 			
 			
 			
-			
+			panel.add(urgent);
 			panel.add(date);
 			panel.add(pDate);
 			panel.add(horaire);

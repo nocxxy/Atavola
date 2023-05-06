@@ -9,8 +9,8 @@ import java.sql.Statement;
 public class CreneauFrame extends JFrame {
 	
 	//Attributs
-	final static int WIDTH = 200;
-	final static int HEIGHT = 305;
+	final static int WIDTH = 300;
+	final static int HEIGHT = 390;
 
 	private ChoixEmployer e;
 	private JTextField d;
@@ -31,7 +31,7 @@ public class CreneauFrame extends JFrame {
 		 * Panel Général qui va tout contenir
 		 */
 		JPanel panel = new JPanel();
-		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 500, 200));
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 20));
 		
 		JLabel text = new JLabel("Sélectionner employé : ");
 		this.e = new ChoixEmployer(st);
@@ -40,7 +40,7 @@ public class CreneauFrame extends JFrame {
 		JLabel date = new JLabel("Date : ");
 		
 		JPanel pDate = new JPanel();
-		panel.setLayout(new FlowLayout());
+		pDate.setLayout(new FlowLayout());
 		this.d = new JTextField();
 		this.d.setPreferredSize(new Dimension(55,30));
 		this.m = new JTextField();
@@ -48,6 +48,7 @@ public class CreneauFrame extends JFrame {
 		this.a = new JTextField();
 		this.a.setPreferredSize(new Dimension(55,30));
 		
+		pDate.add(date);
 		pDate.add(this.d);
 		pDate.add(this.m);
 		pDate.add(this.a);
@@ -55,12 +56,13 @@ public class CreneauFrame extends JFrame {
 		JLabel horaire = new JLabel("Horaires : ");
 		
 		JPanel pHour = new JPanel();
-		panel.setLayout(new FlowLayout());
+		pHour.setLayout(new FlowLayout());
 		this.hd = new JTextField();
 		this.hd.setPreferredSize(new Dimension(50,30));
 		this.hf = new JTextField();
 		this.hf.setPreferredSize(new Dimension(50,30));
 		
+		pHour.add(horaire);
 		pHour.add(this.hd);
 		pHour.add(this.hf);
 		
@@ -72,9 +74,7 @@ public class CreneauFrame extends JFrame {
 
 		panel.add(text);
 		panel.add(this.e);
-		panel.add(date);
 		panel.add(pDate);
-		panel.add(horaire);
 		panel.add(pHour);
 		
 		panel.add(add);
