@@ -4,16 +4,68 @@ import java.awt.*;
 import java.sql.Statement;
 
 import javax.swing.*;
+
+import EDT.SignalerListener;
+import Front.Fonction.Employe;
 import interface_polo.GreenRoundButton;
+import interface_polo.SignalerIndisponibleListener;
 
 public class IndispoFrame extends JFrame{
 	
 	//Attributs
 		final static int WIDTH = 300;
 		final static int HEIGHT = 450;
-		
-		//Constructeur
-		public IndispoFrame(Statement st) {
+
+		private RoundJTextArea motif;
+
+		private JTextField dd;
+		private JTextField dm;
+		private JTextField da;
+		private JTextField fd;
+		private JTextField fm;
+		private JTextField fa;
+
+		private  Employe e;
+
+
+	//Getter
+
+	public Employe getE() {
+		return e;
+	}
+
+	public RoundJTextArea getMotif() {
+		return motif;
+	}
+
+	public JTextField getDd() {
+		return dd;
+	}
+
+	public JTextField getDm() {
+		return dm;
+	}
+
+	public JTextField getDa() {
+		return da;
+	}
+
+	public JTextField getFd() {
+		return fd;
+	}
+
+	public JTextField getFm() {
+		return fm;
+	}
+
+	public JTextField getFa() {
+		return fa;
+	}
+
+	//Constructeur
+		public IndispoFrame(Statement st, Employe e) {
+			this.e = e;
+
 			this.setBounds(100,100,WIDTH,HEIGHT);
 			this.setTitle("A Tavola ! | Retirer Employe");
 			ImageIcon img = new ImageIcon("src/img/italie.png");
@@ -33,51 +85,59 @@ public class IndispoFrame extends JFrame{
 			
 			JPanel pDateDebut = new JPanel();
 			pDateDebut.setLayout(new FlowLayout());
-			JTextField d1 = new JTextField();
-			d1.setPreferredSize(new Dimension(55,30));
-			JTextField m1 = new JTextField();
-			m1.setPreferredSize(new Dimension(55,30));
-			JTextField a1 = new JTextField();
-			a1.setPreferredSize(new Dimension(55,30));
+			this.dd = new JTextField();
+			this.dd.setPreferredSize(new Dimension(55,30));
+			this.dm = new JTextField();
+			this.dm.setPreferredSize(new Dimension(55,30));
+			this.da = new JTextField();
+			this.da.setPreferredSize(new Dimension(55,30));
 			
 			pDateDebut.add(dateDebut);
-			pDateDebut.add(d1);
-			pDateDebut.add(m1);
-			pDateDebut.add(a1);
+			pDateDebut.add(this.dd);
+			pDateDebut.add(this.dm);
+			pDateDebut.add(this.da);
 			
-			JLabel dateFin = new JLabel("Date Début : ");
+			JLabel dateFin = new JLabel("Date Fin : ");
 			
 			JPanel pDateFin = new JPanel();
 			pDateFin.setLayout(new FlowLayout());
-			JTextField d2 = new JTextField();
-			d2.setPreferredSize(new Dimension(55,30));
-			JTextField m2 = new JTextField();
-			m2.setPreferredSize(new Dimension(55,30));
-			JTextField a2 = new JTextField();
-			a2.setPreferredSize(new Dimension(55,30));
+			this.fd = new JTextField();
+			this.fd.setPreferredSize(new Dimension(55,30));
+			this.fm = new JTextField();
+			this.fm.setPreferredSize(new Dimension(55,30));
+			this.fa = new JTextField();
+			this.fa.setPreferredSize(new Dimension(55,30));
 			
 			pDateFin.add(dateFin);
-			pDateFin.add(d2);
-			pDateFin.add(m2);
-			pDateFin.add(a2);
+			pDateFin.add(this.fd);
+			pDateFin.add(this.fm);
+			pDateFin.add(this.fa);
 			
 			JLabel lMotif = new JLabel("Motif :");
 			
-			RoundJTextArea motif = new RoundJTextArea(200,100,15);
-			motif.setPreferredSize(new Dimension(200,100));
+			this.motif = new RoundJTextArea(200,100,15);
+			this.motif.setPreferredSize(new Dimension(200,100));
 			
 			GreenRoundButton add = new GreenRoundButton("Valider","Green",175,30,30);
 			GreenRoundButton cancel = new GreenRoundButton("Annuler","Red",175,30,30);
-			
+
+			add.addActionListener(new SignalerIndisponibleListener(st,this));
+			cancel.addActionListener(new AnnulerListener(this));
+
 			panel.add(text);
 			panel.add(pDateDebut);
 			panel.add(pDateFin);
 			panel.add(lMotif);
-			panel.add(motif);
+			panel.add(this.motif);
 			panel.add(add);
 			panel.add(cancel);
 			
 			this.getContentPane().add(panel,BorderLayout.CENTER);
 			this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			
-}}
+}
+
+
+
+
+}

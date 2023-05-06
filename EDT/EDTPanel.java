@@ -29,6 +29,7 @@ import java.sql.Date;
 import Front.Fonction.Creneau;
 import Front.Fonction.Employe;
 import Back.*;
+import interface_package.IndispoFrame;
 import interface_polo.*;
 
 public class EDTPanel extends JPanel{
@@ -223,6 +224,7 @@ public class EDTPanel extends JPanel{
 			//POUR EMPLOYE
 			BouttonPanelBas.setWidth(200);
 			BouttonPanelBas.setText("Signaler indisponibilité");
+			BouttonPanelBas.addActionListener(new SignalerListener(this.st,empConn));
 		}
 		BouttonContainer.add(BouttonPanelBas);
 		PanelBas.add(BouttonPanelBas, BorderLayout.EAST);
