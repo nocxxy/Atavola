@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 public class AnnulerListener implements ActionListener {
     private JFrame f;
-    AnnulerListener(JFrame f){
+    public AnnulerListener(JFrame f){
         this.f = f;
     }
 

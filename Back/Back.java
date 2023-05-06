@@ -29,8 +29,8 @@ public abstract class Back {
             //Créer connection
             String dbName = "atavola";
             String dbIP = "localhost";
-            String dbUser = "root";
-            String dbPwd = "root";
+            String dbUser = "elias";
+            String dbPwd = "admin";
 
             String url = "jdbc:mysql://" + dbIP + ":3306/" + dbName;
             
@@ -60,7 +60,7 @@ public abstract class Back {
                     + "    login VARCHAR(25),\r\n"
                     + "    mdp VARCHAR(200),\r\n"
                     + "    rang VARCHAR(10),\r\n"
-                    + "    CONSTRAINT pk_employe PRIMARY KEY (id)\r\n"
+                    + "    CONSTRAINT pk_employe PRIMARY KEY (id,login)\r\n"
                     + ");";
             //on envoie la requete
             st.executeUpdate(sql);
@@ -171,7 +171,7 @@ public abstract class Back {
     public static void insertCreneau(Statement st, String date_heure_debut, String date_heure_fin, int id_employer) {
         try {
             //La requête sql
-            String sql = "INSERT INTO Creneau (date_heure_debut,date_heure_fin, id_employer) VALUES (";
+            String sql = "INSERT INTO Creneau (date_heure_debut,date_heure_fin, id) VALUES (";
             String query = sql + (char)34 + date_heure_debut + (char)34 + ",";
             query += (char)34 + date_heure_fin + (char)34 + ",";
             query += id_employer;
@@ -276,30 +276,61 @@ public abstract class Back {
         return cpt;
     }
     
+
+    public static Employe getEmployer (Statement st,String nom,String prenom) {
+		try {
+		//La requête sql
+		String select = "SELECT * FROM Employer WHERE nom = ";
+		String query = select + (char)34 + nom + (char)34;
+		query+= (char)34 + prenom + (char)34;
+		
+		
+		//Execution de la requête sql
+		ResultSet rs = st.executeQuery(query);
+		
+		
+		//Traitement du résultat
+		while (rs.next()) {
+		   
+			//On stocke les données
+            
+   		 	String login = rs.getString("login");
+   		 	String rang = rs.getString("rang");
+   		 	int id = rs.getInt("id");
+   		 	//On retourne l'employé
+   		 	Employe res = new Employe (id,nom,prenom,login,rang);
+   		 	return res;
+		}
+		
+		} catch (SQLException ex) {
+			//Exceptions 
+		    ex.printStackTrace();
+		}
+		return null;
+	}
+    
     public static Employe getEmployer (Statement st,String elogin) {
 		try {
 		//La requête sql
 		String select = "SELECT * FROM Employer WHERE login = ";
 		String query = select + (char)34 + elogin + (char)34;
 		
-		System.out.println(query);
+		
 		
 		//Execution de la requête sql
 		ResultSet rs = st.executeQuery(query);
-		System.out.println(rs);
+		
 		
 		//Traitement du résultat
 		while (rs.next()) {
-			//Affichage des données 
-            System.out.println(rs.getString("nom") + ", " + rs.getString("prenom") + ", " + rs.getString("login")
-                    + ", " + rs.getString("rang"));
-            //On stocke les données
-            int id = rs.getInt("id");
+		   
+			//On stocke les données
+            
             String nom = rs.getString("nom");
    		 	String prenom = rs.getString("prenom");
    		 	String login = rs.getString("login");
    		 	String rang = rs.getString("rang");
-   		 	
+   		 	int id = rs.getInt("id");
    		 	//On retourne l'employé
    		 	Employe res = new Employe (id,nom,prenom,login,rang);
    		 	return res;
@@ -329,9 +360,6 @@ public abstract class Back {
     		query += (char)34 + rang +(char)34;
     		query+= ")";
     		
-    		//On affiche la requête
-    		
-    		System.out.println(query);
     		
     		//Execution de la requête
     		
@@ -494,4 +522,332 @@ public abstract class Back {
         }
         return null;
     }
+    /*
+     * Methode qui supprime un employé dans la base
+     * Prend un statement et un id 
+     * 
+     * */
+    
+    
+    public static void retireEmploye(Statement st, int id) {
+    	try {
+    		//La requête sql
+    		String insert = "DELETE FROM Employer WHERE id = ";
+    		String query = insert + id ;
+    		   		
+    		//Execution de la requête
+    		
+    		st.executeUpdate(query);
+    		
+    	} catch (SQLException ex) {
+			//Exceptions 
+		    ex.printStackTrace();
+		}
+    	
+    	
+    	
+    } 
+    
+    /*
+     * Méthode qui vérifie si un employé existe 
+     * Prend un statement et son id
+     * Renvoie un booléen
+     * 
+     * */
+    public static boolean employeExiste(Statement st, int id) {
+    	ResultSet rs = null;
+		try {
+			//la requête sql
+			 String query = "SELECT * FROM Employer WHERE id = ";
+			
+			 query+= id;
+			 
+			 //execution de la requête
+			 rs = st.executeQuery(query);
+			 return (rs.next());
+			 
+			 
+			 
+		}catch (SQLException ex) {
+			//Exceptions 
+		    ex.printStackTrace();
+		    return false;
+    	}	
+    }
+    
+    /*
+     * Méthode qui vérifie si un creneau existe 
+     * Prend un statement et son id
+     * Renvoie un booléen
+     * 
+     * */
+    
+    public static boolean creneauExiste(Statement st, String debut,String fin,int id) {
+    		ResultSet rs = null;
+    		try {
+    			//la requête sql
+    			 String query = "SELECT * FROM Creneau WHERE date_heure_debut = ";
+    			
+    			 query+= (char)34 + debut  + (char)34 + "AND date_heure_fin = ";
+    			 query += (char)34 + fin  + (char)34 + "AND id_employer = " + id;
+    			 
+    			 //execution de la requête
+    			 rs = st.executeQuery(query);
+    			 return (rs.next());
+    			 
+    			 
+    			 
+    		}catch (SQLException ex) {
+    			//Exceptions 
+    		    ex.printStackTrace();
+    		    return false;
+        	}	
+    }
+    
+    /*
+     * Méthode qui récupère l'id d'un creneau 
+     * Prend une heure de debut, une heure de fin et l'id de l'employé
+     * Renvoie un entier 
+     * 
+     * */
+    public static int getIdCreneau(Statement st, String debut,String fin,int id) {
+    	int res = 0;
+    	try {
+    		//La requête pour récupérer l'id
+    		 String getId = "SELECT id FROM Creneau WHERE date_heure_debut = ";
+             
+             getId += (char)34 + debut  + (char)34;
+             getId += " AND date_heure_fin = ";
+             getId += (char)34 + fin  + (char)34;
+             getId += " AND id_employer = ";
+             getId += id;
+             
+             //execution de la requête
+             ResultSet rs = st.executeQuery(getId);
+             
+             
+             while(rs.next()) {
+             	res = rs.getInt("id");          	              
+             } 
+			
+			 
+			 
+		}catch (SQLException ex) {
+			//Exceptions 
+		    ex.printStackTrace();
+		    
+		}return res;
+    }
+    
+    
+    
+    /*
+     * Ajoute un creneau d'indisponibilité d'un employé
+     * Prend son id, le motif, l'heure de debut,l'heure de fin 
+     * 
+     * 
+     * */
+    public static void ajoutIndisp (Statement st, int id, String motif,String debut, String fin) {
+    	try {
+    		//On fait l'ajout d'indisponibilité sur un employé qui existe déjà 
+    		if(employeExiste(st,id) && !estIndisponible(st,id,debut,fin)) {
+    			
+    		if(! creneauExiste(st,debut,fin,id)) {
+    			//Si le créneau n'existe pas on l'ajoute dans la base
+    			insertCreneau(st,debut,fin,id);
+    		}
+    		 
+            int id_creneau = getIdCreneau(st,debut,fin,id);
+            
+            
+            //la requête pour ajouter l'indisponibilité
+            String indisp = "INSERT INTO Indisponible (id_creneau,id_employer,motif) VALUES (";
+            indisp += id_creneau +",";
+            indisp += id +",";
+            indisp += (char)34 + motif + (char)34 ;
+            indisp += ")";
+            
+            
+            st.executeUpdate(indisp);
+    		}
+    		
+    	} catch (SQLException ex) {
+			//Exceptions 
+		    ex.printStackTrace();
+    	}	
+    }  
+    /*
+     * Méthode pour savoir si un employé est indisponible
+     * Prend l'id de l'employé, une heure de début et de fin 
+     * Renvoie un booléen
+     * 
+     * 
+     * */
+    public static boolean estIndisponible (Statement st, int id,String debut,String fin) {
+    	ResultSet rs = null;
+    	try {
+    		//On vérifie si l'employé existe et si le creneau existe
+    		if(employeExiste(st,id) && creneauExiste(st,debut,fin,id)) {
+    			
+    			//On récupère l'id du creneau 
+    			int id_creneau = getIdCreneau(st,debut,fin,id);
+    			
+    			//La requête pour verifier si l'employé est indisponible
+    			String query = "SELECT * FROM Indisponible WHERE id_creneau =";
+    			query += id_creneau + " AND id_employer = ";
+    			query += id;
+    			
+    			rs = st.executeQuery(query);
+   			 	return (rs.next());
+    		}
+    		
+    	}catch (SQLException ex) {
+			//Exceptions 
+		    ex.printStackTrace();
+    	}	return false;
+    	
+    }
+    
+    /*
+     * Méthode pour vérifier que les employés sont disponibles
+     * Prend une liste de type arraylist,une heure de debut,de fin 
+     * Renvoie un booléen
+     * 
+     * */
+    
+    public static boolean sontDisponibles(Statement st,ArrayList<Employe> e ,String debut,String fin) {
+    	boolean res =false;
+     	int id_employer;
+    	for(Employe e1 : e) {
+    		 id_employer = e1.getId();
+    		 if(!estIndisponible(st,id_employer,debut,fin)) {
+   				 res = true;
+   			 }else {
+   				 res= false;
+   			 }
+   		}
+   		return res;
+    }
+    
+    /*
+     * Méthode pour vérifier si un employé travaille
+     * Prend l'id de l'employé, une heure de début, de fin
+     * Renvoie un booléen
+     * 
+     * */
+    public static boolean travail (Statement st, int id,String debut,String fin) {
+    	ResultSet rs = null;
+    	try {
+    		//Si l'employé existe et que le creneau existe
+    		if(employeExiste(st,id) && creneauExiste(st,debut,fin,id)) {
+    			
+    			int id_creneau = getIdCreneau(st,debut,fin,id);
+    			
+    			//On vérifie si l'employé travaille
+    			String query = "SELECT * FROM travail WHERE id_creneau =";
+    			query += id_creneau + " AND id_employer = ";
+    			query += id;
+    			
+    			rs = st.executeQuery(query);
+   			 	return (rs.next());
+    		}
+    		
+    	}catch (SQLException ex) {
+			//Exceptions 
+		    ex.printStackTrace();
+    	}	return false;
+    	
+    }
+    
+    /*
+     * Méthode pour ajouter un creneau de travail 
+     * Prend une liste de type arraylist, une heure de debut et de fin
+     *
+     * */
+    public static void ajoutTravail (Statement st, ArrayList<Employe> e,String debut, String fin) {
+    	try {
+    		for (Employe e1 :e) {
+    			int id = e1.getId();
+    			//On fait l'ajout de creneau de travail sur un employé qui existe déjà 
+    			if(employeExiste(st,id) && ! travail(st,id,debut,fin)) {
+    			
+    				if(! creneauExiste(st,debut,fin,id)) {
+    					//Si le créneau n'existe pas on l'ajoute dans la base
+    					insertCreneau(st,debut,fin,id);
+    				}
+    		 
+    				int id_creneau = getIdCreneau(st,debut,fin,id);
+            
+            
+    				//la requête pour ajouter le creneau de travail
+    				String travail = "INSERT INTO travail (id_creneau,id_employer) VALUES (";
+    				travail += id_creneau +",";
+    				travail += id ;
+    				travail += ")";
+            
+            
+    				st.executeUpdate(travail);
+    			}
+    		}
+    	} catch (SQLException ex) {
+			//Exceptions 
+		    ex.printStackTrace();
+    	}	
+    }  
+    
+    /*
+     * Méthode pour retirer l'indisponibilité d'un employé
+     * Prend une liste de type arraylist,une heure de type et de fin 
+     * 
+     * */
+    public static void retireIndisp (Statement st, ArrayList<Employe> e, String debut, String fin) {
+    	try {
+    		for (Employe e1 :e) {
+    			int id = e1.getId();
+	    		if(employeExiste(st,id) && estIndisponible(st,id,debut,fin)) {
+	    			
+	    		 
+	            int id_creneau = getIdCreneau(st,debut,fin,id);
+	            
+	            
+	            //la requête pour retirer l'indisponibilité
+	            String delete = "DELETE FROM Indisponible WHERE id_creneau = ";
+	            delete += id_creneau +" AND id_employer = ";
+	            delete += id ;
+	       
+	            
+	            
+	            st.executeUpdate(delete);
+	    		}
+    		}
+    		
+    	} catch (SQLException ex) {
+			//Exceptions 
+		    ex.printStackTrace();
+    	}	
+    }  
+    
+    /*
+     * Méthode pour ajouter une réunion
+     * Prend une liste de type arraylist, une heure de debut et de fin 
+     * 
+     * */
+    
+    public static void ajout_reunion (Statement st,ArrayList<Employe> e,String debut, String fin , boolean urgent) {
+    		if (!urgent  ) {
+    			//si la réunion n'est pas urgente, on vérifie si les employés sont tous disponibles
+    			if (sontDisponibles(st,e,debut,fin)) {
+    				ajoutTravail(st,e,debut,fin);
+    			}
+    		}else {
+    			//si la réunion est urgente, on l'ajoute peu importe
+    			retireIndisp(st,e,debut,fin);
+    			ajoutTravail(st,e,debut,fin);
+    			
+    		}
+    		
+    }
+    
+    
+     
 }
