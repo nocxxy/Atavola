@@ -893,6 +893,35 @@ public abstract class Back {
     		
     }
     
+    public static void updateIndisp (Statement st, int idcreneau,int idemploye,String motif,String debut, String fin) {
+    	try {
+    		 
+    		if(employeExiste(st,idemploye)) {
+    		
+            String query = "UPDATE Creneau SET date_heure_debut = ";
+            query+= (char)34 + debut + (char)34 + ",date_heure_fin = ";
+            query+= (char)34 + fin + (char)34 ;
+            query+= " WHERE id_employer = "+idemploye;
+            query+= " AND id = "+idcreneau;         
+            
+            String update = "UPDATE Indisponible SET motif = ";
+            update+= (char)34 + motif + (char)34;
+            update+= " WHERE id_employer = "+idemploye;
+            update+= " AND id_creneau = "+idcreneau;
+            
+            
+            System.out.println(query);
+            System.out.println(update);
+            st.executeUpdate(update);
+            st.executeUpdate(query);
+    		}
+    		
+    	} catch (SQLException ex) {
+			//Exceptions 
+		    ex.printStackTrace();
+    	}	
+    }
+    
     
      
 }
