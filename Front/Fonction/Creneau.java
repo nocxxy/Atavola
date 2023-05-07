@@ -67,6 +67,10 @@ public class Creneau {
         return dispo;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public void setDispo(boolean dispo) {
         this.dispo = dispo;
     }
