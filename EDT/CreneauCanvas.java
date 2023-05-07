@@ -1,8 +1,10 @@
 package EDT;
 
+import java.awt.BasicStroke;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ import java.util.ArrayList;
 import Front.Fonction.Creneau;
 import Front.Fonction.Employe;
 
+@SuppressWarnings("serial")
 public class CreneauCanvas extends Canvas implements MouseListener{
 	private Color couleurEmp;
 	private ArrayList<Creneau> creneaux;
@@ -21,18 +24,29 @@ public class CreneauCanvas extends Canvas implements MouseListener{
 		this.creneaux = creneaux;
 		this.empConn = empConn;
 		addMouseListener(this);
-
+		
 	}
 	
 	public void paint(Graphics g) {
 		g.setColor(couleurEmp);
 		
 		for(int i = 0; i < creneaux.size(); i++) {
-			System.out.println("draw creneau");
+			drawCreneau(g,creneaux.get(i).getHeureDebut(),0,creneaux.get(i).getHeureFin(),0,true);
 		}
+		//drawCreneau(g,14,0,18,0,false);
+		//g.fillRoundRect(0,(this.getHeight()/10)*2,this.getWidth(),(this.getHeight()/10)*2,10,10);
 
-		g.fillRoundRect(0,(this.getHeight()/10)*2,this.getWidth(),(this.getHeight()/10)*2,10,10);
-
+	}
+	
+	public void drawCreneau(Graphics g,int heureDebut, int minuteDebut, int heureFin, int MinuteFin, boolean dispo) {
+		g.setColor(couleurEmp);
+		g.fillRoundRect(0,(this.getHeight()/18)*(heureDebut-7),this.getWidth(),(this.getHeight()/18)*(heureFin-heureDebut),10,10);
+		if(!dispo) {
+			g.setColor(Color.RED);
+			Graphics2D g2d = (Graphics2D) g;
+			g2d.setStroke(new BasicStroke(3));
+			g2d.drawRoundRect(0,(this.getHeight()/18)*(heureDebut-7),this.getWidth(),(this.getHeight()/18)*(heureFin-heureDebut),10,10);
+		}
 	}
 	
     public void mouseClicked(MouseEvent e) {

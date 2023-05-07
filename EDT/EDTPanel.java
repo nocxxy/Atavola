@@ -1,18 +1,13 @@
 package EDT;
 
 import java.awt.BorderLayout;
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.Label;
-import java.awt.Panel;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,9 +26,9 @@ import java.sql.Date;
 import Front.Fonction.Creneau;
 import Front.Fonction.Employe;
 import Back.*;
-import interface_package.IndispoFrame;
 import interface_polo.*;
 
+@SuppressWarnings("serial")
 public class EDTPanel extends JPanel{
 	private Date debut;
 	private ArrayList<Color> couleursEmp = new ArrayList<Color>();
@@ -56,9 +51,6 @@ public class EDTPanel extends JPanel{
 			allEmp.add(empConn);
 			empEDT.add(empConn);
 		}
-		for(int i = 0; i<allEmp.size(); i++){
-			System.out.println(allEmp.get(i).getId());
-		}
 		
 		//Couleurs par defauts
 		couleursEmp.add(new Color(84, 153, 73));
@@ -71,10 +63,8 @@ public class EDTPanel extends JPanel{
 		couleursEmp.add(new Color(160, 232, 171));
 		
 		this.debut = Back.getLundi();
+		allCreneau = Back.getAllCreneauWeek(st,debut);
 		
-		//this.allCreneau.add(new Creneau(db,fin,1,true,10));
-
-		//allCreneau = Back.getAllCreneauWeek(st, debut);
 		
 		this.setLayout(new BorderLayout(0, 0));
 		
@@ -123,7 +113,6 @@ public class EDTPanel extends JPanel{
 			        }
 			        creePanelBas(empEDT);
 			        creeCreneauxEDT(empEDT,empConn);
-			        System.out.println(empEDT.get(0).getNom());
 			    }
 			});
 
@@ -364,7 +353,7 @@ public class EDTPanel extends JPanel{
 				colorContainer.add(couleur);
 				
 				//CRENEAU
-				creneauCanvas = new CreneauCanvas(couleursEmp.get(j),Back.getCreneauxEmp(st, debut, empEDT.get(j).getId()),empConn);
+				creneauCanvas = new CreneauCanvas(couleursEmp.get(j),Back.getCreneauxEmp(st, Back.jourPlusi(debut,i), empEDT.get(j).getId()),empConn);
 				creneauPanel.add(creneauCanvas);
 
 			}
