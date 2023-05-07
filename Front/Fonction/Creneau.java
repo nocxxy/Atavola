@@ -67,6 +67,10 @@ public class Creneau {
         return dispo;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public void setDispo(boolean dispo) {
         this.dispo = dispo;
     }
@@ -149,5 +153,8 @@ public class Creneau {
         this.id = id;
     }
 
-
+    @Override
+    public String toString() {
+        return  this.heuredebut.toString() + " " + this.heurefin.toString();
+    }
 }
