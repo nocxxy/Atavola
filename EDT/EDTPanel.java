@@ -200,7 +200,7 @@ public class EDTPanel extends JPanel{
 			} else {
 				empColor = couleursEmp.get(i);
 			}
-			empHeure = heureEmp(emp.get(i).getNom(),Back.minuteToHeure(Back.getHeuresEmploye(allCreneau, 1)),empColor);
+			empHeure = heureEmp(emp.get(i).getNom(),Back.minuteToHeure(Back.getHeuresEmploye(allCreneau, emp.get(i).getId())),empColor);
 			EmployePanel.add(empHeure);
 		}
 		
