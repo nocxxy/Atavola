@@ -71,6 +71,8 @@ public class EDTPanel extends JPanel{
 		creePanelHaut();
 		creeCreneauxEDT(empEDT,empConn);
 		creePanelBas(empEDT);
+
+
 	}
 	
 	private void creePanelHaut() {
@@ -139,14 +141,7 @@ public class EDTPanel extends JPanel{
 		
 		JButton btnSemainePrecedente = new JButton("<");
 		btnSemainePrecedente.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnSemainePrecedente.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setDebut(Back.getSemainePrecedente(getDebut()));
-				allCreneau = Back.getAllCreneauWeek(st, getDebut());
-				creeCreneauxEDT(empEDT,empConn);
-				creePanelBas(empEDT);
-			}
-		});
+		btnSemainePrecedente.addActionListener(new SemainePrecListener(this) );
 		btnSemainePrecedente.setMargin(new Insets(0, 8, 0, 8));
 		btnSemainePrecedente.setBackground(new Color(45, 106, 79));
 		btnSemainePrecedente.setBorder(UIManager.getBorder("Button.border"));
@@ -184,7 +179,10 @@ public class EDTPanel extends JPanel{
 	 * Contiendras les horaires des employés
 	 * Ainsi que les boutons d'ajout de creneaux/indisponibilité
 	 */
-	private void creePanelBas(ArrayList<Employe> emp) {
+
+
+	public void creePanelBas(ArrayList<Employe> emp) {
+
 		JPanel PanelBas = new JPanel();
 		PanelBas.setLayout(new BorderLayout());
 		JPanel EmployePanel = new JPanel();
@@ -226,7 +224,13 @@ public class EDTPanel extends JPanel{
 		if(layout.getLayoutComponent(BorderLayout.SOUTH) != null) {
 			this.remove(layout.getLayoutComponent(BorderLayout.SOUTH));
 		}
+
+
 		this.add(PanelBas, BorderLayout.SOUTH);
+
+
+		this.add(PanelBas, BorderLayout.SOUTH);
+
 	};
 	
 
@@ -248,7 +252,9 @@ public class EDTPanel extends JPanel{
 	/*Affiche l'emploi du temps
 	 * En fonction de la liste d'employe en entrée
 	 */
-	private void creeCreneauxEDT(ArrayList<Employe> emp, Employe empConn) {
+
+
+	public void creeCreneauxEDT(ArrayList<Employe> emp, Employe empConn) {
 		Border grayline = BorderFactory.createLineBorder(new Color(190,190,190));
 	
 		JPanel EDT = new JPanel();
@@ -358,6 +364,10 @@ public class EDTPanel extends JPanel{
 
 			}
 		}
+
+		this.add(EDT, BorderLayout.CENTER);
+
+
 		
 		}
 	
@@ -368,5 +378,20 @@ public class EDTPanel extends JPanel{
 		public Date getDebut() {
 			return this.debut;
 		}
-	
+
+	public Statement getSt() {
+		return st;
+	}
+
+	public void setAllCreneau(ArrayList<Creneau> allCreneau) {
+		this.allCreneau = allCreneau;
+	}
+
+	public ArrayList<Employe> getEmpEDT() {
+		return empEDT;
+	}
+
+	public Employe getEmpConn() {
+		return empConn;
+	}
 }
