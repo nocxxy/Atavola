@@ -70,13 +70,9 @@ public class EDTPanel extends JPanel{
 		
 		creePanelHaut();
 		creeCreneauxEDT(empEDT,empConn);
-<<<<<<< HEAD
-
 		creePanelBas(empEDT);
 
-=======
-		creePanelBas(empEDT);
->>>>>>> parent of cfa18ca (debut  des listener changer de seamine)
+
 	}
 	
 	private void creePanelHaut() {
@@ -190,11 +186,10 @@ public class EDTPanel extends JPanel{
 	 * Contiendras les horaires des employés
 	 * Ainsi que les boutons d'ajout de creneaux/indisponibilité
 	 */
-<<<<<<< HEAD
-	public void creePanelBas(ArrayList<Employe> emp) {
-=======
+
+
 	private void creePanelBas(ArrayList<Employe> emp) {
->>>>>>> parent of cfa18ca (debut  des listener changer de seamine)
+
 		JPanel PanelBas = new JPanel();
 		PanelBas.setLayout(new BorderLayout());
 		JPanel EmployePanel = new JPanel();
@@ -236,13 +231,13 @@ public class EDTPanel extends JPanel{
 		if(layout.getLayoutComponent(BorderLayout.SOUTH) != null) {
 			this.remove(layout.getLayoutComponent(BorderLayout.SOUTH));
 		}
-<<<<<<< HEAD
+
 
 		this.add(PanelBas, BorderLayout.SOUTH);
-		this.panelBas = PanelBas;
-=======
+
+
 		this.add(PanelBas, BorderLayout.SOUTH);
->>>>>>> parent of cfa18ca (debut  des listener changer de seamine)
+
 	};
 	
 
@@ -264,11 +259,9 @@ public class EDTPanel extends JPanel{
 	/*Affiche l'emploi du temps
 	 * En fonction de la liste d'employe en entrée
 	 */
-<<<<<<< HEAD
-	public void creeCreneauxEDT(ArrayList<Employe> emp, Employe empConn) {
-=======
+
+
 	private void creeCreneauxEDT(ArrayList<Employe> emp, Employe empConn) {
->>>>>>> parent of cfa18ca (debut  des listener changer de seamine)
 		Border grayline = BorderFactory.createLineBorder(new Color(190,190,190));
 	
 		JPanel EDT = new JPanel();
@@ -378,11 +371,10 @@ public class EDTPanel extends JPanel{
 
 			}
 		}
-<<<<<<< HEAD
+
 		this.add(EDT, BorderLayout.CENTER);
-		this.edt = EDT;
-=======
->>>>>>> parent of cfa18ca (debut  des listener changer de seamine)
+
+
 		
 		}
 	
