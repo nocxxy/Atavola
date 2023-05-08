@@ -28,9 +28,9 @@ public class ModifierIndisponibleListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String horraireDebut = this.f.getDa().getText() + "-" + this.f.getDm().getText() + "-" + this.f.getDd().getText() + " " + getHeureSynthaxe("00h00");
-        String horraireFin = this.f.getFa().getText() + "-" + this.f.getFm().getText() + "-" + this.f.getFd().getText() + " " + getHeureSynthaxe("00h00");
+//        String horraireFin = this.f.getFa().getText() + "-" + this.f.getFm().getText() + "-" + this.f.getFd().getText() + " " + getHeureSynthaxe("00h00");
         String motif = this.f.getMotif().getText();
-        Back.ajoutIndisp(this.st,this.f.getE().getId(),motif,horraireDebut,horraireFin);
+//        Back.ajoutIndisp(this.st,this.f.getE().getId(),motif,horraireDebut,horraireFin);
         this.f.dispose();
     }
 }
