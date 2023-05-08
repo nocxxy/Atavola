@@ -21,14 +21,23 @@ public class IndispoFrame extends JFrame{
 		private JTextField dd;
 		private JTextField dm;
 		private JTextField da;
-		private JTextField fd;
-		private JTextField fm;
-		private JTextField fa;
+
+		private JTextField hd;
+		private JTextField hf ;
+
 
 		private  Employe e;
 
 
 	//Getter
+
+	public JTextField getHd() {
+		return hd;
+	}
+
+	public JTextField getHf() {
+		return hf;
+	}
 
 	public Employe getE() {
 		return e;
@@ -50,17 +59,7 @@ public class IndispoFrame extends JFrame{
 		return da;
 	}
 
-	public JTextField getFd() {
-		return fd;
-	}
 
-	public JTextField getFm() {
-		return fm;
-	}
-
-	public JTextField getFa() {
-		return fa;
-	}
 
 	//Constructeur
 		public IndispoFrame(Statement st, Employe e) {
@@ -81,7 +80,7 @@ public class IndispoFrame extends JFrame{
 			
 			JLabel text = new JLabel("Veuillez compléter les informations suivantes : ");
 			
-			JLabel dateDebut = new JLabel("Date Début : ");
+			JLabel dateDebut = new JLabel("Date : ");
 			
 			JPanel pDateDebut = new JPanel();
 			pDateDebut.setLayout(new FlowLayout());
@@ -96,22 +95,19 @@ public class IndispoFrame extends JFrame{
 			pDateDebut.add(this.dd);
 			pDateDebut.add(this.dm);
 			pDateDebut.add(this.da);
-			
-			JLabel dateFin = new JLabel("Date Fin : ");
-			
-			JPanel pDateFin = new JPanel();
-			pDateFin.setLayout(new FlowLayout());
-			this.fd = new JTextField();
-			this.fd.setPreferredSize(new Dimension(55,30));
-			this.fm = new JTextField();
-			this.fm.setPreferredSize(new Dimension(55,30));
-			this.fa = new JTextField();
-			this.fa.setPreferredSize(new Dimension(55,30));
-			
-			pDateFin.add(dateFin);
-			pDateFin.add(this.fd);
-			pDateFin.add(this.fm);
-			pDateFin.add(this.fa);
+
+			JLabel horaire = new JLabel("Horaires : ");
+
+			JPanel pHour = new JPanel();
+			pHour.setLayout(new FlowLayout());
+			this.hd = new JTextField();
+			this.hd.setPreferredSize(new Dimension(50,30));
+			this.hf = new JTextField();
+			this.hf.setPreferredSize(new Dimension(50,30));
+
+			pHour.add(horaire);
+			pHour.add(this.hd);
+			pHour.add(this.hf);
 			
 			JLabel lMotif = new JLabel("Motif :");
 			
@@ -126,7 +122,7 @@ public class IndispoFrame extends JFrame{
 
 			panel.add(text);
 			panel.add(pDateDebut);
-			panel.add(pDateFin);
+			panel.add(pHour);
 			panel.add(lMotif);
 			panel.add(this.motif);
 			panel.add(add);
