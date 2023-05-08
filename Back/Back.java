@@ -922,6 +922,64 @@ public abstract class Back {
     	}	
     }
     
+    public static ArrayList<Creneau> getCreneauxIndisp(Statement st, Date jour, int id){
+    	ResultSet rs = null;
+    	try {
+    		
+    		String sql = "SELECT id_creneau FROM Indisponible WHERE id_employer ="+id;
+    		
+    		
+    		rs = st.executeQuery(sql);
+    		
+    		
+    		ArrayList<Creneau> liste = new ArrayList();
+    		
+    		while(rs.next()) {
+    			int id_creneau = rs.getInt("id_creneau");
+    			//Creneau c = CreneauIndisp(st,jour,id_creneau,id);
+    			
+    			
+    			
+    			String jourStr = jour.getYear()+1900+"-"+ (jour.getMonth()+1)+"-"+jour.getDate();
+        		String date =  (char)34 + jourStr  + (char)34;
+        		System.out.println(date);
+        		
+        		String select = "SELECT * FROM Creneau WHERE id ="+id_creneau ;
+        		select += " AND DATE(date_heure_debut) = "+date
+        		+" AND DATE(date_heure_fin) = "+date +
+        		" AND id_employer = " +id ;
+        		
+        		System.out.println(select);
+
+        		rs = st.executeQuery(select);
+        		
+                while (rs.next()) {
+
+                    //On stocke les données
+                	Timestamp hd = rs.getTimestamp("date_heure_debut");
+                	Timestamp hf = rs.getTimestamp("date_heure_fin");
+                    
+                	Creneau c = new Creneau(hd,hf);
+                	liste.add(c);
+                }
+    			
+    		}
+    		for(Creneau c : liste) {
+    			 System.out.println("Creneau:");
+                 System.out.println(c.getDateDebut() + ", " + c.getDateFin());
+    		}
+    		return liste;
+    		
+    		
+    	}catch (SQLException ex) {
+			//Exceptions 
+		    ex.printStackTrace();
+    	}	return null;
+    }
+    
+    
+    
+    
     
      
 }
