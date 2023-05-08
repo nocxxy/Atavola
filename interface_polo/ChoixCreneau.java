@@ -33,15 +33,15 @@ public class ChoixCreneau extends JPanel {
         }
         return res;
     }
-    public int getSelect(){
-        int id =-1;
+    public Creneau getSelect(){
+        Creneau res = null;
         String choix = (String)this.choixCreneau.getSelectedItem();
         for (int i=0;i<this.c.size();i++){
             if (this.c.get(i).toString().equals(choix)){
-                id = this.c.get(i).getId();
+                res = this.c.get(i);
             }
         }
-        return  id;
+        return res;
     }
 
 }

@@ -20,9 +20,5 @@ public class SemainePrecListener implements ActionListener {
         this.e.setAllCreneau(Back.getAllCreneauWeek(this.e.getSt(), this.e.getDebut()));
         this.e.creeCreneauxEDT(this.e.getEmpEDT(), this.e.getEmpConn());
         this.e.creePanelBas(this.e.getEmpEDT());
-
-
-
-
     }
 }

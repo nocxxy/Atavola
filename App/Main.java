@@ -11,7 +11,7 @@ public class Main {
 	public static void main(String[] args) {
 		
 		Statement st = Back.connectionBase();
-
+		Back.connectionBase();
 
 		ConnexionFrame c = new ConnexionFrame(st);
 		c.setVisible(true);

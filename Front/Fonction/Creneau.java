@@ -155,6 +155,6 @@ public class Creneau {
 
     @Override
     public String toString() {
-        return  this.heuredebut.toString() + " " + this.heurefin.toString();
+        return  this.heuredebut.toString() + " -> " + this.heurefin.toString();
     }
 }

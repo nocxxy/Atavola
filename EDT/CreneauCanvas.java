@@ -9,8 +9,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
+import Back.Back;
 import Front.Fonction.Creneau;
 import Front.Fonction.Employe;
+import interface_polo.RetirerCreneauFrame;
 
 @SuppressWarnings("serial")
 public class CreneauCanvas extends Canvas implements MouseListener{
@@ -52,6 +54,8 @@ public class CreneauCanvas extends Canvas implements MouseListener{
     public void mouseClicked(MouseEvent e) {
         if(empConn.getRang().equals("chef")) {
         	System.out.println("Modifie les creneaux du jour");
+			RetirerCreneauFrame f = new RetirerCreneauFrame(Back.connectionBase(),this.creneaux);
+			f.setVisible(true);
         } else {
         	System.out.println("Modifie les indispos du jour du jour");
         }
