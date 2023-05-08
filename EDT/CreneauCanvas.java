@@ -18,6 +18,7 @@ import interface_polo.RetirerCreneauFrame;
 public class CreneauCanvas extends Canvas implements MouseListener{
 	private Color couleurEmp;
 	private ArrayList<Creneau> creneaux;
+	private ArrayList<Creneau> indispo;
 	private Employe empConn;
 	
 	public CreneauCanvas(Color color, ArrayList<Creneau> creneaux,  ArrayList<Creneau> indispo, Employe empConn) {
