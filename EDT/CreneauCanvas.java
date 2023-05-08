@@ -20,11 +20,12 @@ public class CreneauCanvas extends Canvas implements MouseListener{
 	private ArrayList<Creneau> creneaux;
 	private Employe empConn;
 	
-	public CreneauCanvas(Color color, ArrayList<Creneau> creneaux, Employe empConn) {
+	public CreneauCanvas(Color color, ArrayList<Creneau> creneaux,  ArrayList<Creneau> indispo, Employe empConn) {
 		this.setBackground(new Color(255,255,255));
 		this.couleurEmp = color;
 		this.creneaux = creneaux;
 		this.empConn = empConn;
+		this.indispo = indispo;
 		addMouseListener(this);
 		
 	}
@@ -32,8 +33,13 @@ public class CreneauCanvas extends Canvas implements MouseListener{
 	public void paint(Graphics g) {
 		g.setColor(couleurEmp);
 		
+		//Dessine creneaux
 		for(int i = 0; i < creneaux.size(); i++) {
 			drawCreneau(g,creneaux.get(i).getHeureDebut(),0,creneaux.get(i).getHeureFin(),0,true);
+		}
+		//Dessine indispo
+		for(int i = 0; i < indispo.size();i++) {
+			drawCreneau(g,indispo.get(i).getHeureDebut(),0,indispo.get(i).getHeureFin(),0,false);
 		}
 		//drawCreneau(g,14,0,18,0,false);
 		//g.fillRoundRect(0,(this.getHeight()/10)*2,this.getWidth(),(this.getHeight()/10)*2,10,10);

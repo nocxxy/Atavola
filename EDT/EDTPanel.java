@@ -360,7 +360,7 @@ public class EDTPanel extends JPanel{
 				colorContainer.add(couleur);
 				
 				//CRENEAU
-				creneauCanvas = new CreneauCanvas(couleursEmp.get(j),Back.getCreneauxEmp(st, Back.jourPlusi(debut,i), empEDT.get(j).getId()),empConn);
+				creneauCanvas = new CreneauCanvas(couleursEmp.get(j),Back.getCreneauxEmp(st, Back.jourPlusi(debut,i), empEDT.get(j).getId()),Back.getCreneauxIndisp(st, Back.jourPlusi(debut,i), empEDT.get(j).getId()),empConn);
 				creneauPanel.add(creneauCanvas);
 
 			}
