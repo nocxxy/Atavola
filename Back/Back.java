@@ -1065,8 +1065,8 @@ public abstract class Back {
 
                 //On stocke les données
                 int id_creneau = rs.getInt("id");
-            	Date hd = rs.getDate("date_heure_debut");
-                Date hf = rs.getDate("date_heure_fin");
+                Timestamp hd = rs.getTimestamp("date_heure_debut");
+                Timestamp hf = rs.getTimestamp("date_heure_fin");
                 int id_employer = rs.getInt("id_employer");
 
                 //On ajoute le creneau
