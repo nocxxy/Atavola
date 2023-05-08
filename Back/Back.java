@@ -29,7 +29,7 @@ public abstract class Back {
             //Créer connection
             String dbName = "atavola";
             String dbIP = "localhost";
-            String dbUser = "roor";
+            String dbUser = "root";
             String dbPwd = "root";
 
             String url = "jdbc:mysql://" + dbIP + ":3306/" + dbName;
@@ -134,7 +134,7 @@ public abstract class Back {
     public static Creneau getCreneau(Statement st,int id) {
         try {
             //La requête sql
-            String select = "SELECT c.date_heure_debut, c.date_heure_fin FROM Creneau c INNER JOIN Employer e ON c.id_employer = e.id WHERE e.id = ";
+            String select = "SELECT c.id, c.id_employer, c.date_heure_debut, c.date_heure_fin FROM Creneau c INNER JOIN Employer e ON c.id_employer = e.id WHERE e.id = ";
             String query = select + id;
 
             //Execution de la requête sql
@@ -148,11 +148,15 @@ public abstract class Back {
                         + ", " + rs.getString("date_heure_fin"));
 
                 //On stocke les données
+                int id_creneau = rs.getInt("id");
                 Date hd = rs.getDate("date_heure_debut");
                 Date hf = rs.getDate("date_heure_fin");
-
+                int id_employe = rs.getInt("id_employer");
+                
                 //On retourne le creneau
                 Creneau res = new Creneau(hd, hf);
+                res.setEmploye(id_employe);
+                res.setId(id_creneau);
                 return res;
             }
 
@@ -228,19 +232,24 @@ public abstract class Back {
             while (rs.next()) {
 
                 //On stocke les données
-                Date hd = rs.getDate("date_heure_debut");
+                int id_creneau = rs.getInt("id");
+            	Date hd = rs.getDate("date_heure_debut");
                 Date hf = rs.getDate("date_heure_fin");
-                //int id_employer = rs.getInt("id_employer");
+                int id_employer = rs.getInt("id_employer");
 
                 //On ajoute le creneau
                 Creneau c = new Creneau(hd,hf);
+                c.setEmploye(id_employer);
+                c.setId(id_creneau);
+
                 res.add(c);
             }
 
             for(Creneau c : res) {
                 //On affiche les éléments de la liste
                 System.out.println("Creneau:");
-                System.out.println(c.getDateDebut() + ", " + c.getDateFin());
+                System.out.println(c.getDateDebut() + ", " + c.getDateFin() + ", "+c.getId() 
+                +", " + c.getEmploye());
             }
             return res;
 
@@ -500,21 +509,24 @@ public abstract class Back {
             while (rs.next()) {
 
                 //On stocke les données
+            	int id_creneau = rs.getInt("id");
             	Timestamp hd = rs.getTimestamp("date_heure_debut");
             	Timestamp hf = rs.getTimestamp("date_heure_fin");
                 
-                System.out.println(hd);
-                //int id_employer = rs.getInt("id_employer");
 
                 //On ajoute le creneau
                 Creneau c = new Creneau(hd,hf);
+                c.setEmploye(id);
+                c.setId(id_creneau);
+                
                 res.add(c);
             }
 
             for(Creneau c : res) {
                 //On affiche les éléments de la liste
                 System.out.println("Creneau:");
-                System.out.println(c.getDateDebut() + ", " + c.getDateFin());
+                System.out.println(c.getDateDebut() + ", " + c.getDateFin() +", "
+                		+c.getId() + ", " + c.getEmploye());
             }
             return res;
 
@@ -927,48 +939,40 @@ public abstract class Back {
     public static ArrayList<Creneau> getCreneauxIndisp(Statement st, Date jour, int id){
     	ResultSet rs = null;
     	try {
+
+			String jourStr = jour.getYear()+1900+"-"+ (jour.getMonth()+1)+"-"+jour.getDate();
+    		String date =  (char)34 + jourStr  + (char)34;
     		
-    		String sql = "SELECT id_creneau FROM Indisponible WHERE id_employer ="+id;
-    		
+    		String sql = "SELECT * FROM Creneau WHERE id ";
+    		sql += "IN (SELECT id_creneau FROM Indisponible WHERE id_employer = ";
+    		sql += id + ")";
+    		sql += " AND DATE(date_heure_debut) = " + date;
+    		sql+= " AND DATE(date_heure_fin) = " + date; 
+    		sql += "AND id_employer = " + id;
+
     		
     		rs = st.executeQuery(sql);
     		
     		
     		ArrayList<Creneau> liste = new ArrayList();
-    		
-    		while(rs.next()) {
-    			int id_creneau = rs.getInt("id_creneau");
-    			//Creneau c = CreneauIndisp(st,jour,id_creneau,id);
-    			
-    			
-    			
-    			String jourStr = jour.getYear()+1900+"-"+ (jour.getMonth()+1)+"-"+jour.getDate();
-        		String date =  (char)34 + jourStr  + (char)34;
-        		System.out.println(date);
         		
-        		String select = "SELECT * FROM Creneau WHERE id ="+id_creneau ;
-        		select += " AND DATE(date_heure_debut) = "+date
-        		+" AND DATE(date_heure_fin) = "+date +
-        		" AND id_employer = " +id ;
-        		
-        		System.out.println(select);
-
-        		rs = st.executeQuery(select);
-        		
-                while (rs.next()) {
-
-                    //On stocke les données
-                	Timestamp hd = rs.getTimestamp("date_heure_debut");
-                	Timestamp hf = rs.getTimestamp("date_heure_fin");
-                    
-                	Creneau c = new Creneau(hd,hf);
-                	liste.add(c);
-                }
-    			
+            while (rs.next()) {
+            	int id_creneau = rs.getInt("id");
+                Timestamp hd = rs.getTimestamp("date_heure_debut");
+                Timestamp hf = rs.getTimestamp("date_heure_fin");
+                
+                Creneau c = new Creneau(hd,hf);
+                c.setEmploye(id);
+                c.setId(id_creneau);
+                	
+                liste.add(c);
+                
     		}
+    		
     		for(Creneau c : liste) {
     			 System.out.println("Creneau:");
-                 System.out.println(c.getDateDebut() + ", " + c.getDateFin());
+                 System.out.println(c.getDateDebut() + ", " + c.getDateFin() + 
+                		 ", "+ c.getId() + ", "+ c.getEmploye());
     		}
     		return liste;
     		
