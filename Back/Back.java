@@ -468,18 +468,20 @@ public abstract class Back {
 
     public static Date jourPlusi(Date jour, int i) {
         Calendar cal = Calendar.getInstance();
+        java.util.Date temp = new java.util.Date(jour.getTime());
         cal.setTime(jour);
         cal.add(Calendar.DAY_OF_MONTH, i);
+        System.out.println(cal.getTime().toString());
         Date jourPlus = new Date(cal.getTime().getTime());
         return jourPlus;
     }
 
     public static Date getSemaineSuivante(Date jour) {
-        return jourPlusi(getLundi(), 7);
+        return jourPlusi(jour, 7);
     }
 
     public static Date getSemainePrecedente(Date jour) {
-        return jourPlusi(getLundi(), -7);
+        return jourPlusi(jour, -7);
     }
     public static ArrayList<Creneau> getCreneauxEmp(Statement st,Date jour, int id){
         try {
