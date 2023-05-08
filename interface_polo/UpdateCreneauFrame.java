@@ -138,8 +138,8 @@ public class UpdateCreneauFrame extends JFrame {
     }
     @SuppressWarnings("deprecation")
     private String getMonth(int m){
-        if (m<10){
-            return "0" + m;
+        if ((m+1)<10){
+            return "0" + (m+1);
         }
         return "" + m;
     }
