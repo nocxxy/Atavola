@@ -14,9 +14,8 @@ public class Main {
 		Back.connectionBase();
 
 		ConnexionFrame c = new ConnexionFrame(st);
-		//c.setVisible(true);
-		
-		Back.deleteIndisp(st, 4);
+		c.setVisible(true);
+
 
 		
 	}

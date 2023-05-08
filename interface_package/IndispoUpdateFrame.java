@@ -3,12 +3,13 @@ package interface_package;
 import java.awt.*;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.*;
 
 import EDT.SignalerListener;
 import Front.Fonction.Creneau;
-import Front.Fonction.Employe;
+
 import interface_polo.GreenRoundButton;
 import interface_polo.ModifierIndisponibleListener;
 import interface_polo.SignalerIndisponibleListener;
@@ -28,14 +29,11 @@ public class IndispoUpdateFrame extends JFrame{
 		private JTextField hd;
 		private JTextField hf;
 
-		private  Employe e;
+
 
 
 	//Getter
 
-	public Employe getE() {
-		return e;
-	}
 
 	public RoundJTextArea getMotif() {
 		return motif;
@@ -52,11 +50,24 @@ public class IndispoUpdateFrame extends JFrame{
 	public JTextField getDa() {
 		return da;
 	}
+
+	public Creneau getC() {
+		return c;
+	}
+
+	public JTextField getHd() {
+		return hd;
+	}
+
+	public JTextField getHf() {
+		return hf;
+	}
+
 	private Creneau c;
 
 	//Constructeur
+	@SuppressWarnings("deprecation")
 		public IndispoUpdateFrame(Statement st, Creneau c) {
-			this.e = e;
 			this.c = c;
 
 			this.setBounds(100,100,WIDTH,HEIGHT);
@@ -78,11 +89,17 @@ public class IndispoUpdateFrame extends JFrame{
 
 			JPanel pDateDebut = new JPanel();
 			pDateDebut.setLayout(new FlowLayout());
-			this.dd = new JTextField();
+
+			String day = getDay(c.getDateDebut().getDate());
+			this.dd = new JTextField(day);
 			this.dd.setPreferredSize(new Dimension(55,30));
-			this.dm = new JTextField();
+
+			String month = getMonth(c.getDateDebut().getMonth());
+			this.dm = new JTextField(month);
 			this.dm.setPreferredSize(new Dimension(55,30));
-			this.da = new JTextField();
+
+			String year = String.valueOf(c.getDateDebut().getYear() + 1900);
+			this.da = new JTextField(year);
 			this.da.setPreferredSize(new Dimension(55,30));
 
 			pDateDebut.add(dateDebut);
@@ -94,9 +111,9 @@ public class IndispoUpdateFrame extends JFrame{
 
 			JPanel pHour = new JPanel();
 			pHour.setLayout(new FlowLayout());
-			this.hd = new JTextField();
+			this.hd = new JTextField(heureSynthaxe(c.getDateDebut()));
 			this.hd.setPreferredSize(new Dimension(50,30));
-			this.hf = new JTextField();
+			this.hf = new JTextField(heureSynthaxe(c.getDateFin()));
 			this.hf.setPreferredSize(new Dimension(50,30));
 
 			pHour.add(horaire);
@@ -111,7 +128,7 @@ public class IndispoUpdateFrame extends JFrame{
 			GreenRoundButton add = new GreenRoundButton("Valider","Green",175,30,30);
 			GreenRoundButton cancel = new GreenRoundButton("Annuler","Red",175,30,30);
 
-//			add.addActionListener(new SignalerIndisponibleListener(st,this));
+			add.addActionListener(new ModifierIndisponibleListener(st,this));
 			cancel.addActionListener(new AnnulerListener(this));
 
 			panel.add(text);
@@ -126,6 +143,43 @@ public class IndispoUpdateFrame extends JFrame{
 			this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			
 }
+	@SuppressWarnings("deprecation")
+	private String heureSynthaxe(Date a){
+		System.out.println(a.toString());
+		int heure = a.getHours();
+		int min = a.getMinutes();
+
+
+		String minute = "" + min;
+		String heur = "" + heure;
+		if (min<10){
+			System.out.println("min inferieur a 10");
+			minute = "0" + min;
+			System.out.println(minute);
+		}
+		if(heure<10){
+			System.out.println("heure inferieur a 10");
+			heur = "0" + heure;
+			System.out.println(heur);
+		}
+
+
+		return heur + "h" + minute;
+	}
+	@SuppressWarnings("deprecation")
+	private String getDay(int d){
+		if (d<10){
+			return "0" + d;
+		}
+		return "" +d;
+	}
+	@SuppressWarnings("deprecation")
+	private String getMonth(int m){
+		if ((m+1)<10){
+			return "0" + (m+1);
+		}
+		return "" + m;
+	}
 
 
 
