@@ -23,10 +23,8 @@ public class SemainePrecListener implements ActionListener {
         this.e.remove(this.e.getEdt());
         this.e.remove(this.e.getPanelBas());
 
-        this.e.setEdt(this.e.creeCreneauxEDT(this.e.getEmpEDT(), this.e.getEmpConn()));
-        this.e.add(this.e.getEdt(), BorderLayout.CENTER);
-        this.e.setPanelBas(this.e.creePanelBas(this.e.getEmpEDT()));
-        this.e.add(this.e.getEdt(),BorderLayout.SOUTH);
+        this.e.creeCreneauxEDT(this.e.getEmpEDT(), this.e.getEmpConn());
+        this.e.creePanelBas(this.e.getEmpEDT());
 
 
     }
