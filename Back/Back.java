@@ -199,6 +199,9 @@ public abstract class Back {
     public static void deleteCreneau(Statement st, int id) {
         try {
             //La requête sql
+        	deleteIndisp(st,id);
+        	deleteTravail(st,id);
+        	
             String sql = "DELETE FROM Creneau WHERE Creneau.id = ";
             String query = sql + id;
 
@@ -1017,7 +1020,21 @@ public abstract class Back {
 		    ex.printStackTrace();
     	}	
     }  
-    
+    public static void deleteTravail (Statement st, int id_creneau) {
+    	try {           
+	            String delete = "DELETE FROM travail WHERE id_creneau = ";
+	            delete += id_creneau ;
+	            
+	            System.out.println(delete);
+	            
+	            st.executeUpdate(delete);
+    		
+    		
+    	} catch (SQLException ex) {
+			//Exceptions 
+		    ex.printStackTrace();
+    	}	
+    }  
     
     
      
