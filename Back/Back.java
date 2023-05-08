@@ -978,8 +978,41 @@ public abstract class Back {
 		    ex.printStackTrace();
     	}	return null;
     }
+    public static void updateCreneau (Statement st, int idcreneau,int idemploye,String debut, String fin) {
+    	try {
+    		
+            String query = "UPDATE Creneau SET date_heure_debut = ";
+            query+= (char)34 + debut + (char)34 + ",date_heure_fin = ";
+            query+= (char)34 + fin + (char)34 ;
+            query+= " WHERE id_employer = "+idemploye;
+            query+= " AND id = "+idcreneau;         
+            
+            
+            System.out.println(query);
+            st.executeUpdate(query);
+    		
+    		
+    	} catch (SQLException ex) {
+			//Exceptions 
+		    ex.printStackTrace();
+    	}	
+    }
     
-    
+    public static void deleteIndisp (Statement st, int id_creneau) {
+    	try {           
+	            String delete = "DELETE FROM Indisponible WHERE id_creneau = ";
+	            delete += id_creneau ;
+	            
+	            System.out.println(delete);
+	            
+	            st.executeUpdate(delete);
+    		
+    		
+    	} catch (SQLException ex) {
+			//Exceptions 
+		    ex.printStackTrace();
+    	}	
+    }  
     
     
     
