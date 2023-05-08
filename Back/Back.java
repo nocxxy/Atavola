@@ -1015,9 +1015,13 @@ public abstract class Back {
 	            String delete = "DELETE FROM Indisponible WHERE id_creneau = ";
 	            delete += id_creneau ;
 	            
+	            String sql = "DELETE FROM Creneau WHERE id = ";
+	            String query = sql + id_creneau;
+	            
 	            System.out.println(delete);
 	            
 	            st.executeUpdate(delete);
+	            st.executeUpdate(query);
     		
     		
     	} catch (SQLException ex) {
