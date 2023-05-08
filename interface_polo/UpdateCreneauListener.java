@@ -17,6 +17,7 @@ public class UpdateCreneauListener implements ActionListener {
     }
 
     private String getHeureSynthaxe(String h){
+        System.out.println(h.length());
         String heure =h.substring(0,2);
         String min = h.substring(3,5);
         return heure + ":"+min+":00";

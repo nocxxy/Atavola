@@ -62,11 +62,11 @@ public class UpdateCreneauFrame extends JFrame {
 
         JPanel pDate = new JPanel();
         pDate.setLayout(new FlowLayout());
-        String day = String.valueOf(c.getDateDebut().getDate());
+        String day = getDay(c.getDateDebut().getDate());
         this.d = new JTextField(day);
         this.d.setPreferredSize(new Dimension(55,30));
 
-        String month = String.valueOf(c.getDateDebut().getMonth());
+        String month = getMonth(c.getDateDebut().getMonth());
         this.m = new JTextField(month);
         this.m.setPreferredSize(new Dimension(55,30));
 
@@ -106,10 +106,41 @@ public class UpdateCreneauFrame extends JFrame {
         this.getContentPane().add(panel,BorderLayout.CENTER);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
-
-    public String heureSynthaxe(Date a){
+    @SuppressWarnings("deprecation")
+    private String heureSynthaxe(Date a){
+        System.out.println(a.toString());
         int heure = a.getHours();
         int min = a.getMinutes();
-        return heure + "h" + min;
+
+
+        String minute = "" + min;
+        String heur = "" + heure;
+        if (min<10){
+            System.out.println("min inferieur a 10");
+            minute = "0" + min;
+            System.out.println(minute);
+        }
+        if(heure<10){
+            System.out.println("heure inferieur a 10");
+            heur = "0" + heure;
+            System.out.println(heur);
+        }
+
+
+        return heur + "h" + minute;
+    }
+    @SuppressWarnings("deprecation")
+    private String getDay(int d){
+        if (d<10){
+            return "0" + d;
+        }
+        return "" +d;
+    }
+    @SuppressWarnings("deprecation")
+    private String getMonth(int m){
+        if (m<10){
+            return "0" + m;
+        }
+        return "" + m;
     }
 }
