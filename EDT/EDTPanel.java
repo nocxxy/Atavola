@@ -141,7 +141,11 @@ public class EDTPanel extends JPanel{
 		
 		JButton btnSemainePrecedente = new JButton("<");
 		btnSemainePrecedente.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+		//listener
 		btnSemainePrecedente.addActionListener(new SemainePrecListener(this) );
+
+
 		btnSemainePrecedente.setMargin(new Insets(0, 8, 0, 8));
 		btnSemainePrecedente.setBackground(new Color(45, 106, 79));
 		btnSemainePrecedente.setBorder(UIManager.getBorder("Button.border"));
@@ -157,14 +161,11 @@ public class EDTPanel extends JPanel{
 		
 		JButton btnSemaineSuivante = new JButton(">");
 		btnSemaineSuivante.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnSemaineSuivante.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setDebut(Back.getSemaineSuivante(getDebut()));
-				allCreneau = Back.getAllCreneauWeek(st, getDebut());
-				creeCreneauxEDT(empEDT,empConn);
-				creePanelBas(empEDT);
-			}
-		});
+
+		//listener
+		btnSemaineSuivante.addActionListener(new SemaineProListener(this));
+
+
 		btnSemaineSuivante.setFocusPainted(false);
 		btnSemaineSuivante.setMargin(new Insets(0, 8, 0, 8));
 		btnSemaineSuivante.setBorderPainted(false);
