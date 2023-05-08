@@ -2,10 +2,12 @@ package interface_package;
 
 import java.awt.*;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
 import EDT.SignalerListener;
+import Front.Fonction.Creneau;
 import Front.Fonction.Employe;
 import interface_polo.GreenRoundButton;
 import interface_polo.ModifierIndisponibleListener;
@@ -50,11 +52,12 @@ public class IndispoUpdateFrame extends JFrame{
 	public JTextField getDa() {
 		return da;
 	}
-
+	private Creneau c;
 
 	//Constructeur
-		public IndispoUpdateFrame(Statement st, Employe e) {
+		public IndispoUpdateFrame(Statement st, Creneau c) {
 			this.e = e;
+			this.c = c;
 
 			this.setBounds(100,100,WIDTH,HEIGHT);
 			this.setTitle("A Tavola ! | Retirer Employe");

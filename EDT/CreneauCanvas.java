@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import Back.Back;
 import Front.Fonction.Creneau;
 import Front.Fonction.Employe;
+import interface_package.RetirerIndispoFrame;
 import interface_polo.RetirerCreneauFrame;
 
 @SuppressWarnings("serial")
@@ -61,11 +62,19 @@ public class CreneauCanvas extends Canvas implements MouseListener{
 	
     public void mouseClicked(MouseEvent e) {
         if(empConn.getRang().equals("chef")) {
-        	System.out.println("Modifie les creneaux du jour");
-			RetirerCreneauFrame f = new RetirerCreneauFrame(Back.connectionBase(),this.creneaux);
-			f.setVisible(true);
+			if(creneaux.size()!=0){
+				System.out.println("Modifie les creneaux du jour");
+				RetirerCreneauFrame f = new RetirerCreneauFrame(Back.connectionBase(),this.creneaux);
+				f.setVisible(true);
+			}
+
         } else {
-        	System.out.println("Modifie les indispos du jour du jour");
+			if (indispo.size()!=0){
+				System.out.println("Modifie les indispos du jour du jour");
+				RetirerIndispoFrame f = new RetirerIndispoFrame(Back.connectionBase(),this.indispo);
+				f.setVisible(true);
+			}
+
         }
     }
 

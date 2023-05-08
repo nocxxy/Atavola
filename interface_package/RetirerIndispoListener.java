@@ -1,18 +1,19 @@
-package interface_polo;
+package interface_package;
 
 import Back.Back;
+import interface_polo.RetirerCreneauFrame;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Statement;
 
-public class RetirerCreneauListener implements ActionListener {
+public class RetirerIndispoListener implements ActionListener {
 
-    private RetirerCreneauFrame f;
+    private RetirerIndispoFrame f;
 
     private Statement st;
 
-    RetirerCreneauListener(RetirerCreneauFrame f , Statement st){
+    public RetirerIndispoListener(Statement st, RetirerIndispoFrame f){
         this.f = f;
         this.st = st;
     }
@@ -20,7 +21,7 @@ public class RetirerCreneauListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         int id =this.f.getChoix().getSelect().getId();
-        Back.deleteCreneau(this.st,id);
+        Back.deleteIndisp(this.st,id);
         this.f.dispose();
     }
 }
