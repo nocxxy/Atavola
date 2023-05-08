@@ -19,6 +19,7 @@ public class RetirerCreneauListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        System.out.println("-------------------------------------------------------------------------");
         int id =this.f.getChoix().getSelect().getId();
         Back.deleteCreneau(this.st,id);
         this.f.dispose();

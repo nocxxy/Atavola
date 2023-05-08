@@ -46,6 +46,7 @@ public class RetirerCreneauFrame extends JFrame {
 
 		cancel.addActionListener(new AnnulerListener(this));
 		del.addActionListener(new RetirerCreneauListener(this,st));
+		modifier.addActionListener(new TransiUpdateListener(st,this));
 
 		panel.add(text);
 		panel.add(this.choix);
