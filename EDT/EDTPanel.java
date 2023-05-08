@@ -37,6 +37,9 @@ public class EDTPanel extends JPanel{
 	private ArrayList<Employe> allEmp = new ArrayList<Employe>();
 	private ArrayList<Creneau> allCreneau = new ArrayList<Creneau>();
 	private ArrayList<Employe> empEDT = new ArrayList<Employe>();
+
+	private JPanel panelBas;
+	private JPanel edt;
 	
 	public EDTPanel(Statement st, Employe emp) {
 		this.setOpaque(false);
@@ -69,8 +72,10 @@ public class EDTPanel extends JPanel{
 		this.setLayout(new BorderLayout(0, 0));
 		
 		creePanelHaut();
-		creeCreneauxEDT(empEDT,empConn);
-		creePanelBas(empEDT);
+		this.edt =creeCreneauxEDT(empEDT,empConn);
+		this.add(this.edt,BorderLayout.CENTER);
+		this.panelBas = creePanelBas(empEDT);
+		this.add(this.panelBas,BorderLayout.SOUTH);
 	}
 	
 	private void creePanelHaut() {
@@ -139,14 +144,10 @@ public class EDTPanel extends JPanel{
 		
 		JButton btnSemainePrecedente = new JButton("<");
 		btnSemainePrecedente.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnSemainePrecedente.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setDebut(Back.getSemainePrecedente(getDebut()));
-				allCreneau = Back.getAllCreneauWeek(st, getDebut());
-				creeCreneauxEDT(empEDT,empConn);
-				creePanelBas(empEDT);
-			}
-		});
+
+		//Listener de semaine precedente
+		btnSemainePrecedente.addActionListener(new SemainePrecListener(this));
+
 		btnSemainePrecedente.setMargin(new Insets(0, 8, 0, 8));
 		btnSemainePrecedente.setBackground(new Color(45, 106, 79));
 		btnSemainePrecedente.setBorder(UIManager.getBorder("Button.border"));
@@ -162,14 +163,11 @@ public class EDTPanel extends JPanel{
 		
 		JButton btnSemaineSuivante = new JButton(">");
 		btnSemaineSuivante.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnSemaineSuivante.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setDebut(Back.getSemaineSuivante(getDebut()));
-				allCreneau = Back.getAllCreneauWeek(st, getDebut());
-				creeCreneauxEDT(empEDT,empConn);
-				creePanelBas(empEDT);
-			}
-		});
+
+		//listener semaine pro
+		btnSemaineSuivante.addActionListener(new SemaineProListener(this));
+
+
 		btnSemaineSuivante.setFocusPainted(false);
 		btnSemaineSuivante.setMargin(new Insets(0, 8, 0, 8));
 		btnSemaineSuivante.setBorderPainted(false);
@@ -184,7 +182,7 @@ public class EDTPanel extends JPanel{
 	 * Contiendras les horaires des employés
 	 * Ainsi que les boutons d'ajout de creneaux/indisponibilité
 	 */
-	private void creePanelBas(ArrayList<Employe> emp) {
+	public JPanel creePanelBas(ArrayList<Employe> emp) {
 		JPanel PanelBas = new JPanel();
 		PanelBas.setLayout(new BorderLayout());
 		JPanel EmployePanel = new JPanel();
@@ -226,7 +224,8 @@ public class EDTPanel extends JPanel{
 		if(layout.getLayoutComponent(BorderLayout.SOUTH) != null) {
 			this.remove(layout.getLayoutComponent(BorderLayout.SOUTH));
 		}
-		this.add(PanelBas, BorderLayout.SOUTH);
+		return PanelBas;
+//		this.add(PanelBas, BorderLayout.SOUTH);
 	};
 	
 
@@ -248,7 +247,7 @@ public class EDTPanel extends JPanel{
 	/*Affiche l'emploi du temps
 	 * En fonction de la liste d'employe en entrée
 	 */
-	private void creeCreneauxEDT(ArrayList<Employe> emp, Employe empConn) {
+	public JPanel creeCreneauxEDT(ArrayList<Employe> emp, Employe empConn) {
 		Border grayline = BorderFactory.createLineBorder(new Color(190,190,190));
 	
 		JPanel EDT = new JPanel();
@@ -257,7 +256,7 @@ public class EDTPanel extends JPanel{
 		if(layout.getLayoutComponent(BorderLayout.CENTER) != null) {
 			this.remove(layout.getLayoutComponent(BorderLayout.CENTER));
 		}
-		this.add(EDT, BorderLayout.CENTER);
+
 		EDT.setLayout(new BorderLayout(0, 0));
 		
 		JPanel Heures = new JPanel();
@@ -358,6 +357,8 @@ public class EDTPanel extends JPanel{
 
 			}
 		}
+//		this.add(EDT, BorderLayout.CENTER);
+		return EDT;
 		
 		}
 	
@@ -368,5 +369,48 @@ public class EDTPanel extends JPanel{
 		public Date getDebut() {
 			return this.debut;
 		}
-	
+
+	public void setAllCreneau(ArrayList<Creneau> allCreneau) {
+		this.allCreneau = allCreneau;
+	}
+
+	public Statement getSt() {
+		return st;
+	}
+
+	public ArrayList<Color> getCouleursEmp() {
+		return couleursEmp;
+	}
+
+	public Employe getEmpConn() {
+		return empConn;
+	}
+
+	public ArrayList<Employe> getAllEmp() {
+		return allEmp;
+	}
+
+	public ArrayList<Creneau> getAllCreneau() {
+		return allCreneau;
+	}
+
+	public ArrayList<Employe> getEmpEDT() {
+		return empEDT;
+	}
+
+	public void setEdt(JPanel edt) {
+		this.edt = edt;
+	}
+
+	public void setPanelBas(JPanel panelBas) {
+		this.panelBas = panelBas;
+	}
+
+	public JPanel getEdt() {
+		return edt;
+	}
+
+	public JPanel getPanelBas() {
+		return panelBas;
+	}
 }
