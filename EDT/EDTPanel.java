@@ -63,7 +63,7 @@ public class EDTPanel extends JPanel{
 		couleursEmp.add(new Color(160, 232, 171));
 		
 		this.debut = Back.getLundi();
-		allCreneau = Back.getAllCreneauWeek(st,debut);
+		allCreneau = Back.getAllCreneau(st,debut);
 		
 		
 		this.setLayout(new BorderLayout(0, 0));
