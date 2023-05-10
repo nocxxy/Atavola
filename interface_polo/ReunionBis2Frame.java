@@ -19,7 +19,7 @@ public class ReunionBis2Frame extends JFrame {
 	final static int HEIGHT = 274;
 	
 	//Constructeur
-	public ReunionBis2Frame(Statement st, Creneau c) {
+	public ReunionBis2Frame(Statement st,Creneau c) {
 		this.setBounds(100,100,WIDTH,HEIGHT);
 		this.setTitle("A Tavola ! | Reunion2");
 		ImageIcon img = new ImageIcon("src/img/italie.png");
@@ -43,7 +43,6 @@ public class ReunionBis2Frame extends JFrame {
 		//JComboBox créneaux
 		ChoixCreneau creneau = new ChoixCreneau(c);
 		panel.add(creneau);
-
 		JLabel nb = new JLabel("Nombres d'employés dispos : ");
 		
 		JLabel employe = new JLabel("Employés dispo");

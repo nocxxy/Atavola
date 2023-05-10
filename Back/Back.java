@@ -79,6 +79,7 @@ public abstract class Back {
 
             // Creation de la table reunion dans la base de donnée
             sql = "CREATE TABLE IF NOT EXISTS reunion(\r\n"
+            		+ "    id INT,\r\n "
                     + "    id_creneau INT,\r\n"
                     + "    id_employer INT,\r\n"
                     + "    CONSTRAINT fk_reunion_employe FOREIGN KEY (id_employer) REFERENCES Employer (id),\r\n"
@@ -1030,10 +1031,10 @@ public abstract class Back {
 		    ex.printStackTrace();
     	}	
     }  
-    public static void deletereunion (Statement st, int id_creneau) {
+    public static void deletereunion (Statement st, int id) {
     	try {           
-	            String delete = "DELETE FROM reunion WHERE id_creneau = ";
-	            delete += id_creneau ;
+	            String delete = "DELETE FROM reunion WHERE id = ";
+	            delete += id ;
 	            
 	            System.out.println(delete);
 	            
