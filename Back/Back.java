@@ -121,13 +121,13 @@ public abstract class Back {
 
             // Creation de la table Reservations dans la base de donnée
             sql = "CREATE TABLE IF NOT EXISTS Reservations(\r\n" +
-                    "id_table INT NOT NULL, \r\n)" +
+                    "id_table INT NOT NULL, \r\n" +
                     "service ENUM('midi_1','midi_2','soir_1','soir_2'),\r\n" +
                     "jour DATE,\r\n" +
                     "nom_client VARCHAR(50), \r\n" +
                     "CONSTRAINT pk_reservations PRIMARY KEY (id_table,service,jour), \r\n" +
-                    "CONSTRAINT fk_reservations FOREIGN KEY (id_table) REFERENCES Tables (id)\r\n"
-                    + ");";
+                    "CONSTRAINT fk_reservations FOREIGN KEY (id_table) REFERENCES Tables (id)\r\n" +
+                    ");";
             //Envoie de la requete
             st.executeUpdate(sql);
             
@@ -1263,13 +1263,15 @@ public abstract class Back {
 			String jourStr = jour.getYear()+1900+"-"+ (jour.getMonth()+1)+"-"+jour.getDate();
     		String date =  (char)34 + jourStr  + (char)34;
     		
-    		String sql = "SELECT * FROM Creneau WHERE id ";
-    		sql += "IN (SELECT id_creneau FROM Reunion WHERE id_employer = ";
-    		sql += id + ")";
-    		sql += " AND DATE(date_heure_debut) = " + date;
-    		sql+= " AND DATE(date_heure_fin) = " + date; 
-    		sql += "AND id_employer = " + id;
+    		String sql = "SELECT r.id,c.id,c.date_heure_debut,"
+    				+ "c.date_heure_fin FROM Creneau c"
+    				+ " JOIN Reunion r ON r.id_creneau = c.id"
+    				+ " WHERE r.id_employer = "+id;
+    		sql += " AND DATE(c.date_heure_debut) = " + date;
+    		sql += " AND DATE(c.date_heure_fin) = " + date; 
+    		sql += " AND c.id_employer = " + id;
 
+    		System.out.println(sql);
     		
     		rs = st.executeQuery(sql);
     		
@@ -1277,14 +1279,18 @@ public abstract class Back {
     		ArrayList<Creneau> liste = new ArrayList();
         		
             while (rs.next()) {
-            	int id_creneau = rs.getInt("id");
+            	int id_reunion = rs.getInt("r.id");
+            	int id_creneau = rs.getInt("c.id");
+         
+            	
                 Timestamp hd = rs.getTimestamp("date_heure_debut");
                 Timestamp hf = rs.getTimestamp("date_heure_fin");
                 
                 Creneau c = new Creneau(hd,hf);
                 c.setEmploye(id);
                 c.setId(id_creneau);
-                c.setReunion(1);
+                c.setReunion(id_reunion);
+           
                 	
                 liste.add(c);
                 
