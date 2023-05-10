@@ -63,7 +63,7 @@ public class EDTPanel extends JPanel{
 		couleursEmp.add(new Color(160, 232, 171));
 		
 		this.debut = Back.getLundi();
-		allCreneau = Back.getAllCreneau(st,debut);
+		//allCreneau = Back.getAllCreneau(st,debut);
 		
 		
 		this.setLayout(new BorderLayout(0, 0));
@@ -192,6 +192,8 @@ public class EDTPanel extends JPanel{
 		EmployePanel.setPreferredSize(new Dimension(10, 70));
 		EmployePanel.setOpaque(false);
 		
+		allCreneau = Back.getAllCreneau(st,debut);
+		
 		JPanel empHeure;
 		Color empColor;
 		for(int i = 0; i < emp.size(); i++) {
@@ -225,13 +227,9 @@ public class EDTPanel extends JPanel{
 		if(layout.getLayoutComponent(BorderLayout.SOUTH) != null) {
 			this.remove(layout.getLayoutComponent(BorderLayout.SOUTH));
 		}
-
-
 		this.add(PanelBas, BorderLayout.SOUTH);
-
-
-		this.add(PanelBas, BorderLayout.SOUTH);
-
+		this.revalidate();
+		
 	};
 	
 
@@ -260,11 +258,7 @@ public class EDTPanel extends JPanel{
 	
 		JPanel EDT = new JPanel();
 		EDT.setBounds(new Rectangle(0, 0, 100, 0));
-		BorderLayout layout = (BorderLayout) this.getLayout();
-		if(layout.getLayoutComponent(BorderLayout.CENTER) != null) {
-			this.remove(layout.getLayoutComponent(BorderLayout.CENTER));
-		}
-		this.add(EDT, BorderLayout.CENTER);
+		
 		EDT.setLayout(new BorderLayout(0, 0));
 		
 		JPanel Heures = new JPanel();
@@ -311,9 +305,9 @@ public class EDTPanel extends JPanel{
 		JPanel creneauPanel;
 		CreneauCanvas creneauCanvas;
 		for(int i = 0; i<7; i++) {
+			
 			//PANEL JOUR
 			jourPanel = new JPanel();
-			jourPanel.setBackground(new Color(255, 255, 255));
 			semainePanel.add(jourPanel);
 			jourPanel.setLayout(new BorderLayout(0, 0));
 			
@@ -362,29 +356,32 @@ public class EDTPanel extends JPanel{
 				//CRENEAU
 				creneauCanvas = new CreneauCanvas(couleursEmp.get(j),Back.getCreneauxEmp(st, Back.jourPlusi(debut,i), empEDT.get(j).getId()),Back.getCreneauxIndisp(st, Back.jourPlusi(debut,i), empEDT.get(j).getId()),empConn);
 				creneauPanel.add(creneauCanvas);
-
+				}
 			}
+		//colorEmpContainer.revalidate();
+		BorderLayout layout = (BorderLayout)this.getLayout();
+		if(layout.getLayoutComponent(BorderLayout.CENTER)!=null) {
+			this.remove(layout.getLayoutComponent(BorderLayout.CENTER));
 		}
-
 		this.add(EDT, BorderLayout.CENTER);
-
-
-		
-		}
+		this.revalidate();
+	}
 	
-		public void setDebut(Date debut) {
-			this.debut = debut;
-		}
 	
-		public Date getDebut() {
-			return this.debut;
-		}
+	public void setDebut(Date debut) {
+		this.debut = debut;
+	}
+	
+	public Date getDebut() {
+		return this.debut;
+	}
 
 	public Statement getSt() {
 		return st;
 	}
 
 	public void setAllCreneau(ArrayList<Creneau> allCreneau) {
+		System.out.println("set");
 		this.allCreneau = allCreneau;
 	}
 
@@ -395,4 +392,5 @@ public class EDTPanel extends JPanel{
 	public Employe getEmpConn() {
 		return empConn;
 	}
+
 }
