@@ -9,13 +9,15 @@ public class Creneau {
     private int employe;
     private boolean dispo;
     private int id;
-    private boolean reunion;
+    private int reunion;
     
-    public boolean isReunion() {
+   
+
+	public int getReunion() {
 		return reunion;
 	}
 
-	public void setReunion(boolean reunion) {
+	public void setReunion(int reunion) {
 		this.reunion = reunion;
 	}
 
