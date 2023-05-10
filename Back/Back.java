@@ -1031,10 +1031,10 @@ public abstract class Back {
 		    ex.printStackTrace();
     	}	
     }  
-    public static void deletereunion (Statement st, int id_creneau) {
+    public static void deletereunion (Statement st, int id) {
     	try {           
-	            String delete = "DELETE FROM reunion WHERE id_creneau = ";
-	            delete += id_creneau ;
+	            String delete = "DELETE FROM reunion WHERE id = ";
+	            delete += id ;
 	            
 	            System.out.println(delete);
 	            
