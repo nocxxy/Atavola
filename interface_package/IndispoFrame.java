@@ -1,6 +1,8 @@
 package interface_package;
 
 import java.awt.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.sql.Statement;
 
 import javax.swing.*;
@@ -86,10 +88,64 @@ public class IndispoFrame extends JFrame{
 			pDateDebut.setLayout(new FlowLayout());
 			this.dd = new JTextField();
 			this.dd.setPreferredSize(new Dimension(55,30));
+			dd.setForeground(Color.GRAY);
+			dd.setText("DD");
+			this.dd.addFocusListener(new FocusListener(){
+				@Override
+				public void focusGained(FocusEvent e) {
+					if (dd.getText().equals("DD")) {
+						dd.setText("");
+						dd.setForeground(Color.BLACK);
+					}
+				}
+				@Override
+				public void focusLost(FocusEvent e) {
+					if (dd.getText().isEmpty()) {
+						dd.setForeground(Color.GRAY);
+						dd.setText("DD");
+					}
+				}
+			});
 			this.dm = new JTextField();
 			this.dm.setPreferredSize(new Dimension(55,30));
+			dm.setForeground(Color.GRAY);
+			dm.setText("MM");
+			this.dm.addFocusListener(new FocusListener(){
+				@Override
+				public void focusGained(FocusEvent e) {
+					if (dm.getText().equals("MM")) {
+						dm.setText("");
+						dm.setForeground(Color.BLACK);
+					}
+				}
+				@Override
+				public void focusLost(FocusEvent e) {
+					if (dm.getText().isEmpty()) {
+						dm.setForeground(Color.GRAY);
+						dm.setText("MM");
+					}
+				}
+			});
 			this.da = new JTextField();
 			this.da.setPreferredSize(new Dimension(55,30));
+			da.setForeground(Color.GRAY);
+			da.setText("YYYY");
+			this.da.addFocusListener(new FocusListener(){
+				@Override
+				public void focusGained(FocusEvent e) {
+					if (da.getText().equals("YYYY")) {
+						da.setText("");
+						da.setForeground(Color.BLACK);
+					}
+				}
+				@Override
+				public void focusLost(FocusEvent e) {
+					if (da.getText().isEmpty()) {
+						da.setForeground(Color.GRAY);
+						da.setText("YYYY");
+					}
+				}
+			});
 			
 			pDateDebut.add(dateDebut);
 			pDateDebut.add(this.dd);
@@ -102,8 +158,44 @@ public class IndispoFrame extends JFrame{
 			pHour.setLayout(new FlowLayout());
 			this.hd = new JTextField();
 			this.hd.setPreferredSize(new Dimension(50,30));
+			this.hd.setForeground(Color.GRAY);
+			this.hd.setText("--h--");
+			this.hd.addFocusListener(new FocusListener(){
+				@Override
+				public void focusGained(FocusEvent e) {
+					if (hd.getText().equals("--h--")) {
+						hd.setText("");
+						hd.setForeground(Color.BLACK);
+					}
+				}
+				@Override
+				public void focusLost(FocusEvent e) {
+					if (hd.getText().isEmpty()) {
+						hd.setForeground(Color.GRAY);
+						hd.setText("--h--");
+					}
+				}
+			});
 			this.hf = new JTextField();
 			this.hf.setPreferredSize(new Dimension(50,30));
+			this.hf.setForeground(Color.GRAY);
+			this.hf.setText("--h--");
+			this.hf.addFocusListener(new FocusListener(){
+				@Override
+				public void focusGained(FocusEvent e) {
+					if (hf.getText().equals("--h--")) {
+						hf.setText("");
+						hf.setForeground(Color.BLACK);
+					}
+				}
+				@Override
+				public void focusLost(FocusEvent e) {
+					if (hf.getText().isEmpty()) {
+						hf.setForeground(Color.GRAY);
+						hf.setText("--h--");
+					}
+				}
+			});
 
 			pHour.add(horaire);
 			pHour.add(this.hd);
