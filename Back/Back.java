@@ -98,6 +98,39 @@ public abstract class Back {
                     + ");";
             //Envoie de la requete
             st.executeUpdate(sql);
+
+            // Creation de la table Tables dans la base de donnée
+            sql = "CREATE TABLE IF NOT EXISTS Tables(\r\n"
+                    + "id INT NOT NULL AUTO_INCREMENT, \r\n"
+                    + "numero INT NOT NULL, \r\n"
+                    + "nb_places INT NOT NULL, \r\n"
+                    + "CONSTRAINT pk_tables PRIMARY KEY (id)\r\n"
+                    + ");";
+            //Envoie de la requete
+            st.executeUpdate(sql);
+
+            // Creation de la table Tables_prises dans la base de donnée
+            sql = "CREATE TABLE IF NOT EXISTS Tables_prises(\r\n"
+                    + "id_table INT NOT NULL, \r\n"
+                    + "service ENUM('midi_1','midi_2','soir_1','soir_2'),\r\n"
+                    + "CONSTRAINT pk_tables_prises PRIMARY KEY (id_table,service), \r\n"
+                    + "CONSTRAINT fk_tables_prises FOREIGN KEY (id_table) REFERENCES Tables (id)\r\n"
+                    + ");";
+            //Envoie de la requete
+            st.executeUpdate(sql);
+
+            // Creation de la table Reservations dans la base de donnée
+            sql = "CREATE TABLE IF NOT EXISTS Reservations(\r\n" +
+                    "id_table INT NOT NULL, \r\n)" +
+                    "service ENUM('midi_1','midi_2','soir_1','soir_2'),\r\n" +
+                    "jour DATE,\r\n" +
+                    "nom_client VARCHAR(50), \r\n" +
+                    "CONSTRAINT pk_reservations PRIMARY KEY (id_table,service,jour), \r\n" +
+                    "CONSTRAINT fk_reservations FOREIGN KEY (id_table) REFERENCES Tables (id)\r\n"
+                    + ");";
+            //Envoie de la requete
+            st.executeUpdate(sql);
+            
         } catch (Exception e) {
             System.out.println("Erreur " + e.getMessage());
         }

@@ -34,8 +34,8 @@ class RoundedPanel extends JPanel
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Dimension arcs = new Dimension(cornerRadius, cornerRadius);
-        int width = getWidth();
-        int height = getHeight();
+        int width = this.getWidth();
+        int height = this.getHeight();
         Graphics2D graphics = (Graphics2D) g;
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
