@@ -9,9 +9,17 @@ public class Creneau {
     private int employe;
     private boolean dispo;
     private int id;
-
+    private boolean reunion;
     
-    // ________________________________________________Constructeur/Setter_____________________________
+    public boolean isReunion() {
+		return reunion;
+	}
+
+	public void setReunion(boolean reunion) {
+		this.reunion = reunion;
+	}
+
+	// ________________________________________________Constructeur/Setter_____________________________
     public Creneau (Date hd, Date hf) {//, int e ){//, boolean dispo) {
         this.heuredebut = hd;
         this.heurefin = hf;

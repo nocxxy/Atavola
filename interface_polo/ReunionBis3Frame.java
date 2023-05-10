@@ -11,16 +11,16 @@ import javax.swing.*;
 
 import interface_package.RoundJTextField;
 
-public class ReunionBis2Frame extends JFrame {
+public class ReunionBis3Frame extends JFrame {
 	
 	//Attributs
 	final static int WIDTH = 300;
 	final static int HEIGHT = 274;
 	
 	//Constructeur
-	public ReunionBis2Frame(Statement st) {
+	public ReunionBis3Frame(Statement st) {
 		this.setBounds(100,100,WIDTH,HEIGHT);
-		this.setTitle("A Tavola ! | Reunion2");
+		this.setTitle("A Tavola ! | Reunion3");
 		ImageIcon img = new ImageIcon("src/img/italie.png");
 		this.setIconImage(img.getImage());
 		this.setOpacity(1);
@@ -33,17 +33,14 @@ public class ReunionBis2Frame extends JFrame {
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 200, 15));
 		
 		
-		JLabel text = new JLabel("Création Réunion (2/3)");
+		JLabel text = new JLabel("Création Réunion (3/3)");
 		panel.add(text);
 		
-		JLabel question = new JLabel("A quelle horaire souhaitez vous la planifier ?");
+		JLabel question = new JLabel("Quels employés souhaitez vous convier ?");
 		panel.add(question);
 		
-		//JComboBox créneaux
-		JLabel nb = new JLabel("Nombres d'employés dispos : ");
-		
-		JLabel employe = new JLabel("Employés dispo");
-		//boucle for
+		JCheckBox employe = new JCheckBox("employe");
+		panel.add(employe);
 		
 		JPanel nav = new JPanel();
 		nav.setLayout(new FlowLayout());
