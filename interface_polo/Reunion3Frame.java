@@ -108,6 +108,7 @@ public class Reunion3Frame extends JFrame {
 			this.getContentPane().add(panel,BorderLayout.CENTER);
 			this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			this.setResizable(false);
+			this.setLocationRelativeTo(null); 
 			
 			
 		}

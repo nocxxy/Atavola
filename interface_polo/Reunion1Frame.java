@@ -81,6 +81,7 @@ public class Reunion1Frame extends JFrame {
 			
 			this.getContentPane().add(panel,BorderLayout.CENTER);
 			this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			this.setLocationRelativeTo(null); 
 
 }
 

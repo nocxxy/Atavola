@@ -13,7 +13,7 @@ import javax.swing.*;
 public class RetirerCreneauFrame extends JFrame {
 	
 	//Attributs
-	final static int WIDTH = 280;
+	final static int WIDTH = 350;
 	final static int HEIGHT = 280;
 
 	private ChoixCreneau choix;
@@ -23,7 +23,7 @@ public class RetirerCreneauFrame extends JFrame {
 	public RetirerCreneauFrame(Statement st,ArrayList<Creneau> c) {
 		this.creneau = c;
 		this.setBounds(100,100,WIDTH,HEIGHT);
-		this.setTitle("A Tavola ! | Retirer Employe");
+		this.setTitle("A Tavola ! | Modifications Créneau");
 		ImageIcon img = new ImageIcon("src/img/italie.png");
 		this.setIconImage(img.getImage());
 		this.setOpacity(1);
@@ -35,7 +35,7 @@ public class RetirerCreneauFrame extends JFrame {
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 200, 15));
 		
 		
-		JLabel text = new JLabel("Choisissez le créneau à supprimer : ");
+		JLabel text = new JLabel("Choisissez le créneau à traiter : ");
 		
 		
 		this.choix= new ChoixCreneau(this.creneau);
@@ -56,6 +56,7 @@ public class RetirerCreneauFrame extends JFrame {
 		
 		this.getContentPane().add(panel,BorderLayout.CENTER);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setLocationRelativeTo(null); 
 		
 		
 	}
