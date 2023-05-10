@@ -15,7 +15,7 @@ import interface_package.RoundJTextField;
 public class ReunionBis3Frame extends JFrame {
 	
 	//Attributs
-	final static int WIDTH = 300;
+	final static int WIDTH = 320;
 	final static int HEIGHT = 274;
 	
 	private ArrayList<JCheckBox> select; 
@@ -36,7 +36,7 @@ public class ReunionBis3Frame extends JFrame {
 		 */
 		JPanel panel = new JPanel();
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 200, 15));
-		//panel.setPreferredSize(new Dimension(HEIGHT,WIDTH + ));
+		panel.setPreferredSize(new Dimension(HEIGHT,WIDTH + this.listEmploye.size()* 15 ));
 		
 		
 		JLabel text = new JLabel("Création Réunion (3/3)");
@@ -69,6 +69,9 @@ public class ReunionBis3Frame extends JFrame {
 		
 		JScrollPane scroll = new JScrollPane(finale);
 		scroll.setPreferredSize(new Dimension(0,0));
+		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		
 		
 		
 		this.getContentPane().add(scroll);
