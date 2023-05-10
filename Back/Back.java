@@ -29,8 +29,8 @@ public abstract class Back {
             //Créer connection
             String dbName = "atavola";
             String dbIP = "localhost";
-            String dbUser = "root";
-            String dbPwd = "root";
+            String dbUser = "elias";
+            String dbPwd = "admin";
 
             String url = "jdbc:mysql://" + dbIP + ":3306/" + dbName;
             
@@ -248,13 +248,15 @@ public abstract class Back {
 
                 res.add(c);
             }
-
+            /*
             for(Creneau c : res) {
                 //On affiche les éléments de la liste
                 System.out.println("Creneau:");
                 System.out.println(c.getDateDebut() + ", " + c.getDateFin() + ", "+c.getId() 
                 +", " + c.getEmploye());
             }
+            
+            */
             return res;
 
         } catch (SQLException ex) {
@@ -395,10 +397,12 @@ public abstract class Back {
         cal.add(cal.DATE,6);
         java.util.Date d1 = new java.util.Date (cal.YEAR-1900,cal.MONTH,cal.DATE);
         ArrayList<Creneau> res = getAllWeeklyCreneau(st,convertDatetoString(d),convertDatetoString(d1));
+        /*
         for(Creneau c : res) {
         	System.out.println(c.getId()+ ", "+c.getHeureDebut()+ ", "+
         			c.getHeureFin());
         }
+        */
         return res;
     }
     
@@ -489,7 +493,7 @@ public abstract class Back {
         java.util.Date temp = new java.util.Date(jour.getTime());
         cal.setTime(jour);
         cal.add(Calendar.DAY_OF_MONTH, i);
-        System.out.println(cal.getTime().toString());
+        //System.out.println(cal.getTime().toString());
         Date jourPlus = new Date(cal.getTime().getTime());
         return jourPlus;
     }
@@ -509,7 +513,7 @@ public abstract class Back {
             String query = sql + (char)34 + date + (char)34 + " AND DATE(date_heure_fin) = "+
                     (char)34 + date + (char)34 + " AND id_employer = " +id;
             
-            System.out.println(query);
+            //System.out.println(query);
             //Execution de la requête sql
             ResultSet rs = st.executeQuery(query);
 
@@ -531,12 +535,14 @@ public abstract class Back {
                 res.add(c);
             }
 
+            /*
             for(Creneau c : res) {
                 //On affiche les éléments de la liste
                 System.out.println("Creneau:");
                 System.out.println(c.getDateDebut() + ", " + c.getDateFin() +", "
                 		+c.getId() + ", " + c.getEmploye());
             }
+            */
             return res;
 
         } catch (SQLException ex) {
@@ -984,11 +990,13 @@ public abstract class Back {
                 
     		}
     		
+            /*
     		for(Creneau c : liste) {
     			 System.out.println("Creneau:");
                  System.out.println(c.getDateDebut() + ", " + c.getDateFin() + 
                 		 ", "+ c.getId() + ", "+ c.getEmploye());
     		}
+    		*/
     		return liste;
     		
     		
@@ -1091,12 +1099,14 @@ public abstract class Back {
                 res.add(c);
             }
 
+            /*
             for(Creneau c : res) {
                 //On affiche les éléments de la liste
                 System.out.println("Creneau:");
                 System.out.println(c.getDateDebut() + ", " + c.getDateFin() + ", "+c.getId() 
                 +", " + c.getEmploye());
             }
+            */
             return res;
 
         } catch (SQLException ex) {
@@ -1201,11 +1211,13 @@ public abstract class Back {
                 
     		}
     		
+            /*
     		for(Creneau c : liste) {
     			 System.out.println("Creneau:");
                  System.out.println(c.getDateDebut() + ", " + c.getDateFin() + 
                 		 ", "+ c.getId() + ", "+ c.getEmploye());
     		}
+    		*/
     		return liste;
     		
     		
@@ -1214,5 +1226,55 @@ public abstract class Back {
 		    ex.printStackTrace();
     	}	return null;
     }
-     
+
+    /*
+     * Méthode qui vérifie si une reunion existe
+     * Prend un statement et son id
+     * Renvoie un booléen
+     *
+     * */
+    public static boolean reunionExiste(Statement st, int id_reunion) {
+        ResultSet rs = null;
+        try {
+            //la requête sql
+            String query = "SELECT * FROM reunion WHERE id_reunion = ";
+
+            query+= id_reunion;
+
+            //execution de la requête
+            rs = st.executeQuery(query);
+            return (rs.next());
+
+        }catch (SQLException ex) {
+            //Exceptions
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    public static void updateReunion(Statement st, int id_reunion, ArrayList<Employe> e, String debut, String fin, boolean urgent) {
+        if(reunionExiste(st,id_reunion)) {
+            // Supprimer la réunion existante
+            deletereunion(st, id_reunion);
+            // Ajouter la nouvelle réunion
+            ajout_reunion(st, e, debut, fin, urgent);
+        }
+    }
+
+    public static int getIdLastReunion(Statement st) {
+        try {
+            String query = "SELECT id FROM creneau ORDER BY id DESC LIMIT 1";
+            ResultSet rs = st.executeQuery(query);
+            if (rs.next()) {
+                return rs.getInt("id");
+            } else {
+                return 0;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return -1;
+        }
+    }
+
+
 }

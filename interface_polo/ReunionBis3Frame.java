@@ -9,16 +9,21 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
+import Front.Fonction.Employe;
 import interface_package.RoundJTextField;
 
 public class ReunionBis3Frame extends JFrame {
 	
 	//Attributs
-	final static int WIDTH = 300;
+	final static int WIDTH = 320;
 	final static int HEIGHT = 274;
 	
+	private ArrayList<JCheckBox> select; 
+	private ArrayList<Employe> listEmploye;
+	
 	//Constructeur
-	public ReunionBis3Frame(Statement st) {
+	public ReunionBis3Frame(Statement st,ArrayList<Employe> listEmploye) {
+		this.listEmploye = listEmploye;
 		this.setBounds(100,100,WIDTH,HEIGHT);
 		this.setTitle("A Tavola ! | Reunion3");
 		ImageIcon img = new ImageIcon("src/img/italie.png");
@@ -30,7 +35,8 @@ public class ReunionBis3Frame extends JFrame {
 		 * Panel Général qui va tout contenir
 		 */
 		JPanel panel = new JPanel();
-		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 200, 15));
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 2000, 15));
+		panel.setPreferredSize(new Dimension(HEIGHT,WIDTH + this.listEmploye.size()* 15 ));
 		
 		
 		JLabel text = new JLabel("Création Réunion (3/3)");
@@ -39,8 +45,12 @@ public class ReunionBis3Frame extends JFrame {
 		JLabel question = new JLabel("Quels employés souhaitez vous convier ?");
 		panel.add(question);
 		
-		JCheckBox employe = new JCheckBox("employe");
-		panel.add(employe);
+		
+		for(int i = 0; i<this.listEmploye.size();i++) {
+			String pn = this.listEmploye.get(i).getPrenom() + " " + this.listEmploye.get(i).getNom();
+			JCheckBox cb = new JCheckBox(pn);
+			panel.add(cb);
+		}
 		
 		JPanel nav = new JPanel();
 		nav.setLayout(new FlowLayout());
@@ -53,7 +63,18 @@ public class ReunionBis3Frame extends JFrame {
 		
 		panel.add(nav);
 		
-		this.getContentPane().add(panel,BorderLayout.CENTER);
+		JPanel finale = new JPanel();
+		finale.setLayout(new BorderLayout());
+		finale.add(panel,BorderLayout.CENTER);
+		
+		JScrollPane scroll = new JScrollPane(finale);
+		scroll.setPreferredSize(new Dimension(0,0));
+		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		
+		
+		
+		this.getContentPane().add(scroll);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setLocationRelativeTo(null); 
 
