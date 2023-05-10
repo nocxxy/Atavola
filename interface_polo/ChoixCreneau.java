@@ -18,19 +18,21 @@ public class ChoixCreneau extends JPanel {
         this.choixCreneau = new JComboBox(s1);
         this.add(this.choixCreneau);
     }
+    @SuppressWarnings("deprecation")
     public ChoixCreneau(Creneau c){
         ArrayList<Creneau> temp = new ArrayList<Creneau>();
-        Date d1 = c.getDateDebut();
-        Date d2 = c.getDateFin();
+
 
         for (int i = 7; i<23 ; i++){
-            d1.setHours(i);
-            d2.setHours(i+1);
+            Date d1 = new Date(c.getDateDebut().getYear(),c.getDateDebut().getMonth(),c.getDateDebut().getDate(),i,0);
+            Date d2 = new Date(c.getDateFin().getYear(),c.getDateFin().getMonth(),c.getDateFin().getDate(),i+1,0);
             Creneau h = new Creneau(d1,d2);
             temp.add(h);
 
         }
+        System.out.println(temp.get(0).toString());
         this.c = temp;
+        System.out.println(this.c);
         String s1[] = this.getListCreneau();
         this.choixCreneau = new JComboBox(s1);
         this.add(this.choixCreneau);
