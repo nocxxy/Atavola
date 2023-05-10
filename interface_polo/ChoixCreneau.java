@@ -5,6 +5,7 @@ import Front.Fonction.Creneau;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 
 public class ChoixCreneau extends JPanel {
 
@@ -13,6 +14,23 @@ public class ChoixCreneau extends JPanel {
 
     public ChoixCreneau(ArrayList<Creneau> c){
         this.c = c;
+        String s1[] = this.getListCreneau();
+        this.choixCreneau = new JComboBox(s1);
+        this.add(this.choixCreneau);
+    }
+    public ChoixCreneau(Creneau c){
+        ArrayList<Creneau> temp = new ArrayList<Creneau>();
+        Date d1 = c.getDateDebut();
+        Date d2 = c.getDateFin();
+
+        for (int i = 7; i<23 ; i++){
+            d1.setHours(i);
+            d2.setHours(i+1);
+            Creneau h = new Creneau(d1,d2);
+            temp.add(h);
+
+        }
+        this.c = temp;
         String s1[] = this.getListCreneau();
         this.choixCreneau = new JComboBox(s1);
         this.add(this.choixCreneau);
