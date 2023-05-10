@@ -77,12 +77,12 @@ public abstract class Back {
             //Envoie de la requete
             st.executeUpdate(sql);
 
-            // Creation de la table Travail dans la base de donnée
-            sql = "CREATE TABLE IF NOT EXISTS travail(\r\n"
+            // Creation de la table reunion dans la base de donnée
+            sql = "CREATE TABLE IF NOT EXISTS reunion(\r\n"
                     + "    id_creneau INT,\r\n"
                     + "    id_employer INT,\r\n"
-                    + "    CONSTRAINT fk_travail_employe FOREIGN KEY (id_employer) REFERENCES Employer (id),\r\n"
-                    + "    CONSTRAINT fk_travail_creneau FOREIGN KEY (id_creneau) REFERENCES Creneau (id)\r\n"
+                    + "    CONSTRAINT fk_reunion_employe FOREIGN KEY (id_employer) REFERENCES Employer (id),\r\n"
+                    + "    CONSTRAINT fk_reunion_creneau FOREIGN KEY (id_creneau) REFERENCES Creneau (id)\r\n"
                     + ");";
             //Envoie de la requete
             st.executeUpdate(sql);
@@ -200,7 +200,7 @@ public abstract class Back {
         try {
             //La requête sql
         	deleteIndisp(st,id);
-        	deleteTravail(st,id);
+        	deletereunion(st,id);
         	
             String sql = "DELETE FROM Creneau WHERE Creneau.id = ";
             String query = sql + id;
@@ -567,10 +567,10 @@ public abstract class Back {
     	}	
     }
     
-    public static void retireIndispOuTravail (Statement st,int id,String indispOuTravail) {
+    public static void retireIndispOureunion (Statement st,int id,String indispOureunion) {
     	try {
 	  	            
-	            String delete = "DELETE FROM " +indispOuTravail +" WHERE id_employer = "+id;
+	            String delete = "DELETE FROM " +indispOureunion +" WHERE id_employer = "+id;
 	            st.executeUpdate(delete);
     
     		
@@ -590,8 +590,8 @@ public abstract class Back {
     public static void retireEmploye(Statement st, int id) {
     	try {
     		if(creneauExiste(st,id)) {
-    			retireIndispOuTravail(st,id,"Indisponible");
-    			retireIndispOuTravail(st,id,"Travail");
+    			retireIndispOureunion(st,id,"Indisponible");
+    			retireIndispOureunion(st,id,"reunion");
     			String sql = "DELETE FROM Creneau WHERE id_employer = ";
     			sql+= id;
     			st.executeUpdate(sql);
@@ -802,7 +802,7 @@ public abstract class Back {
      * Renvoie un booléen
      * 
      * */
-    public static boolean travail (Statement st, int id,String debut,String fin) {
+    public static boolean reunion (Statement st, int id,String debut,String fin) {
     	ResultSet rs = null;
     	try {
     		//Si l'employé existe et que le creneau existe
@@ -811,7 +811,7 @@ public abstract class Back {
     			int id_creneau = getIdCreneau(st,debut,fin,id);
     			
     			//On vérifie si l'employé travaille
-    			String query = "SELECT * FROM travail WHERE id_creneau =";
+    			String query = "SELECT * FROM reunion WHERE id_creneau =";
     			query += id_creneau + " AND id_employer = ";
     			query += id;
     			
@@ -827,16 +827,16 @@ public abstract class Back {
     }
     
     /*
-     * Méthode pour ajouter un creneau de travail 
+     * Méthode pour ajouter un creneau de reunion
      * Prend une liste de type arraylist, une heure de debut et de fin
      *
      * */
-    public static void ajoutTravail (Statement st, ArrayList<Employe> e,String debut, String fin) {
+    public static void ajoutreunion (Statement st, ArrayList<Employe> e,String debut, String fin) {
     	try {
     		for (Employe e1 :e) {
     			int id = e1.getId();
-    			//On fait l'ajout de creneau de travail sur un employé qui existe déjà 
-    			if(employeExiste(st,id) && ! travail(st,id,debut,fin)) {
+    			//On fait l'ajout de creneau de reunion sur un employé qui existe déjà
+    			if(employeExiste(st,id) && ! reunion(st,id,debut,fin)) {
     			
     				if(! creneauExiste(st,debut,fin,id)) {
     					//Si le créneau n'existe pas on l'ajoute dans la base
@@ -846,14 +846,14 @@ public abstract class Back {
     				int id_creneau = getIdCreneau(st,debut,fin,id);
             
             
-    				//la requête pour ajouter le creneau de travail
-    				String travail = "INSERT INTO travail (id_creneau,id_employer) VALUES (";
-    				travail += id_creneau +",";
-    				travail += id ;
-    				travail += ")";
+    				//la requête pour ajouter le creneau de reunion
+    				String reunion = "INSERT INTO reunion (id_creneau,id_employer) VALUES (";
+    				reunion += id_creneau +",";
+    				reunion += id ;
+    				reunion += ")";
             
             
-    				st.executeUpdate(travail);
+    				st.executeUpdate(reunion);
     			}
     		}
     	} catch (SQLException ex) {
@@ -904,12 +904,12 @@ public abstract class Back {
     		if (!urgent  ) {
     			//si la réunion n'est pas urgente, on vérifie si les employés sont tous disponibles
     			if (sontDisponibles(st,e,debut,fin)) {
-    				ajoutTravail(st,e,debut,fin);
+    				ajoutreunion(st,e,debut,fin);
     			}
     		}else {
     			//si la réunion est urgente, on l'ajoute peu importe
     			retireIndisp(st,e,debut,fin);
-    			ajoutTravail(st,e,debut,fin);
+    			ajoutreunion(st,e,debut,fin);
     			
     		}
     		
@@ -1029,9 +1029,9 @@ public abstract class Back {
 		    ex.printStackTrace();
     	}	
     }  
-    public static void deleteTravail (Statement st, int id_creneau) {
+    public static void deletereunion (Statement st, int id_creneau) {
     	try {           
-	            String delete = "DELETE FROM travail WHERE id_creneau = ";
+	            String delete = "DELETE FROM reunion WHERE id_creneau = ";
 	            delete += id_creneau ;
 	            
 	            System.out.println(delete);
