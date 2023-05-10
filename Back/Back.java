@@ -29,8 +29,8 @@ public abstract class Back {
             //Créer connection
             String dbName = "atavola";
             String dbIP = "localhost";
-            String dbUser = "elias";
-            String dbPwd = "admin";
+            String dbUser = "root";
+            String dbPwd = "root";
 
             String url = "jdbc:mysql://" + dbIP + ":3306/" + dbName;
             
@@ -79,7 +79,7 @@ public abstract class Back {
 
             // Creation de la table reunion dans la base de donnée
             sql = "CREATE TABLE IF NOT EXISTS reunion(\r\n"
-            		+ "    id INT ,\r\n "
+            		+ "    id INT DEFAULT 0,\r\n "
                     + "    id_creneau INT,\r\n"
                     + "    id_employer INT,\r\n"
                     + "    CONSTRAINT fk_reunion_employe FOREIGN KEY (id_employer) REFERENCES Employer (id),\r\n"
@@ -847,14 +847,54 @@ public abstract class Back {
 		    ex.printStackTrace();
     	}	
     }
+    
+    
+    public static boolean memeReunion(String debut,String fin) {
+    	ResultSet rs = null;
+    	try {
+    		String sql = "SELECT * FROM reunion WHERE id_creneau IN "
+					+ "(SELECT id FROM Creneau WHERE date_heure_debut =";
+					sql += (char)34 +debut +(char)34;
+					sql+= " AND date_heure_fin = ";
+					sql += (char)34 + fin +(char)34 +")" +"LIMIT 1 ";
+			System.out.println(sql);
+			rs= Back.connectionBase().executeQuery(sql);
+			
+			return rs.next();
+    	}catch (SQLException ex) {
+			//Exceptions 
+		    ex.printStackTrace();
+    	}return false;
+    }
+    
+    
+    public static int idMemeReunion(String debut,String fin) {
+    	int id = 0;
+    	try {
+    		String sql = "SELECT * FROM reunion WHERE id_creneau IN "
+					+ "(SELECT id FROM Creneau WHERE date_heure_debut =";
+					sql += (char)34 +debut +(char)34;
+					sql+= " AND date_heure_fin = ";
+					sql += (char)34 + fin +(char)34 +")" +"LIMIT 1 ";
+			System.out.println(sql);
+			ResultSet rs = Back.connectionBase().executeQuery(sql);
+			
+			while(rs.next()) {
+				id = rs.getInt("id");
+			}
+    	}catch (SQLException ex) {
+			//Exceptions 
+		    ex.printStackTrace();
+    	}return id;
+    }
     /*
      * Méthode pour ajouter un creneau de reunion
      * Prend une liste de type arraylist, une heure de debut et de fin
      *
      * */
     public static void ajoutreunion (Statement st, ArrayList<Employe> e,String debut, String fin) {
-    	
-    		//int indice = getIdLastReunion(st) +1;
+    		int indice = getIdLastReunion(st) +1;
+    		
     		for (Employe e1 :e) {
     			int id = e1.getId();
     			//On fait l'ajout de creneau de reunion sur un employé qui existe déjà
@@ -864,13 +904,19 @@ public abstract class Back {
     					//Si le créneau n'existe pas on l'ajoute dans la base
     					insertCreneau(st,debut,fin,id);
     				}
-    		 
     				int id_creneau = getIdCreneau(st,debut,fin,id);
             
-    				//la requête pour ajouter le creneau de reunion
-    				insertionReunion(1,id_creneau,id);
+    				
+    				if (memeReunion(debut,fin)) {
+    					indice = idMemeReunion(debut,fin);
+    					insertionReunion(indice,id_creneau,id);
+    				}else {
+    					insertionReunion(indice,id_creneau,id);
+    				}
     			}
     		}
+    		
+    		
     	
     }  
     
@@ -1263,7 +1309,7 @@ public abstract class Back {
 
     public static int getIdLastReunion(Statement st) {
         try {
-            String query = "SELECT id FROM creneau ORDER BY id DESC LIMIT 1";
+            String query = "SELECT id FROM reunion ORDER BY id DESC LIMIT 1";
             ResultSet rs = st.executeQuery(query);
             if (rs.next()) {
                 return rs.getInt("id");
@@ -1275,6 +1321,5 @@ public abstract class Back {
             return -1;
         }
     }
-
 
 }
