@@ -972,6 +972,7 @@ public abstract class Back {
                 Creneau c = new Creneau(hd,hf);
                 c.setEmploye(id);
                 c.setId(id_creneau);
+                c.setDispo(false);
                 	
                 liste.add(c);
                 
@@ -1157,6 +1158,52 @@ public abstract class Back {
     	return res;
     }
     
-    
+    public static ArrayList<Creneau> getCreneauxReunion(Statement st, Date jour, int id){
+    	ResultSet rs = null;
+    	try {
+
+			String jourStr = jour.getYear()+1900+"-"+ (jour.getMonth()+1)+"-"+jour.getDate();
+    		String date =  (char)34 + jourStr  + (char)34;
+    		
+    		String sql = "SELECT * FROM Creneau WHERE id ";
+    		sql += "IN (SELECT id_creneau FROM Reunion WHERE id_employer = ";
+    		sql += id + ")";
+    		sql += " AND DATE(date_heure_debut) = " + date;
+    		sql+= " AND DATE(date_heure_fin) = " + date; 
+    		sql += "AND id_employer = " + id;
+
+    		
+    		rs = st.executeQuery(sql);
+    		
+    		
+    		ArrayList<Creneau> liste = new ArrayList();
+        		
+            while (rs.next()) {
+            	int id_creneau = rs.getInt("id");
+                Timestamp hd = rs.getTimestamp("date_heure_debut");
+                Timestamp hf = rs.getTimestamp("date_heure_fin");
+                
+                Creneau c = new Creneau(hd,hf);
+                c.setEmploye(id);
+                c.setId(id_creneau);
+                c.setReunion(true);
+                	
+                liste.add(c);
+                
+    		}
+    		
+    		for(Creneau c : liste) {
+    			 System.out.println("Creneau:");
+                 System.out.println(c.getDateDebut() + ", " + c.getDateFin() + 
+                		 ", "+ c.getId() + ", "+ c.getEmploye());
+    		}
+    		return liste;
+    		
+    		
+    	}catch (SQLException ex) {
+			//Exceptions 
+		    ex.printStackTrace();
+    	}	return null;
+    }
      
 }
