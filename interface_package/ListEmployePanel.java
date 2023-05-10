@@ -19,7 +19,7 @@ public class ListEmployePanel extends JPanel {
 
     public  ListEmployePanel(Statement st)
     {
-    	this.setLayout(new FlowLayout(FlowLayout.CENTER,300,20));
+    	this.setLayout(new FlowLayout(FlowLayout.CENTER,3000,20));
         JTable table = new JTable(new ListEmployeModelTable(Back.getAllEmployer(st)));
         JScrollPane tableau = new JScrollPane(table);
         //JButton addEmployer = new JButton("Ajouter Employer");
