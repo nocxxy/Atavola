@@ -35,7 +35,7 @@ public class ReunionBis3Frame extends JFrame {
 		 * Panel Général qui va tout contenir
 		 */
 		JPanel panel = new JPanel();
-		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 200, 15));
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 2000, 15));
 		panel.setPreferredSize(new Dimension(HEIGHT,WIDTH + this.listEmploye.size()* 15 ));
 		
 		
