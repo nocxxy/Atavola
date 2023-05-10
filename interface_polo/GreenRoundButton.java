@@ -35,6 +35,25 @@ public class GreenRoundButton extends JButton {
 		this.setForeground(Color.decode("#FFFFFF"));
 		
 	}
+	public GreenRoundButton(String label,String color,int width,int height,int radius,int font) {
+		
+		super();
+		this.label = label;
+		this.color = color;
+		this.width=width;
+		this.height=height;
+		this.radius=radius;
+		
+		this.setText(label);
+		this.setFocusPainted(false);
+		this.setFont(new Font("MontSerrat", Font.PLAIN, font));
+		this.setPreferredSize(new Dimension(width, height));
+		this.setMargin(new Insets(10, 50, 50, 50));
+		this.setBorder(new RoundedBorder(10));
+		this.setContentAreaFilled(false);
+		this.setForeground(Color.decode("#FFFFFF"));
+		
+	}
 	
     public void setHeight(int height) {
 		this.height = height;
