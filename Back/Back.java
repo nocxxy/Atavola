@@ -29,7 +29,7 @@ public abstract class Back {
             //Créer connection
             String dbName = "atavola";
             String dbIP = "localhost";
-            String dbUser = "roor";
+            String dbUser = "root";
             String dbPwd = "root";
 
             String url = "jdbc:mysql://" + dbIP + ":3306/" + dbName;
@@ -1050,6 +1050,8 @@ public abstract class Back {
         try {
             //La requête sql
         	
+        	
+        	
         	String jourdebut = jour.getYear()+1900+"-"+ (jour.getMonth()+1)+"-"+jour.getDate();
         	String jourfin = jour.getYear()+1900+"-"+ (jour.getMonth()+1)+"-"+(jour.getDate()+6);
     		
@@ -1058,6 +1060,7 @@ public abstract class Back {
     		
             String sql = "SELECT * FROM Creneau WHERE DATE(date_heure_debut)  >= ";
             String query = sql + debut + " AND DATE (date_heure_fin) <= " +fin;
+            query += " AND id NOT IN (SELECT id_creneau FROM Indisponible)";
             
             System.out.println(query);
             
