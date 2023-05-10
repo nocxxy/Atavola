@@ -79,6 +79,7 @@ public abstract class Back {
 
             // Creation de la table reunion dans la base de donnée
             sql = "CREATE TABLE IF NOT EXISTS reunion(\r\n"
+            		+ "    id INT,\r\n "
                     + "    id_creneau INT,\r\n"
                     + "    id_employer INT,\r\n"
                     + "    CONSTRAINT fk_reunion_employe FOREIGN KEY (id_employer) REFERENCES Employer (id),\r\n"
