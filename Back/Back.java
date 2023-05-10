@@ -1256,6 +1256,20 @@ public abstract class Back {
         }
     }
 
+    public static int getIdLastReunion(Statement st) {
+        try {
+            String query = "SELECT id FROM creneau ORDER BY id DESC LIMIT 1";
+            ResultSet rs = st.executeQuery(query);
+            if (rs.next()) {
+                return rs.getInt("id");
+            } else {
+                return 0;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return -1;
+        }
+    }
 
 
 }
