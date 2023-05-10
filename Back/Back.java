@@ -29,7 +29,7 @@ public abstract class Back {
             //Créer connection
             String dbName = "atavola";
             String dbIP = "localhost";
-            String dbUser = "root";
+            String dbUser = "roor";
             String dbPwd = "root";
 
             String url = "jdbc:mysql://" + dbIP + ":3306/" + dbName;
@@ -1142,6 +1142,7 @@ public abstract class Back {
     public static boolean estDispo(Employe e,Creneau c) {
     	Date temp = new Date(c.getDateDebut().getTime());
     	ArrayList<Creneau> creneaux = getCreneauxEmp(Back.connectionBase(),temp,e.getId());
+        System.out.println(creneaux.toString());
     	boolean res=false;
     	int i = 0;
     	while(!res && i<creneaux.size()){    
@@ -1149,7 +1150,10 @@ public abstract class Back {
     		if(c.estPasDedans(creneaux.get(i))) {
     			res =true;
     		}i++;
-    	}	
+    	}
+        if (creneaux.size()==0){
+            res=true;
+        }
     	return res;
     }
     
