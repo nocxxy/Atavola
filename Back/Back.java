@@ -1221,5 +1221,41 @@ public abstract class Back {
 		    ex.printStackTrace();
     	}	return null;
     }
-     
+
+    /*
+     * Méthode qui vérifie si une reunion existe
+     * Prend un statement et son id
+     * Renvoie un booléen
+     *
+     * */
+    public static boolean reunionExiste(Statement st, int id_reunion) {
+        ResultSet rs = null;
+        try {
+            //la requête sql
+            String query = "SELECT * FROM reunion WHERE id_reunion = ";
+
+            query+= id_reunion;
+
+            //execution de la requête
+            rs = st.executeQuery(query);
+            return (rs.next());
+
+        }catch (SQLException ex) {
+            //Exceptions
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    public static void updateReunion(Statement st, int id_reunion, ArrayList<Employe> e, String debut, String fin, boolean urgent) {
+        if(reunionExiste(st,id_reunion)) {
+            // Supprimer la réunion existante
+            deletereunion(st, id_reunion);
+            // Ajouter la nouvelle réunion
+            ajout_reunion(st, e, debut, fin, urgent);
+        }
+    }
+
+
+
 }
