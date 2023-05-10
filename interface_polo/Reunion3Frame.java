@@ -50,7 +50,7 @@ public class Reunion3Frame extends JFrame {
 			
 			this.urgent = new JCheckBox("Réunion Urgente");
 			
-			JPanel pMainDate = new JPanel();
+			
 			JLabel date = new JLabel("Date : ");
 			
 			

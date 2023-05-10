@@ -8,19 +8,23 @@ import java.awt.Insets;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.sql.Statement;
 
 import javax.swing.*;
 
-public class ConnexionFrame extends JFrame {
+public class ConnexionFrame extends JFrame implements KeyListener {
 	//Attributs
 	final static int WIDTH = 650;
 	final static int HEIGHT = 750;
 
 	private JTextField jlogin;
 	private JTextField jmdp;
+	private ConnexionButton connect;
 	
 	//Constructeur
 	public ConnexionFrame(Statement st) {
@@ -66,10 +70,10 @@ public class ConnexionFrame extends JFrame {
 
 		
 		panel.add(signIn);
-		JButton connect2 = new JButton("Connexion");
-		connect2.setFont(new Font("Poppins", Font.PLAIN, 35));
-		connect2.setPreferredSize(new Dimension(200, 37));
-		connect2.setMargin(new Insets(10, 50, 50, 50));
+
+		this.connect = new ConnexionButton("Connexion",true);
+		
+		
 		
 		JTextField textFieldLogin = new RoundJTextField(35,455,50,15);
 		textFieldLogin.setText("Nom d'utilisateur...");
@@ -94,6 +98,30 @@ public class ConnexionFrame extends JFrame {
 					textFieldLogin.setText("Nom d'utilisateur...");
 				}
 			}
+		});
+		
+		textFieldLogin.addKeyListener(new KeyListener() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+					connect.doClick();
+				}
+				
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
 		});
 		signIn.add(textFieldLogin);
 		
@@ -126,19 +154,77 @@ public class ConnexionFrame extends JFrame {
 				}
 			}
 		});
+		
+		textFieldPwd.addKeyListener(new KeyListener() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+					connect.doClick();
+				}
+				
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 
 		this.jlogin = textFieldLogin;
 		this.jmdp = textFieldPwd;
 		
-		
-		
-		ConnexionButton connect = new ConnexionButton("Connexion",true);
 		connect.addActionListener(new ConnexionListener(this,st));
+		connect.addKeyListener(new KeyListener() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+					((JButton)e.getSource()).doClick();
+				}
+				
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
 		signIn.add(connect);
+		
+		
+		
+		
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().add(panel,BorderLayout.CENTER);
 		this.setResizable(false);
+		
+		 KeyStroke us = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false);
+	        panel.getInputMap().put(us, "enter");
+	        panel.getActionMap().put("enter", new AbstractAction(){
+	            @Override
+	            public void actionPerformed(ActionEvent evt){
+	               connect.doClick();
+	            }
+	        });
 		
 		
 	}
@@ -150,4 +236,23 @@ public class ConnexionFrame extends JFrame {
 	public JTextField getJmdp() {
 		return jmdp;
 	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
