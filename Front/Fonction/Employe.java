@@ -34,5 +34,8 @@ public class Employe {
 	public int getId() {
 		return id;
 	}
-
-}
+	
+	@Override
+	public String toString() {
+		return "Employe [id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", login=" + login + ", rg=" + rg + "]";
+	}}

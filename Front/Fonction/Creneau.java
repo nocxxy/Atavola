@@ -158,4 +158,25 @@ public class Creneau {
     public String toString() {
         return  this.heuredebut.toString() + " -> " + this.heurefin.toString();
     }
+    
+    public boolean estPasDedans(Creneau c) {
+    	boolean res=false;
+    	int hd = c.getHeureDebut();
+    	int md = c.getDateDebut().getMinutes();
+    	
+    	int hf = c.getHeureFin();
+    	int mf = c.getDateFin().getMinutes();
+    	
+    	
+    	if((this.getHeureDebut()>=hf) && (this.getDateDebut().getMinutes()>=mf)){
+    		res = true;
+    	}if((this.getHeureFin()<=hd) && (this.getDateFin().getMinutes()<=md)) {
+    		res=true;
+    	}
+    	
+    	return res;
+    }
+    
+    
+    
 }

@@ -29,7 +29,7 @@ public abstract class Back {
             //Créer connection
             String dbName = "atavola";
             String dbIP = "localhost";
-            String dbUser = "roor";
+            String dbUser = "root";
             String dbPwd = "root";
 
             String url = "jdbc:mysql://" + dbIP + ":3306/" + dbName;
@@ -1096,6 +1096,62 @@ public abstract class Back {
         return null;
     }
     
+   
+    
+    public static ArrayList<Creneau> getAllCreneauDay (String jour){
+    	ArrayList<Creneau> res = new ArrayList();
+    	Statement st1 = Back.connectionBase();
+    	try {
+    		String sql = "SELECT * FROM Creneau WHERE DATE(date_heure_debut) = ";
+    		sql+= jour ;
+    		ResultSet rs = st1.executeQuery(sql);
+    		
+    		while(rs.next()) {
+    			 //On stocke les données
+                int id_creneau = rs.getInt("id");
+                Timestamp hd = rs.getTimestamp("date_heure_debut");
+                Timestamp hf = rs.getTimestamp("date_heure_fin");
+                int id_employer = rs.getInt("id_employer");
+
+                //On ajoute le creneau
+                Creneau c = new Creneau(hd,hf);
+                c.setEmploye(id_employer);
+                c.setId(id_creneau);
+
+                res.add(c);
+    		}
+    		
+    		
+    	}catch (SQLException ex) {
+            //Exceptions
+            ex.printStackTrace();
+        }return res;
+    }
+    
+    public static ArrayList<Employe> getEmployeDispo(Creneau creneau){
+    	ArrayList<Employe> e = getAllEmployer(Back.connectionBase());
+    	ArrayList<Employe>res =new ArrayList<Employe>();
+    	
+    	for (Employe e1 : e) {
+    		if(estDispo(e1,creneau)) {
+    			res.add(e1);
+    		}
+    	}return res;
+    	
+    }
+    public static boolean estDispo(Employe e,Creneau c) {
+    	Date temp = new Date(c.getDateDebut().getTime());
+    	ArrayList<Creneau> creneaux = getCreneauxEmp(Back.connectionBase(),temp,e.getId());
+    	boolean res=false;
+    	int i = 0;
+    	while(!res && i<creneaux.size()){    
+    		
+    		if(c.estPasDedans(creneaux.get(i))) {
+    			res =true;
+    		}i++;
+    	}	
+    	return res;
+    }
     
     
      
