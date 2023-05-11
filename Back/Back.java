@@ -1128,9 +1128,11 @@ public abstract class Back {
 	            String delete = "DELETE FROM reunion WHERE id_creneau = ";
 	            delete += id_creneau ;
 	            
-	            System.out.println(delete);
+	            String suppr = "DELETE FROM Creneau WHERE id_creneau =";
+	            suppr += id_creneau;
 	            
 	            st.executeUpdate(delete);
+	            st.executeUpdate(suppr);
     		
     		
     	} catch (SQLException ex) {
@@ -1296,13 +1298,13 @@ public abstract class Back {
                 
     		}
     		
-            /*
+            
     		for(Creneau c : liste) {
     			 System.out.println("Creneau:");
                  System.out.println(c.getDateDebut() + ", " + c.getDateFin() + 
                 		 ", "+ c.getId() + ", "+ c.getEmploye());
     		}
-    		*/
+    		
     		return liste;
     		
     		
