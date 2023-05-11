@@ -2,8 +2,11 @@ package interface_polo;
 
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.security.PrivateKey;
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -17,9 +20,19 @@ public class ReunionBis2Frame extends JFrame {
 	//Attributs
 	final static int WIDTH = 300;
 	final static int HEIGHT = 274;
-	
+	private JLabel nbEmployer = new JLabel();
+	private JLabel listeNomEmploye = new JLabel();
+
+	public JLabel getNbEmployer() {
+		return nbEmployer;
+	}
+
+	public JLabel getListeNomEmploye() {
+		return listeNomEmploye;
+	}
+
 	//Constructeur
-	public ReunionBis2Frame(Statement st,Creneau c) {
+	public ReunionBis2Frame(Statement st,Creneau c,ReunionBis1Frame f) {
 		this.setBounds(100,100,WIDTH,HEIGHT);
 		this.setTitle("A Tavola ! | Reunion2");
 		ImageIcon img = new ImageIcon("src/img/italie.png");
@@ -41,18 +54,24 @@ public class ReunionBis2Frame extends JFrame {
 		panel.add(question);
 		
 		//JComboBox créneaux
-		ChoixCreneau creneau = new ChoixCreneau(c);
+		ChoixCreneau creneau = new ChoixCreneau(c,this);
 		panel.add(creneau);
+
 		JLabel nb = new JLabel("Nombres d'employés dispos : ");
+		panel.add(nb);
+		panel.add(this.nbEmployer);
 		
-		JLabel employe = new JLabel("Employés dispo");
-		//boucle for
-		
+		JLabel employe = new JLabel("Employés dispo :");
+		panel.add(employe);
+		panel.add(this.listeNomEmploye);
+
 		JPanel nav = new JPanel();
 		nav.setLayout(new FlowLayout());
 		
 		GreenRoundButton suiv = new GreenRoundButton("➤","Green",75,30,30);
 		GreenRoundButton prec = new GreenRoundButton("⮜","Red",75,30,30);
+
+
 		
 		nav.add(prec);
 		nav.add(suiv);

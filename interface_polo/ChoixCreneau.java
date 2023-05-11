@@ -19,14 +19,15 @@ public class ChoixCreneau extends JPanel {
         this.add(this.choixCreneau);
     }
     @SuppressWarnings("deprecation")
-    public ChoixCreneau(Creneau c){
+    public ChoixCreneau(Creneau c,ReunionBis2Frame f){
         ArrayList<Creneau> temp = new ArrayList<Creneau>();
 
 
         for (int i = 7; i<23 ; i++){
-            Date d1 = new Date(c.getDateDebut().getYear(),c.getDateDebut().getMonth(),c.getDateDebut().getDate(),i,0);
-            Date d2 = new Date(c.getDateFin().getYear(),c.getDateFin().getMonth(),c.getDateFin().getDate(),i+1,0);
+            Date d1 = new Date(c.getDateDebut().getYear(),c.getDateDebut().getMonth()-1,c.getDateDebut().getDate(),i,0);
+            Date d2 = new Date(c.getDateFin().getYear(),c.getDateFin().getMonth()-1,c.getDateFin().getDate(),i+1,0);
             Creneau h = new Creneau(d1,d2);
+            System.out.println(h);
             temp.add(h);
 
         }
@@ -35,6 +36,8 @@ public class ChoixCreneau extends JPanel {
         System.out.println(this.c);
         String s1[] = this.getListCreneau();
         this.choixCreneau = new JComboBox(s1);
+
+        this.choixCreneau.addActionListener(new RecupEmployeDispoListener(this,f));
         this.add(this.choixCreneau);
     }
     public String[] getListCreneau() {

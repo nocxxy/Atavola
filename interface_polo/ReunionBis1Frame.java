@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
+import EDT.AjouterCreneauReunionListener;
 import interface_package.RoundJTextField;
 
 public class ReunionBis1Frame extends JFrame {
@@ -19,8 +20,24 @@ public class ReunionBis1Frame extends JFrame {
 			private JTextField m;
 			private JTextField a;
 			private JCheckBox urgent;
-			
-			//Constructeur
+
+	public JTextField getD() {
+		return d;
+	}
+
+	public JTextField getM() {
+		return m;
+	}
+
+	public JTextField getA() {
+		return a;
+	}
+
+	public JCheckBox getUrgent() {
+		return urgent;
+	}
+
+	//Constructeur
 			public ReunionBis1Frame(Statement st) {
 				this.setBounds(100,100,WIDTH,HEIGHT);
 				this.setTitle("A Tavola ! | Reunion1");
@@ -71,6 +88,9 @@ public class ReunionBis1Frame extends JFrame {
 				
 				GreenRoundButton suiv = new GreenRoundButton("➤","Green",75,30,30);
 				GreenRoundButton prec = new GreenRoundButton("⮜","Red",75,30,30);
+
+				suiv.addActionListener(new CreerReunion2Listener(this,st));
+				prec.addActionListener(new AjouterCreneauReunionListener(st));
 				
 				nav.add(prec);
 				nav.add(suiv);
