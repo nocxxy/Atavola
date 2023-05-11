@@ -20,39 +20,50 @@ public class CreneauCanvas extends Canvas implements MouseListener{
 	private Color couleurEmp;
 	private ArrayList<Creneau> creneaux;
 	private ArrayList<Creneau> indispo;
+	private ArrayList<Creneau> reunion;
 	private Employe empConn;
 	
-	public CreneauCanvas(Color color, ArrayList<Creneau> creneaux,  ArrayList<Creneau> indispo, Employe empConn) {
+	public CreneauCanvas(Color color, ArrayList<Creneau> creneaux,  ArrayList<Creneau> indispo, ArrayList<Creneau> reunion, Employe empConn) {
 		this.setBackground(new Color(255,255,255));
 		this.couleurEmp = color;
 		this.creneaux = creneaux;
 		this.empConn = empConn;
 		this.indispo = indispo;
+		this.reunion = reunion;
 		addMouseListener(this);
 		
 	}
-	
+
 	public void paint(Graphics g) {
 		g.setColor(couleurEmp);
 		
 		//Dessine creneaux
 		for(int i = 0; i < creneaux.size(); i++) {
-			drawCreneau(g,creneaux.get(i).getHeureDebut(),0,creneaux.get(i).getHeureFin(),0,true);
+			drawCreneau(g,creneaux.get(i).getHeureDebut(),0,creneaux.get(i).getHeureFin(),0,"travail");
 		}
 		//Dessine indispo
 		for(int i = 0; i < indispo.size();i++) {
-			drawCreneau(g,indispo.get(i).getHeureDebut(),0,indispo.get(i).getHeureFin(),0,false);
+			drawCreneau(g,indispo.get(i).getHeureDebut(),0,indispo.get(i).getHeureFin(),0,"indispo");
+		}
+		//Dessine reunion
+		for(int i = 0; i < reunion.size();i++) {
+			drawCreneau(g,reunion.get(i).getHeureDebut(),0,indispo.get(i).getHeureFin(),0,"reunion");
 		}
 		//drawCreneau(g,14,0,18,0,false);
 		//g.fillRoundRect(0,(this.getHeight()/10)*2,this.getWidth(),(this.getHeight()/10)*2,10,10);
 
 	}
 	
-	public void drawCreneau(Graphics g,int heureDebut, int minuteDebut, int heureFin, int MinuteFin, boolean dispo) {
+	public void drawCreneau(Graphics g,int heureDebut, int minuteDebut, int heureFin, int MinuteFin, String type) {
 		g.setColor(couleurEmp);
 		g.fillRoundRect(0,(this.getHeight()/18)*(heureDebut-7),this.getWidth(),(this.getHeight()/18)*(heureFin-heureDebut),10,10);
-		if(!dispo) {
+		if(type == "indispo") {
 			g.setColor(Color.RED);
+			Graphics2D g2d = (Graphics2D) g;
+			g2d.setStroke(new BasicStroke(3));
+			g2d.drawRoundRect(0,(this.getHeight()/18)*(heureDebut-7),this.getWidth(),(this.getHeight()/18)*(heureFin-heureDebut),10,10);
+		} else if(type == "reunion") {
+			g.setColor(Color.ORANGE);
 			Graphics2D g2d = (Graphics2D) g;
 			g2d.setStroke(new BasicStroke(3));
 			g2d.drawRoundRect(0,(this.getHeight()/18)*(heureDebut-7),this.getWidth(),(this.getHeight()/18)*(heureFin-heureDebut),10,10);
