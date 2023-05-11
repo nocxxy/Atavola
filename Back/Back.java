@@ -79,7 +79,7 @@ public abstract class Back {
 
             // Creation de la table reunion dans la base de donnée
             sql = "CREATE TABLE IF NOT EXISTS reunion(\r\n"
-            		+ "    id INT,\r\n "
+            		+ "    id INT DEFAULT 0,\r\n "
                     + "    id_creneau INT,\r\n"
                     + "    id_employer INT,\r\n"
                     + "    CONSTRAINT fk_reunion_employe FOREIGN KEY (id_employer) REFERENCES Employer (id),\r\n"
@@ -98,6 +98,39 @@ public abstract class Back {
                     + ");";
             //Envoie de la requete
             st.executeUpdate(sql);
+
+            // Creation de la table Tables dans la base de donnée
+            sql = "CREATE TABLE IF NOT EXISTS Tables(\r\n"
+                    + "id INT NOT NULL AUTO_INCREMENT, \r\n"
+                    + "numero INT NOT NULL, \r\n"
+                    + "nb_places INT NOT NULL, \r\n"
+                    + "CONSTRAINT pk_tables PRIMARY KEY (id)\r\n"
+                    + ");";
+            //Envoie de la requete
+            st.executeUpdate(sql);
+
+            // Creation de la table Tables_prises dans la base de donnée
+            sql = "CREATE TABLE IF NOT EXISTS Tables_prises(\r\n"
+                    + "id_table INT NOT NULL, \r\n"
+                    + "service ENUM('midi_1','midi_2','soir_1','soir_2'),\r\n"
+                    + "CONSTRAINT pk_tables_prises PRIMARY KEY (id_table,service), \r\n"
+                    + "CONSTRAINT fk_tables_prises FOREIGN KEY (id_table) REFERENCES Tables (id)\r\n"
+                    + ");";
+            //Envoie de la requete
+            st.executeUpdate(sql);
+
+            // Creation de la table Reservations dans la base de donnée
+            sql = "CREATE TABLE IF NOT EXISTS Reservations(\r\n" +
+                    "id_table INT NOT NULL, \r\n" +
+                    "service ENUM('midi_1','midi_2','soir_1','soir_2'),\r\n" +
+                    "jour DATE,\r\n" +
+                    "nom_client VARCHAR(50), \r\n" +
+                    "CONSTRAINT pk_reservations PRIMARY KEY (id_table,service,jour), \r\n" +
+                    "CONSTRAINT fk_reservations FOREIGN KEY (id_table) REFERENCES Tables (id)\r\n" +
+                    ");";
+            //Envoie de la requete
+            st.executeUpdate(sql);
+            
         } catch (Exception e) {
             System.out.println("Erreur " + e.getMessage());
         }
@@ -248,13 +281,15 @@ public abstract class Back {
 
                 res.add(c);
             }
-
+            /*
             for(Creneau c : res) {
                 //On affiche les éléments de la liste
                 System.out.println("Creneau:");
                 System.out.println(c.getDateDebut() + ", " + c.getDateFin() + ", "+c.getId() 
                 +", " + c.getEmploye());
             }
+            
+            */
             return res;
 
         } catch (SQLException ex) {
@@ -395,10 +430,12 @@ public abstract class Back {
         cal.add(cal.DATE,6);
         java.util.Date d1 = new java.util.Date (cal.YEAR-1900,cal.MONTH,cal.DATE);
         ArrayList<Creneau> res = getAllWeeklyCreneau(st,convertDatetoString(d),convertDatetoString(d1));
+        /*
         for(Creneau c : res) {
         	System.out.println(c.getId()+ ", "+c.getHeureDebut()+ ", "+
         			c.getHeureFin());
         }
+        */
         return res;
     }
     
@@ -489,7 +526,7 @@ public abstract class Back {
         java.util.Date temp = new java.util.Date(jour.getTime());
         cal.setTime(jour);
         cal.add(Calendar.DAY_OF_MONTH, i);
-        System.out.println(cal.getTime().toString());
+        //System.out.println(cal.getTime().toString());
         Date jourPlus = new Date(cal.getTime().getTime());
         return jourPlus;
     }
@@ -509,7 +546,7 @@ public abstract class Back {
             String query = sql + (char)34 + date + (char)34 + " AND DATE(date_heure_fin) = "+
                     (char)34 + date + (char)34 + " AND id_employer = " +id;
             
-            System.out.println(query);
+            //System.out.println(query);
             //Execution de la requête sql
             ResultSet rs = st.executeQuery(query);
 
@@ -531,12 +568,14 @@ public abstract class Back {
                 res.add(c);
             }
 
+            /*
             for(Creneau c : res) {
                 //On affiche les éléments de la liste
                 System.out.println("Creneau:");
                 System.out.println(c.getDateDebut() + ", " + c.getDateFin() +", "
                 		+c.getId() + ", " + c.getEmploye());
             }
+            */
             return res;
 
         } catch (SQLException ex) {
@@ -826,14 +865,69 @@ public abstract class Back {
     	}	return false;
     	
     }
+    public static void insertionReunion(int id,int id_creneau,int id_employer) {
+    	try {
+    			
+				String reunion = "INSERT INTO reunion (id,id_creneau,id_employer) VALUES (";
+				reunion += id +",";
+				reunion += id_creneau +",";
+				reunion += id_employer ;
+				reunion += ")";
+			
+				Back.connectionBase().executeUpdate(reunion);
+    	}catch (SQLException ex) {
+			//Exceptions 
+		    ex.printStackTrace();
+    	}	
+    }
     
+    
+    public static boolean memeReunion(String debut,String fin) {
+    	ResultSet rs = null;
+    	try {
+    		String sql = "SELECT * FROM reunion WHERE id_creneau IN "
+					+ "(SELECT id FROM Creneau WHERE date_heure_debut =";
+					sql += (char)34 +debut +(char)34;
+					sql+= " AND date_heure_fin = ";
+					sql += (char)34 + fin +(char)34 +")" +"LIMIT 1 ";
+			System.out.println(sql);
+			rs= Back.connectionBase().executeQuery(sql);
+			
+			return rs.next();
+    	}catch (SQLException ex) {
+			//Exceptions 
+		    ex.printStackTrace();
+    	}return false;
+    }
+    
+    
+    public static int idMemeReunion(String debut,String fin) {
+    	int id = 0;
+    	try {
+    		String sql = "SELECT * FROM reunion WHERE id_creneau IN "
+					+ "(SELECT id FROM Creneau WHERE date_heure_debut =";
+					sql += (char)34 +debut +(char)34;
+					sql+= " AND date_heure_fin = ";
+					sql += (char)34 + fin +(char)34 +")" +"LIMIT 1 ";
+			System.out.println(sql);
+			ResultSet rs = Back.connectionBase().executeQuery(sql);
+			
+			while(rs.next()) {
+				id = rs.getInt("id");
+			}
+    	}catch (SQLException ex) {
+			//Exceptions 
+		    ex.printStackTrace();
+    	}return id;
+    }
     /*
      * Méthode pour ajouter un creneau de reunion
      * Prend une liste de type arraylist, une heure de debut et de fin
      *
      * */
     public static void ajoutreunion (Statement st, ArrayList<Employe> e,String debut, String fin) {
-    	try {
+    		int indice = getIdLastReunion(st) +1;
+    		
     		for (Employe e1 :e) {
     			int id = e1.getId();
     			//On fait l'ajout de creneau de reunion sur un employé qui existe déjà
@@ -843,24 +937,20 @@ public abstract class Back {
     					//Si le créneau n'existe pas on l'ajoute dans la base
     					insertCreneau(st,debut,fin,id);
     				}
-    		 
     				int id_creneau = getIdCreneau(st,debut,fin,id);
             
-            
-    				//la requête pour ajouter le creneau de reunion
-    				String reunion = "INSERT INTO reunion (id_creneau,id_employer) VALUES (";
-    				reunion += id_creneau +",";
-    				reunion += id ;
-    				reunion += ")";
-            
-            
-    				st.executeUpdate(reunion);
+    				
+    				if (memeReunion(debut,fin)) {
+    					indice = idMemeReunion(debut,fin);
+    					insertionReunion(indice,id_creneau,id);
+    				}else {
+    					insertionReunion(indice,id_creneau,id);
+    				}
     			}
     		}
-    	} catch (SQLException ex) {
-			//Exceptions 
-		    ex.printStackTrace();
-    	}	
+    		
+    		
+    	
     }  
     
     /*
@@ -979,11 +1069,13 @@ public abstract class Back {
                 
     		}
     		
+            /*
     		for(Creneau c : liste) {
     			 System.out.println("Creneau:");
                  System.out.println(c.getDateDebut() + ", " + c.getDateFin() + 
                 		 ", "+ c.getId() + ", "+ c.getEmploye());
     		}
+    		*/
     		return liste;
     		
     		
@@ -1031,10 +1123,10 @@ public abstract class Back {
 		    ex.printStackTrace();
     	}	
     }  
-    public static void deletereunion (Statement st, int id) {
+    public static void deletereunion (Statement st, int id_creneau) {
     	try {           
-	            String delete = "DELETE FROM reunion WHERE id = ";
-	            delete += id ;
+	            String delete = "DELETE FROM reunion WHERE id_creneau = ";
+	            delete += id_creneau ;
 	            
 	            System.out.println(delete);
 	            
@@ -1086,12 +1178,14 @@ public abstract class Back {
                 res.add(c);
             }
 
+            /*
             for(Creneau c : res) {
                 //On affiche les éléments de la liste
                 System.out.println("Creneau:");
                 System.out.println(c.getDateDebut() + ", " + c.getDateFin() + ", "+c.getId() 
                 +", " + c.getEmploye());
             }
+            */
             return res;
 
         } catch (SQLException ex) {
@@ -1169,13 +1263,15 @@ public abstract class Back {
 			String jourStr = jour.getYear()+1900+"-"+ (jour.getMonth()+1)+"-"+jour.getDate();
     		String date =  (char)34 + jourStr  + (char)34;
     		
-    		String sql = "SELECT * FROM Creneau WHERE id ";
-    		sql += "IN (SELECT id_creneau FROM Reunion WHERE id_employer = ";
-    		sql += id + ")";
-    		sql += " AND DATE(date_heure_debut) = " + date;
-    		sql+= " AND DATE(date_heure_fin) = " + date; 
-    		sql += "AND id_employer = " + id;
+    		String sql = "SELECT r.id,c.id,c.date_heure_debut,"
+    				+ "c.date_heure_fin FROM Creneau c"
+    				+ " JOIN Reunion r ON r.id_creneau = c.id"
+    				+ " WHERE r.id_employer = "+id;
+    		sql += " AND DATE(c.date_heure_debut) = " + date;
+    		sql += " AND DATE(c.date_heure_fin) = " + date; 
+    		sql += " AND c.id_employer = " + id;
 
+    		System.out.println(sql);
     		
     		rs = st.executeQuery(sql);
     		
@@ -1183,24 +1279,30 @@ public abstract class Back {
     		ArrayList<Creneau> liste = new ArrayList();
         		
             while (rs.next()) {
-            	int id_creneau = rs.getInt("id");
+            	int id_reunion = rs.getInt("r.id");
+            	int id_creneau = rs.getInt("c.id");
+         
+            	
                 Timestamp hd = rs.getTimestamp("date_heure_debut");
                 Timestamp hf = rs.getTimestamp("date_heure_fin");
                 
                 Creneau c = new Creneau(hd,hf);
                 c.setEmploye(id);
                 c.setId(id_creneau);
-                c.setReunion(true);
+                c.setReunion(id_reunion);
+           
                 	
                 liste.add(c);
                 
     		}
     		
+            /*
     		for(Creneau c : liste) {
     			 System.out.println("Creneau:");
                  System.out.println(c.getDateDebut() + ", " + c.getDateFin() + 
                 		 ", "+ c.getId() + ", "+ c.getEmploye());
     		}
+    		*/
     		return liste;
     		
     		
@@ -1209,5 +1311,54 @@ public abstract class Back {
 		    ex.printStackTrace();
     	}	return null;
     }
-     
+
+    /*
+     * Méthode qui vérifie si une reunion existe
+     * Prend un statement et son id
+     * Renvoie un booléen
+     *
+     * */
+    public static boolean reunionExiste(Statement st, int id_reunion) {
+        ResultSet rs = null;
+        try {
+            //la requête sql
+            String query = "SELECT * FROM reunion WHERE id_reunion = ";
+
+            query+= id_reunion;
+
+            //execution de la requête
+            rs = st.executeQuery(query);
+            return (rs.next());
+
+        }catch (SQLException ex) {
+            //Exceptions
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    public static void updateReunion(Statement st, int id_reunion, ArrayList<Employe> e, String debut, String fin, boolean urgent) {
+        if(reunionExiste(st,id_reunion)) {
+            // Supprimer la réunion existante
+            deletereunion(st, id_reunion);
+            // Ajouter la nouvelle réunion
+            ajout_reunion(st, e, debut, fin, urgent);
+        }
+    }
+
+    public static int getIdLastReunion(Statement st) {
+        try {
+            String query = "SELECT id FROM reunion ORDER BY id DESC LIMIT 1";
+            ResultSet rs = st.executeQuery(query);
+            if (rs.next()) {
+                return rs.getInt("id");
+            } else {
+                return 0;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return -1;
+        }
+    }
+
 }

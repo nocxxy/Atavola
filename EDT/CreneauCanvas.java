@@ -41,7 +41,6 @@ public class CreneauCanvas extends Canvas implements MouseListener{
 		}
 		//Dessine indispo
 		for(int i = 0; i < indispo.size();i++) {
-			System.out.println("Draw");
 			drawCreneau(g,indispo.get(i).getHeureDebut(),0,indispo.get(i).getHeureFin(),0,false);
 		}
 		//drawCreneau(g,14,0,18,0,false);
