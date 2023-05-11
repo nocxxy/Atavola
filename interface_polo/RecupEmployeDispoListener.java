@@ -41,8 +41,6 @@ public class RecupEmployeDispoListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Creneau temp = new Creneau(copyDate(this.c.getSelect().getDateDebut()),copyDate(this.c.getSelect().getDateFin()));
         ArrayList<Employe> listeE = Back.getEmployeDispo(temp);
-        System.out.println(listeE.toString());
-        System.out.println(listeE.size()+"");
         this.f.getNbEmployer().setText(listeE.size()+"");
         this.f.getListeNomEmploye().setText(afficheListeEmployer(listeE));
     }

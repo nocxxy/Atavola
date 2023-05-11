@@ -65,21 +65,73 @@ public class ReunionBis1Frame extends JFrame {
 				
 				JLabel date = new JLabel("Date : ");
 				
-				
 				JPanel pDate = new JPanel();
 				pDate.setLayout(new FlowLayout());
 				this.d = new JTextField();
 				this.d.setPreferredSize(new Dimension(55,30));
+				d.setForeground(Color.GRAY);
+				d.setText("DD");
+				this.d.addFocusListener(new FocusListener(){
+					@Override
+					public void focusGained(FocusEvent e) {
+						if (d.getText().equals("DD")) {
+							d.setText("");
+							d.setForeground(Color.BLACK);
+						}
+					}
+					@Override
+					public void focusLost(FocusEvent e) {
+						if (d.getText().isEmpty()) {
+							d.setForeground(Color.GRAY);
+							d.setText("DD");
+						}
+					}
+				});
 				this.m = new JTextField();
 				this.m.setPreferredSize(new Dimension(55,30));
+				m.setForeground(Color.GRAY);
+				m.setText("MM");
+				this.m.addFocusListener(new FocusListener(){
+					@Override
+					public void focusGained(FocusEvent e) {
+						if (m.getText().equals("MM")) {
+							m.setText("");
+							m.setForeground(Color.BLACK);
+						}
+					}
+					@Override
+					public void focusLost(FocusEvent e) {
+						if (m.getText().isEmpty()) {
+							m.setForeground(Color.GRAY);
+							m.setText("MM");
+						}
+					}
+				});
 				this.a = new JTextField();
 				this.a.setPreferredSize(new Dimension(55,30));
+				a.setForeground(Color.GRAY);
+				a.setText("YYYY");
+				this.a.addFocusListener(new FocusListener(){
+					@Override
+					public void focusGained(FocusEvent e) {
+						if (a.getText().equals("YYYY")) {
+							a.setText("");
+							a.setForeground(Color.BLACK);
+						}
+					}
+					@Override
+					public void focusLost(FocusEvent e) {
+						if (a.getText().isEmpty()) {
+							a.setForeground(Color.GRAY);
+							a.setText("YYYY");
+						}
+					}
+				});
 				
 				pDate.add(date);
 				pDate.add(this.d);
 				pDate.add(this.m);
 				pDate.add(this.a);
-				
 				
 				panel.add(pDate);
 				
