@@ -352,9 +352,8 @@ public class EDTPanel extends JPanel{
 				couleur.setPreferredSize(new Dimension(13, 9));
 				couleur.setBackground(couleursEmp.get(j));
 				colorContainer.add(couleur);
-				
 				//CRENEAU
-				creneauCanvas = new CreneauCanvas(couleursEmp.get(j), Back.getCreneauxEmp(st, Back.jourPlusi(debut,i),empEDT.get(j).getId()),Back.getCreneauxReunion(st, Back.jourPlusi(debut,i),empEDT.get(j).getId()), Back.getCreneauxReunion(st, Back.jourPlusi(debut,i),empEDT.get(j).getId()), empConn);
+				creneauCanvas = new CreneauCanvas(couleursEmp.get(j), Back.getCreneauxEmp(st, Back.jourPlusi(debut,i),empEDT.get(j).getId()),Back.getCreneauxIndisp(st, Back.jourPlusi(debut,i),empEDT.get(j).getId()), Back.getCreneauxReunion(st, Back.jourPlusi(debut,i),empEDT.get(j).getId()), empConn);
 				creneauPanel.add(creneauCanvas);
 				}
 			}
