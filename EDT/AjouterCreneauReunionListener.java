@@ -8,7 +8,7 @@ import java.sql.Statement;
 
 public class AjouterCreneauReunionListener implements ActionListener {
     private Statement st;
-    AjouterCreneauReunionListener (Statement st){
+    public AjouterCreneauReunionListener (Statement st){
         this.st = st;
     }
 

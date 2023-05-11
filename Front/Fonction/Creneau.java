@@ -110,18 +110,18 @@ public class Creneau {
 
         switch(jour) {
 
-            case 1 : return "Jan";
-            case 2 : return "Fev";
-            case 3 : return "Mar";
-            case 4 : return "Avr";
-            case 5 : return "Mai";
-            case 6 : return "Juin";
-            case 7 : return "Juil";
-            case 8 : return "Aou";
-            case 9 : return "Sep";
-            case 10 : return "Oct";
-            case 11 : return "Nov";
-            case 12 : return "Dec";
+            case 0 : return "Jan";
+            case 1 : return "Fev";
+            case 2 : return "Mar";
+            case 3 : return "Avr";
+            case 4 : return "Mai";
+            case 5 : return "Juin";
+            case 6 : return "Juil";
+            case 7 : return "Aou";
+            case 8 : return "Sep";
+            case 9 : return "Oct";
+            case 10 : return "Nov";
+            case 11 : return "Dec";
 
             default :
                 System.out.println("Erreur");
@@ -191,7 +191,7 @@ public class Creneau {
 
     @Override
     public String toString() {
-        return  this.getJourCreneau() + " " +this.getMonth() + " "+ (this.heuredebut.getYear()+1900) +" "+ this.heuredebut.getHours() +"h"+ this.heuredebut.getMinutes() + " -> " + this.heurefin.getHours() +"h"+ this.heurefin.getMinutes();
+        return  this.getJourCreneau() + " " + this.getDateDebut().getDate()+ " " +this.getMonth() + " "+ (this.heuredebut.getYear()+1900) +" "+ this.heuredebut.getHours() +"h"+ this.heuredebut.getMinutes() + " -> " + this.heurefin.getHours() +"h"+ this.heurefin.getMinutes();
     }
     
     public boolean estPasDedans(Creneau c) {
