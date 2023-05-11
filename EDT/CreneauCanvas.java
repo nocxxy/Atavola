@@ -31,6 +31,9 @@ public class CreneauCanvas extends Canvas implements MouseListener{
 		this.indispo = indispo;
 		this.reunion = reunion;
 		addMouseListener(this);
+		System.out.println("------------------------------------------");
+		System.out.println(indispo);
+
 		
 	}
 
@@ -47,7 +50,7 @@ public class CreneauCanvas extends Canvas implements MouseListener{
 		}
 		//Dessine reunion
 		for(int i = 0; i < reunion.size();i++) {
-			drawCreneau(g,reunion.get(i).getHeureDebut(),0,indispo.get(i).getHeureFin(),0,"reunion");
+			drawCreneau(g,reunion.get(i).getHeureDebut(),0,reunion.get(i).getHeureFin(),0,"reunion");
 		}
 		//drawCreneau(g,14,0,18,0,false);
 		//g.fillRoundRect(0,(this.getHeight()/10)*2,this.getWidth(),(this.getHeight()/10)*2,10,10);
@@ -72,12 +75,17 @@ public class CreneauCanvas extends Canvas implements MouseListener{
 	
     public void mouseClicked(MouseEvent e) {
         if(empConn.getRang().equals("chef")) {
-			if(creneaux.size()!=0){
-				System.out.println("Modifie les creneaux du jour");
-				RetirerCreneauFrame f = new RetirerCreneauFrame(Back.connectionBase(),this.creneaux);
-				f.setVisible(true);
-			}
 
+			if(creneaux.size()!=0){
+				if(reunion.size()==0 && indispo.size()==0){
+					System.out.println("Modifie les creneaux du jour");
+					RetirerCreneauFrame f = new RetirerCreneauFrame(Back.connectionBase(),this.creneaux);
+					f.setVisible(true);
+				} else if (reunion.size()!=0) {
+					System.out.println("test");
+				}
+
+			}
         } else {
 			if (indispo.size()!=0){
 				System.out.println("Modifie les indispos du jour du jour");

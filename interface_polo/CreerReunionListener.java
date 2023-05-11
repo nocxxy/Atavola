@@ -23,8 +23,8 @@ public class CreerReunionListener implements ActionListener {
 
     private String getDateSynthaxe(Date d){
         int year = d.getYear() + 1900;
-        int month = d.getMonth();
-        int day = d.getDay();
+        int month = d.getMonth() +1;
+        int day = d.getDate();
         int hours = d.getHours();
         int min = d.getMinutes();
         String res = year +"-"+month+"-"+day+" "+hours+":"+min+":00";
@@ -37,7 +37,7 @@ public class CreerReunionListener implements ActionListener {
         ArrayList<JCheckBox> s = this.f.getSelect();
         ArrayList<Employe> listE= this.f.getListEmploye();
         Back.ajout_reunion(this.st,listE,getDateSynthaxe(c.getDateDebut()),getDateSynthaxe(c.getDateFin()),this.f.getF().getF().getUrgent().isSelected());
-
+        this.f.dispose();
 
     }
 }

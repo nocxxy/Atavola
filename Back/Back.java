@@ -1296,13 +1296,13 @@ public abstract class Back {
                 
     		}
     		
-            /*
+
     		for(Creneau c : liste) {
     			 System.out.println("Creneau:");
-                 System.out.println(c.getDateDebut() + ", " + c.getDateFin() + 
+                 System.out.println(c.getDateDebut() + ", " + c.getDateFin() +
                 		 ", "+ c.getId() + ", "+ c.getEmploye());
     		}
-    		*/
+
     		return liste;
     		
     		
