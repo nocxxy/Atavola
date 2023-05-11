@@ -234,7 +234,7 @@ public abstract class Back {
         try {
             //La requête sql
         	deleteIndisp(st,id);
-        	deletereunion(st,id);
+        	deleteReunion(st,id);
         	
             String sql = "DELETE FROM Creneau WHERE Creneau.id = ";
             String query = sql + id;
@@ -1123,16 +1123,18 @@ public abstract class Back {
 		    ex.printStackTrace();
     	}	
     }  
-    public static void deletereunion (Statement st, int id_creneau) {
+    public static void deleteReunion (Statement st, int id_creneau) {
     	try {           
 	            String delete = "DELETE FROM reunion WHERE id_creneau = ";
 	            delete += id_creneau ;
 	            
-	            String suppr = "DELETE FROM Creneau WHERE id_creneau =";
-	            suppr += id_creneau;
+	            String sql = "DELETE FROM Creneau WHERE id = ";
+	            String query = sql + id_creneau;
+	            
+	            System.out.println(delete);
 	            
 	            st.executeUpdate(delete);
-	            st.executeUpdate(suppr);
+	            st.executeUpdate(query);
     		
     		
     	} catch (SQLException ex) {
@@ -1339,13 +1341,29 @@ public abstract class Back {
         }
     }
 
-    public static void updateReunion(Statement st, int id_reunion, ArrayList<Employe> e, String debut, String fin, boolean urgent) {
-        if(reunionExiste(st,id_reunion)) {
-            // Supprimer la réunion existante
-            deletereunion(st, id_reunion);
-            // Ajouter la nouvelle réunion
-            ajout_reunion(st, e, debut, fin, urgent);
-        }
+    public static void updateReunion(Statement st, int id_reunion, ArrayList<Employe> e, String debut, String fin) {
+       try {
+    	   for(Employe e1:e) {
+    		   int idemploye = e1.getId();
+    		   if(employeExiste(st,idemploye)) {
+    	    		
+    	            String query = "UPDATE Creneau SET date_heure_debut = ";
+    	            query+= (char)34 + debut + (char)34 + ",date_heure_fin = ";
+    	            query+= (char)34 + fin + (char)34 ;
+    	            
+    	            query+= " WHERE id_employer = "+idemploye;
+    	            query+= " AND id IN "
+    	            		+ "(SELECT id_creneau FROM reunion "
+    	            		+ "WHERE id = "+id_reunion+")" ;         
+    	        
+    	         
+    	            st.executeUpdate(query);
+    	    		}
+    		   
+    	   }
+       }catch (SQLException ex) {
+           ex.printStackTrace();
+       }
     }
 
     public static int getIdLastReunion(Statement st) {
