@@ -1322,7 +1322,7 @@ public abstract class Back {
         ResultSet rs = null;
         try {
             //la requête sql
-            String query = "SELECT * FROM reunion WHERE id_reunion = ";
+            String query = "SELECT * FROM reunion WHERE id = ";
 
             query+= id_reunion;
 
