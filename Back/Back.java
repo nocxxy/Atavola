@@ -29,7 +29,7 @@ public abstract class Back {
             //Créer connection
             String dbName = "atavola";
             String dbIP = "localhost";
-            String dbUser = "root";
+            String dbUser = "roor";
             String dbPwd = "root";
 
             String url = "jdbc:mysql://" + dbIP + ":3306/" + dbName;
@@ -1378,5 +1378,20 @@ public abstract class Back {
             return -1;
         }
     }
-
+    
+    public static void retireReunions(Statement st, int id_reunion) {
+    	try {
+    		String sql = "SELECT id_creneau FROM reunion WHERE id =";
+    		sql += id_reunion;
+    		
+    		ResultSet rs = st.executeQuery(sql);
+    		
+    		while (rs.next()) {
+    			int id_creneau = rs.getInt("id_creneau");
+    			deleteReunion(Back.connectionBase(),id_creneau);
+    		}
+    	}catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
 }
