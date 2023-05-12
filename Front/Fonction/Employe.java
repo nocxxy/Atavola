@@ -10,7 +10,8 @@ public class Employe {
 
     // ________________________Constructeur/getteur____________________________
 
-    public Employe(String nom, String prenom, String login, String rg) {
+    public Employe(int id, String nom, String prenom, String login, String rg) {
+    	this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.login = login;
@@ -30,11 +31,11 @@ public class Employe {
         return this.rg;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-}
+	public int getId() {
+		return id;
+	}
+	
+	@Override
+	public String toString() {
+		return "Employe [id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", login=" + login + ", rg=" + rg + "]";
+	}}

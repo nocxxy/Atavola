@@ -19,12 +19,14 @@ public class MainContentContainer extends JPanel {
 	
 	private JPanel title; //Titre du main
 	private JLabel titleText;
-	Statement st;
+	private Statement st;
+	private Employe emp;
 	
 	public MainContentContainer(MenuPanel menu,Employe e,Statement st) {
 		super();
 		this.menu = menu;
 		this.st = st;
+		this.emp = e;
 		
 		this.setBackground(new Color(245, 245, 245));
 		this.setLayout(new BorderLayout());
@@ -73,7 +75,7 @@ public class MainContentContainer extends JPanel {
 				if(layout.getLayoutComponent(BorderLayout.CENTER) != null) {
 					this.remove(layout.getLayoutComponent(BorderLayout.CENTER));
 				}
-				EDTPanel edt = new EDTPanel();
+				EDTPanel edt = new EDTPanel(st,emp);
 				this.add(edt,BorderLayout.CENTER);
 				break;
 			default:

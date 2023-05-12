@@ -1,6 +1,7 @@
 package interface_package;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
@@ -32,6 +33,7 @@ public class MenuButton extends JButton{
 		this.setFont(new Font("Nirmala UI", Font.PLAIN, 14));
 		this.setPreferredSize(new Dimension(180, 37));
 		this.setMargin(new Insets(10, 50, 50, 50));
+		this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		ImageIcon imageIcon = new ImageIcon("src/img/"+icon+"_s.png"); // load the image to a imageIcon
 		Image image = imageIcon.getImage(); // transform it 
