@@ -30,6 +30,8 @@ public class ReunionBis2Frame extends JFrame {
 	private JScrollPane scroll;
 	
 	private JPanel panel;
+	
+	private int nombre=0;
 
 	public JLabel getNbEmployer() {
 		return nbEmployer;
@@ -58,7 +60,7 @@ public class ReunionBis2Frame extends JFrame {
 		 */
 		panel = new JPanel();
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 200, 15));
-		panel.setPreferredSize(panel.getPreferredSize());
+		panel.setPreferredSize(new Dimension(HEIGHT,WIDTH + nombre* 5 ));
 		
 		
 		JLabel text = new JLabel("Création Réunion (2/3)");
@@ -132,5 +134,13 @@ public class ReunionBis2Frame extends JFrame {
 
 	public ChoixCreneau getCreneau() {
 		return creneau;
+	}
+
+	public int getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(int nombre) {
+		this.nombre = nombre;
 	}
 }
