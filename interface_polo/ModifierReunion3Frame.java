@@ -20,9 +20,12 @@ public class ModifierReunion3Frame extends JFrame {
 	
 	private ArrayList<JCheckBox> select; 
 	private ArrayList<Employe> listEmploye;
+	private ModifierReunion2Frame f;
+
 	
 	//Constructeur
-	public ModifierReunion3Frame(Statement st,ArrayList<Employe> listEmploye) {
+	public ModifierReunion3Frame(Statement st,ArrayList<Employe> listEmploye,ModifierReunion2Frame f) {
+		this.f = f;
 		this.listEmploye = listEmploye;
 		this.setBounds(100,100,WIDTH,HEIGHT);
 		this.setTitle("A Tavola ! | Reunion3");
@@ -57,7 +60,10 @@ public class ModifierReunion3Frame extends JFrame {
 		
 		GreenRoundButton suiv = new GreenRoundButton("➤","Green",75,30,30);
 		GreenRoundButton prec = new GreenRoundButton("⮜","Red",75,30,30);
-		
+
+		prec.addActionListener(new PrecedentListener(f,this));
+		suiv.addActionListener(new UpdateReunionListener(this,st));
+
 		nav.add(prec);
 		nav.add(suiv);
 		
@@ -78,4 +84,17 @@ public class ModifierReunion3Frame extends JFrame {
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setLocationRelativeTo(null); 
 
-	}}
+	}
+
+	public ModifierReunion2Frame getF() {
+		return f;
+	}
+
+	public ArrayList<Employe> getListEmploye() {
+		return listEmploye;
+	}
+
+	public ArrayList<JCheckBox> getSelect() {
+		return select;
+	}
+}

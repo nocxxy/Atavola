@@ -61,6 +61,10 @@ public class RetirerReunionFrame extends JFrame {
 		
 	}
 
+	public ArrayList<Creneau> getCreneau() {
+		return creneau;
+	}
+
 	public ChoixCreneau getChoix() {
 		return choix;
 	}

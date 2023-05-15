@@ -18,7 +18,7 @@ public class TransiUpdateReunionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         this.f.dispose();
-        ModifierReunion1Frame u =new ModifierReunion1Frame(this.st);
+        ModifierReunion1Frame u =new ModifierReunion1Frame(this.st,this.f);
         u.setVisible(true);
     }
 }

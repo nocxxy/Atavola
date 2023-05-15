@@ -37,9 +37,11 @@ public class ModifierReunion1Frame extends JFrame {
 	public JCheckBox getUrgent() {
 		return urgent;
 	}
+	private RetirerReunionFrame f;
 
 	//Constructeur
-			public ModifierReunion1Frame(Statement st) {
+	public ModifierReunion1Frame(Statement st,RetirerReunionFrame f) {
+				this.f = f;
 				this.setBounds(100,100,WIDTH,HEIGHT);
 				this.setTitle("A Tavola ! | Modifier Reunion1");
 				ImageIcon img = new ImageIcon("src/img/italie.png");
@@ -143,7 +145,7 @@ public class ModifierReunion1Frame extends JFrame {
 				GreenRoundButton prec = new GreenRoundButton("⮜","Red",75,30,30);
 
 				suiv.addActionListener(new CreerReunionUpdate2Listener(st,this));
-				prec.addActionListener(new AnnulerListener(this));
+				prec.addActionListener(new PrecedentListener(this.f,this));
 				
 				nav.add(prec);
 				nav.add(suiv);
@@ -156,4 +158,9 @@ public class ModifierReunion1Frame extends JFrame {
 				this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				this.setLocationRelativeTo(null); 
 
-			}}
+			}
+
+	public RetirerReunionFrame getF() {
+		return f;
+	}
+}

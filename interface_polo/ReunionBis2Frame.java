@@ -92,7 +92,9 @@ public class ReunionBis2Frame extends JFrame {
 		GreenRoundButton prec = new GreenRoundButton("⮜","Red",75,30,30);
 
 		suiv.addActionListener(new CreerReunion3Listener(this,st));
-		
+		prec.addActionListener(new PrecedentListener(f,this));
+
+
 		nav.add(prec);
 		nav.add(suiv);
 		
