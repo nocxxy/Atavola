@@ -24,10 +24,20 @@ public class TestTableFrame extends JFrame {
 			this.setLayout(null);
 		
 			
-			TablePanel test = new TablePanel(18, Color.WHITE);
+			TablePanel test = new TablePanel(18, Color.WHITE,1,2,"Indisponible");
 			test.setBounds(10,10,380,114);
 			test.setOpaque(false);
 			this.getContentPane().add(test);
+			
+			TablePanel test1 = new TablePanel(18, Color.WHITE,2,4,"Disponible");
+			test1.setBounds(400,10,380,114);
+			test1.setOpaque(false);
+			this.getContentPane().add(test1);
+			
+			TablePanel test2 = new TablePanel(18, Color.WHITE,3,8,"Reserve");
+			test2.setBounds(10,150,380,114);
+			test2.setOpaque(false);
+			this.getContentPane().add(test2);
 		}
 
 }

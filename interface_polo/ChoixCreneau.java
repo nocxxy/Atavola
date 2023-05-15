@@ -3,14 +3,19 @@ package interface_polo;
 import Front.Fonction.Creneau;
 
 import javax.swing.*;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
-public class ChoixCreneau extends JPanel {
+public class ChoixCreneau extends JPanel implements ActionListener {
 
     private JComboBox choixCreneau;
     private ArrayList<Creneau> c;
+    private ModifierReunion2Frame f2;
+    private ReunionBis2Frame f;
 
     public ChoixCreneau(ArrayList<Creneau> c){
         this.c = c;
@@ -90,5 +95,12 @@ public class ChoixCreneau extends JPanel {
         }
         return res;
     }
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		f.getScroll().revalidate();
+		f.getScroll().setPreferredSize(f.getPanel().getPreferredSize());
+		f.setNombre(Integer.parseInt(f.getNbEmployer().getText()));
+	}
 
 }

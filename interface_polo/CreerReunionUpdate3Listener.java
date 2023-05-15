@@ -24,8 +24,8 @@ public class CreerReunionUpdate3Listener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Creneau temp = this.f.getCreneau().getSelect();
         ArrayList<Employe> listeE = Back.getEmployeDispo(temp);
-//        ModifierReunion3Frame suiv =new ModifierReunion3Frame(st,listeE,this.f);
-//        suiv.setVisible(true);
+        ModifierReunion3Frame suiv =new ModifierReunion3Frame(st,listeE,this.f);
+        suiv.setVisible(true);
         this.f.dispose();
     }
 }
