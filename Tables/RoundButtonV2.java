@@ -29,9 +29,9 @@ public class RoundButtonV2 extends JButton {
 		this.setText(label);
 		this.setFocusPainted(false);
 		this.setFont(new Font("MontSerrat", Font.PLAIN, font));
-		this.setPreferredSize(new Dimension(width+20, height));
-		this.setMargin(new Insets(10, 50, 50, 50));
-		this.setBorder(new RoundedBorder(10));
+		this.setPreferredSize(new Dimension(width+10, height));
+		this.setMargin(new Insets(0, -50, 1, 0));
+		//this.setBorder(new RoundedBorder(10));
 		this.setContentAreaFilled(false);
 		this.setForeground(Color.decode("#000000"));
 		
@@ -49,30 +49,38 @@ public class RoundButtonV2 extends JButton {
 
 	protected void paintComponent(Graphics g) {
 		g.setColor(Color.decode("#E8E7E7"));
-        g.fillRoundRect(0, 0, width + 20, height, radius, radius);
+        g.fillRoundRect(0, 0, width + 10, height, radius, radius);
     	if (this.getModel().isArmed()) {
+    		this.setForeground(Color.white);
     		g.setColor(Color.decode("#FFFFFF"));
-    		g.fillRoundRect(0, 0, width + 20, height, radius, radius);
+    		g.fillRoundRect(0, 0, width + 10, height, radius, radius);
     		
     	}else if (color=="Red"){
          g.setColor(Color.decode("#CC383B"));
+         this.setForeground(Color.black);
          }
     	else if(color=="Green") {
     		g.setColor(Color.decode("#2D6A4F"));
+    		this.setForeground(Color.black);
+    	}
+    	else if(color=="Orange") {
+    		g.setColor(Color.decode("#F56F36"));
+    		this.setForeground(Color.black);
     	}
     	g.fillOval(width -5, height/4, height/2, height/2);
+    	
          
          super.paintComponent(g);
     }
     
     	protected void paintBorder(Graphics g) {
          g.setColor(Color.decode("#E8E7E7"));
-         g.drawRoundRect(0, 0, width+20-1, height-1, radius, radius);
+         g.drawRoundRect(0, 0, width+10-1, height-1, radius, radius);
     }
     
     public boolean contains(int x, int y) {
          if (shape == null || !shape.getBounds().equals(getBounds())) {
-             shape = new RoundRectangle2D.Float(0, 0, width+20, height, radius, radius);
+             shape = new RoundRectangle2D.Float(0, 0, width+10, height, radius, radius);
          }
          return shape.contains(x, y);
     }
