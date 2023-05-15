@@ -54,8 +54,8 @@ public class ModifierReunion2Frame extends JFrame implements Scrollable {
 		panel.add(question);
 		
 		//JComboBox créneaux
-		ChoixCreneau creneau = new ChoixCreneau(c,this);
-		panel.add(creneau);
+		//ChoixCreneau creneau = new ChoixCreneau(c,this);
+		//panel.add(creneau);
 
 		JPanel pNbEmp = new JPanel();
 		JLabel nb = new JLabel("Nombres d'employés dispos : ");
