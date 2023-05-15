@@ -232,10 +232,11 @@ public abstract class Back {
      */
     public static void deleteCreneau(Statement st, int id) {
         try {
-            //La requête sql
+            
         	deleteIndisp(st,id);
         	deleteReunion(st,id);
         	
+        	//La requête sql
             String sql = "DELETE FROM Creneau WHERE Creneau.id = ";
             String query = sql + id;
 
@@ -299,6 +300,7 @@ public abstract class Back {
         return null;
     }
     
+   
     public static String minuteToHeure(int min) {
         int heur,minu ;
         heur = min / 60;
@@ -324,6 +326,13 @@ public abstract class Back {
         return cpt;
     }
     
+    
+    /*
+     * Méthode qui récupère l'employé
+     * Prend un Statement, le nom de l'employé, le prénom 
+     * de l'employé 
+     * Renvoie l'objet Employé
+     * */
 
     public static Employe getEmployer (Statement st,String nom,String prenom) {
 		try {
@@ -356,6 +365,12 @@ public abstract class Back {
 		}
 		return null;
 	}
+    
+    /*
+     * Méthode qui récupère l'employé
+     * Prend un statement, le login de l'employé
+     * Renvoie l'objet Employé
+     * */
     
     public static Employe getEmployer (Statement st,String elogin) {
 		try {
@@ -418,7 +433,7 @@ public abstract class Back {
 		    ex.printStackTrace();
 		}
     }
-
+    
     public static String convertDatetoString(java.util.Date date){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(date);
@@ -439,6 +454,12 @@ public abstract class Back {
         return res;
     }
     
+    /*
+     * Méthode qui récupère les employés
+     * Prend un statement et renvoie 
+     * la liste des employés
+     * */
+    
     public static ArrayList<Employe> getAllEmployer (Statement st){
     	try {
     		//La requête sql
@@ -450,7 +471,8 @@ public abstract class Back {
     		//Traitement du résultat
     		
     		ArrayList<Employe> res = new ArrayList();
-    		while (rs.next()) {                //On stocke les données
+    		while (rs.next()) {                
+    			//On stocke les données
                 int id = Integer.parseInt(rs.getString("id"));
                 String nom = rs.getString("nom");
        		 	String prenom = rs.getString("prenom");
@@ -471,9 +493,16 @@ public abstract class Back {
     		return null;
     	}
     
+    /*
+     * Méthode qui vérifie le login et le mot de passe 
+     * de l'employé 
+     * Prend le login et le mot de passe
+     * Renvoie un booléen 
+     * 
+     * */
     public static boolean connexionEmployer (Statement st, String login, String mdp) throws SQLException {
     	
-    	//Initialisation de la varible pour executer la requête 
+    	//Initialisation de la variable pour executer la requête 
     	ResultSet rs = null;
     	try {
     		//requête de vérification 
@@ -538,6 +567,13 @@ public abstract class Back {
     public static Date getSemainePrecedente(Date jour) {
         return jourPlusi(jour, -7);
     }
+    
+    /*
+     * Méthode qui récupère les créneaux d'un employé
+     * Prend un statement, le jour, l'id de l'employé
+     * Renvoie la liste des créneaux
+     * 
+     * */
     public static ArrayList<Creneau> getCreneauxEmp(Statement st,Date jour, int id){
         try {
             //La requête sql
@@ -585,7 +621,12 @@ public abstract class Back {
         return null;
     }
     
-    
+    /*
+     * Méthode qui vérifie si un creneau existe
+     * Prend l'id du créneau et un statement 
+     * Renvoie un booléen 
+     * 
+     * */
     public static boolean creneauExiste(Statement st, int id) {
 		ResultSet rs = null;
 		try {
@@ -607,10 +648,19 @@ public abstract class Back {
     	}	
     }
     
+    /*
+     * Méthode générique qui permet de supprimer dans la table 
+     * Soit la table indisponible soit réunion 
+     * Prend l'id de l'employé et le nom de la table 
+     * 
+     * */
+    
     public static void retireIndispOureunion (Statement st,int id,String indispOureunion) {
     	try {
-	  	            
+	  	        //la requête     
 	            String delete = "DELETE FROM " +indispOureunion +" WHERE id_employer = "+id;
+	            
+	            //execution de la requête
 	            st.executeUpdate(delete);
     
     		
@@ -629,9 +679,15 @@ public abstract class Back {
     
     public static void retireEmploye(Statement st, int id) {
     	try {
+    		//On vérifie s'il y a un créneau rattaché à l'employé
     		if(creneauExiste(st,id)) {
+    			//On retire l'indisponibilité
     			retireIndispOureunion(st,id,"Indisponible");
+    			
+    			//On retire la réunion 
     			retireIndispOureunion(st,id,"reunion");
+    			
+    			//On retire le créneau 
     			String sql = "DELETE FROM Creneau WHERE id_employer = ";
     			sql+= id;
     			st.executeUpdate(sql);
@@ -865,9 +921,14 @@ public abstract class Back {
     	}	return false;
     	
     }
+    
+    /*
+     * Méthode pour insérer une réunion dans la base de donnée
+     * Prend l'id de la réunion, du créneau et de l'employé
+     * */
     public static void insertionReunion(int id,int id_creneau,int id_employer) {
     	try {
-    			
+    			//la requête
 				String reunion = "INSERT INTO reunion (id,id_creneau,id_employer) VALUES (";
 				reunion += id +",";
 				reunion += id_creneau +",";
@@ -881,16 +942,24 @@ public abstract class Back {
     	}	
     }
     
-    
+    /*
+     * Méthode qui vérifie s'il existe déjà une réunion à ce créneau
+     * Prend la date de début et de fin 
+     * Renvoie un booléen
+     * 
+     * */
     public static boolean memeReunion(String debut,String fin) {
     	ResultSet rs = null;
     	try {
+    		//la requête
     		String sql = "SELECT * FROM reunion WHERE id_creneau IN "
 					+ "(SELECT id FROM Creneau WHERE date_heure_debut =";
 					sql += (char)34 +debut +(char)34;
 					sql+= " AND date_heure_fin = ";
 					sql += (char)34 + fin +(char)34 +")" +"LIMIT 1 ";
 			System.out.println(sql);
+			
+			//execution de la requête
 			rs= Back.connectionBase().executeQuery(sql);
 			
 			return rs.next();
@@ -899,20 +968,28 @@ public abstract class Back {
 		    ex.printStackTrace();
     	}return false;
     }
-    
+    /*
+     * Méthode qui renvoie l'id de la réunion qui correspond à ce créneau
+     * Prend l'heure de début et de fin
+     * Renvoie un integer
+     * */
     
     public static int idMemeReunion(String debut,String fin) {
     	int id = 0;
     	try {
+    		//la requête 
     		String sql = "SELECT * FROM reunion WHERE id_creneau IN "
 					+ "(SELECT id FROM Creneau WHERE date_heure_debut =";
 					sql += (char)34 +debut +(char)34;
 					sql+= " AND date_heure_fin = ";
 					sql += (char)34 + fin +(char)34 +")" +"LIMIT 1 ";
 			System.out.println(sql);
+			
+			//execution de la requête
 			ResultSet rs = Back.connectionBase().executeQuery(sql);
 			
 			while(rs.next()) {
+				//récupère l'id 
 				id = rs.getInt("id");
 			}
     	}catch (SQLException ex) {
@@ -962,6 +1039,8 @@ public abstract class Back {
     	try {
     		for (Employe e1 :e) {
     			int id = e1.getId();
+    			
+    			//On vérifie si l'employé est indisponible 
 	    		if(employeExiste(st,id) && estIndisponible(st,id,debut,fin)) {
 	    			
 	    		 
@@ -974,7 +1053,7 @@ public abstract class Back {
 	            delete += id ;
 	       
 	            
-	            
+	            //execution de la requête
 	            st.executeUpdate(delete);
 	    		}
     		}
@@ -1006,17 +1085,27 @@ public abstract class Back {
     		
     }
     
+    /*
+     * Méthode qui met à jour l'indisponibilité 
+     * Prend un statement, l'id du créneau, de l'employé, le motif
+     * l'heure de début, de fin 
+     * 
+     * 
+     * */
     public static void updateIndisp (Statement st, int idcreneau,int idemploye,String motif,String debut, String fin) {
     	try {
-    		 
+    		
+    		//On regarde si l'employé existe
     		if(employeExiste(st,idemploye)) {
     		
+    		//la requête pour mettre à jour le créneau d'indisponibilité l'employé
             String query = "UPDATE Creneau SET date_heure_debut = ";
             query+= (char)34 + debut + (char)34 + ",date_heure_fin = ";
             query+= (char)34 + fin + (char)34 ;
             query+= " WHERE id_employer = "+idemploye;
             query+= " AND id = "+idcreneau;         
             
+            //la requête pour mettre à jour le motif
             String update = "UPDATE Indisponible SET motif = ";
             update+= (char)34 + motif + (char)34;
             update+= " WHERE id_employer = "+idemploye;
@@ -1025,6 +1114,8 @@ public abstract class Back {
             
             System.out.println(query);
             System.out.println(update);
+            
+            //execution de la requête
             st.executeUpdate(update);
             st.executeUpdate(query);
     		}
@@ -1035,13 +1126,19 @@ public abstract class Back {
     	}	
     }
     
+    /*
+     * Méthode qui récupère les créneaux d'indisponibilités
+     * Prend le statement, la date du jour, l'id de l'employé
+     * Renvoie la liste des créneaux
+     * */
     public static ArrayList<Creneau> getCreneauxIndisp(Statement st, Date jour, int id){
     	ResultSet rs = null;
     	try {
-
+    		//Transformer la date util en date sql
 			String jourStr = jour.getYear()+1900+"-"+ (jour.getMonth()+1)+"-"+jour.getDate();
     		String date =  (char)34 + jourStr  + (char)34;
     		
+    		//Requête pour récupérer les indisponibilités
     		String sql = "SELECT * FROM Creneau WHERE id ";
     		sql += "IN (SELECT id_creneau FROM Indisponible WHERE id_employer = ";
     		sql += id + ")";
@@ -1056,6 +1153,7 @@ public abstract class Back {
     		ArrayList<Creneau> liste = new ArrayList();
         		
             while (rs.next()) {
+            	//On stocke les données
             	int id_creneau = rs.getInt("id");
                 Timestamp hd = rs.getTimestamp("date_heure_debut");
                 Timestamp hf = rs.getTimestamp("date_heure_fin");
@@ -1084,9 +1182,16 @@ public abstract class Back {
 		    ex.printStackTrace();
     	}	return null;
     }
+    
+    /*
+     * Méthode pour mettre à jour un créneau 
+     * Prend un statement, l'id du créneau, de l'employé,
+     * l'heure de début et de fin 
+     * 
+     * */
     public static void updateCreneau (Statement st, int idcreneau,int idemploye,String debut, String fin) {
     	try {
-    		
+    		//la requête 
             String query = "UPDATE Creneau SET date_heure_debut = ";
             query+= (char)34 + debut + (char)34 + ",date_heure_fin = ";
             query+= (char)34 + fin + (char)34 ;
@@ -1095,6 +1200,8 @@ public abstract class Back {
             
             
             System.out.println(query);
+            //execution de la requête
+            
             st.executeUpdate(query);
     		
     		
@@ -1104,11 +1211,18 @@ public abstract class Back {
     	}	
     }
     
+    /*
+     * Méthode pour supprimer l'indisponibilité 
+     * Prend un statement et l'id du créneau 
+     * 
+     * */
     public static void deleteIndisp (Statement st, int id_creneau) {
     	try {           
+    			//La requête pour supprimer l'indisponibilité
 	            String delete = "DELETE FROM Indisponible WHERE id_creneau = ";
 	            delete += id_creneau ;
 	            
+	            //la requête pour supprimer le créneau relié à l'indisponibilité
 	            String sql = "DELETE FROM Creneau WHERE id = ";
 	            String query = sql + id_creneau;
 	            
@@ -1123,11 +1237,19 @@ public abstract class Back {
 		    ex.printStackTrace();
     	}	
     }  
+    
+    /*
+     * Méthode pour supprimer la réunion 
+     * Prend un statement et l'id du créneau 
+     * 
+     * */
     public static void deleteReunion (Statement st, int id_creneau) {
     	try {           
+    			//La requête pour supprimer la réunion 	
 	            String delete = "DELETE FROM reunion WHERE id_creneau = ";
 	            delete += id_creneau ;
 	            
+	            //la requête pour supprimer le créneau relié à l'indisponibilité
 	            String sql = "DELETE FROM Creneau WHERE id = ";
 	            String query = sql + id_creneau;
 	            
