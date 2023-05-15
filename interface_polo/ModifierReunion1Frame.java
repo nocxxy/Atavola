@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import EDT.AjouterCreneauReunionListener;
+import interface_package.AnnulerListener;
 import interface_package.RoundJTextField;
 
 public class ModifierReunion1Frame extends JFrame {
@@ -141,8 +142,8 @@ public class ModifierReunion1Frame extends JFrame {
 				GreenRoundButton suiv = new GreenRoundButton("➤","Green",75,30,30);
 				GreenRoundButton prec = new GreenRoundButton("⮜","Red",75,30,30);
 
-				//suiv.addActionListener(new CreerReunion2Listener(this,st));
-				//prec.addActionListener(new AjouterCreneauReunionListener(st));
+				suiv.addActionListener(new CreerReunionUpdate2Listener(st,this));
+				prec.addActionListener(new AnnulerListener(this));
 				
 				nav.add(prec);
 				nav.add(suiv);
