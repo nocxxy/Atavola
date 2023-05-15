@@ -21,10 +21,11 @@ public class RecupEmployeDispoListener implements ActionListener {
 
 
     private String afficheListeEmployer(ArrayList<Employe> listeE){
-        String res ="";
+        String res ="<html>";
         for (Employe e : listeE){
-            res+= (e.getPrenom() + " "+e.getNom()+",");
+            res+= (e.getPrenom() + " "+e.getNom()+"<br> ");
         }
+        res+="</html>";
         return res;
     }
 
