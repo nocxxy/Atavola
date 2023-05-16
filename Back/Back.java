@@ -29,7 +29,7 @@ public abstract class Back {
             //Créer connection
             String dbName = "atavola";
             String dbIP = "localhost";
-            String dbUser = "roor";
+            String dbUser = "root";
             String dbPwd = "root";
 
             String url = "jdbc:mysql://" + dbIP + ":3306/" + dbName;
@@ -1520,7 +1520,7 @@ public abstract class Back {
     	ResultSet rs = null;
     	try {
     		String sql = "SELECT * FROM reservations WHERE id_table = "+id;
-    		sql += " AND service = " + service;
+    		sql += " AND service = " + (char)34 + service + (char)34 ;
     		rs = Back.connectionBase().executeQuery(sql);
             return (rs.next());
     	}catch (SQLException ex) {
@@ -1532,7 +1532,7 @@ public abstract class Back {
     public static void retireReservation(int id, String service) {
     	try {
     		String sql = "DELETE FROM reservations WHERE id_table = "+id;
-    		sql += " AND service = "+ service;
+    		sql += " AND service = "+ (char)34 + service + (char)34;
    
     		Back.connectionBase().executeUpdate(sql);
     	}catch (SQLException ex) {
@@ -1546,7 +1546,9 @@ public abstract class Back {
     		}
     		
     		String sql = "INSERT INTO tables_prises (id_table,service) VALUES (";
-    		sql += id + ", " + service + ")";
+    		sql += id + ", " + (char)34 + service + (char)34 + ")";
+    		
+    		System.out.println(sql);
     		
     		Back.connectionBase().executeUpdate(sql);
     		
@@ -1558,8 +1560,13 @@ public abstract class Back {
     
     public static void reserveTable(int id, Date jour, String service, String nom_client) {
     	try {
+    		String jourStr = jour.getYear()+1900+"-"+ (jour.getMonth()+1)+"-"+jour.getDate();
+    		String date =  (char)34 + jourStr  + (char)34;
+    		
     		String sql = "INSERT INTO reservations (id_table,service,jour,nom_client) VALUES (";
-    		sql += id + ", " + service + ", " + jour + ", " + nom_client + ")";
+    		sql += id + ", " + (char)34 + service + (char)34 + ", " + date + ", " +
+    				(char)34 + nom_client + (char)34 + ")";
+    		
     		Back.connectionBase().executeUpdate(sql);
     	}catch (SQLException ex) {
             ex.printStackTrace();
