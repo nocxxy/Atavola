@@ -16,6 +16,7 @@ import java.util.Locale;
 
 import Front.Fonction.Creneau;
 import Front.Fonction.Employe;
+import Tables.Table;
 
 public abstract class Back {
     //methode permettant de se connecter à la base de donnée
@@ -29,8 +30,6 @@ public abstract class Back {
 	            //Créer connection
 	            String dbName = "atavola";
 	            String dbIP = "localhost";
-	            String dbUser = "root";
-	            String dbPwd = "root";
 
 	            String url = "jdbc:mysql://" + dbIP + ":3306/" + dbName;
 	            
@@ -1693,6 +1692,50 @@ public abstract class Back {
     	
     	return res;
     	
+    }
+
+    /*recupere les tables d'un service donné
+    il faut verifier si la table est occupé ou reservée*/
+    public static ArrayList<Table> getTables(Date jour, String service) {
+        ResultSet rs = null;
+        ArrayList<Table> tables = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM Tables WHERE service = ";
+            sql += service;
+            rs = Back.connectionBase().executeQuery(sql);
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int numero = rs.getInt("numero");
+                int nbPlaces = rs.getInt("nb_places");
+
+                Table table = new Table(id,numero,nbPlaces,null, null);
+
+                // Vérifier si la table est occupée ou réservée
+                if (estOccupe(id, service)) {
+                    table.setEtat("occup");
+                } else if (estReserve(id, service)) {
+                    String sql2 = "SELECT nom_client FROM Reservations";
+
+                    ResultSet rs2 = Back.connectionBase().executeQuery(sql);
+
+                    while (rs2.next()) {
+                        String nom_clients = rs.getString("nom_client");
+                        table.setReservation(nom_clients);
+                    }
+                    table.setEtat("reserv");
+                } else {
+                    table.setEtat("libre");
+                }
+
+                // Ajouter la table à la liste
+                tables.add(table);
+            }
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+        }
+        return tables;
     }
 }
 
