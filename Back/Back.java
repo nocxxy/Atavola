@@ -24,12 +24,14 @@ public abstract class Back {
 	 public static Statement connectionBase() {
 	        try {
 	            //Chargement driver
-	            Class.forName("com.mysql.jdbc.Driver");
+	            Class.forName("com.mysql.cj.jdbc.Driver");
 	            System.out.println("DRIVER OK");
 
 	            //Créer connection
 	            String dbName = "atavola";
 	            String dbIP = "localhost";
+	            String dbUser = "atavola";
+	            String dbPwd = "9F0";
 
 	            String url = "jdbc:mysql://" + dbIP + ":3306/" + dbName;
 	            
@@ -1519,7 +1521,7 @@ public abstract class Back {
     public static boolean estReserve(int id, String service){
     	ResultSet rs = null;
     	try {
-    		String sql = "SELECT * FROM reservations WHERE id_table = "+id;
+    		String sql = "SELECT * FROM Reservations WHERE id_table = "+id;
     		sql += " AND service = " + (char)34 + service + (char)34 ;
     		rs = Back.connectionBase().executeQuery(sql);
             return (rs.next());
@@ -1545,7 +1547,7 @@ public abstract class Back {
     			retireReservation(id,service);
     		}
     		
-    		String sql = "INSERT INTO tables_prises (id_table,service) VALUES (";
+    		String sql = "INSERT INTO Tables_prises (id_table,service) VALUES (";
     		sql += id + ", " + (char)34 + service + (char)34 + ")";
     		
     		System.out.println(sql);
@@ -1563,7 +1565,7 @@ public abstract class Back {
     		String jourStr = jour.getYear()+1900+"-"+ (jour.getMonth()+1)+"-"+jour.getDate();
     		String date =  (char)34 + jourStr  + (char)34;
     		
-    		String sql = "INSERT INTO reservations (id_table,service,jour,nom_client) VALUES (";
+    		String sql = "INSERT INTO Reservations (id_table,service,jour,nom_client) VALUES (";
     		sql += id + ", " + (char)34 + service + (char)34 + ", " + date + ", " +
     				(char)34 + nom_client + (char)34 + ")";
     		
@@ -1700,8 +1702,7 @@ public abstract class Back {
         ResultSet rs = null;
         ArrayList<Table> tables = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM Tables WHERE service = ";
-            sql += service;
+            String sql = "SELECT * FROM Tables";
             rs = Back.connectionBase().executeQuery(sql);
 
             while (rs.next()) {
@@ -1715,13 +1716,14 @@ public abstract class Back {
                 if (estOccupe(id, service)) {
                     table.setEtat("occup");
                 } else if (estReserve(id, service)) {
-                    String sql2 = "SELECT nom_client FROM Reservations";
+                    String sql2 = "SELECT nom_client FROM Reservations WHERE service = ";
+                    sql2 += (char) 34 + service + (char) 34;
 
-                    ResultSet rs2 = Back.connectionBase().executeQuery(sql);
+                    ResultSet rs2 = Back.connectionBase().executeQuery(sql2);
 
                     while (rs2.next()) {
-                        String nom_clients = rs.getString("nom_client");
-                        table.setReservation(nom_clients);
+                        String nom = rs2.getString("nom_client");
+                        table.setReservation(nom);
                     }
                     table.setEtat("reserv");
                 } else {
@@ -1730,6 +1732,10 @@ public abstract class Back {
 
                 // Ajouter la table à la liste
                 tables.add(table);
+
+                for(Table t : tables) {
+                    System.out.println(t.getEtat() + " " + t.getReservation() + " " + t.getId() + " " + t.getNbPlaces() + " " + t.getNbPlaces());
+                }
             }
 
             } catch (SQLException ex) {
