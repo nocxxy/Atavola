@@ -16,8 +16,7 @@ public class Main {
 		ConnexionFrame c = new ConnexionFrame(st);
 		c.setVisible(true);
 
-		Back.libereTable(1,"midi_1");
-		Back.creeTable(5,5,6);
+
 	}
 
 }

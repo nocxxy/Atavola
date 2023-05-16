@@ -16,36 +16,39 @@ import java.util.Locale;
 
 import Front.Fonction.Creneau;
 import Front.Fonction.Employe;
-import Tables.Table;
 
 public abstract class Back {
     //methode permettant de se connecter à la base de donnée
     //ne prend aucun paramètre mais renvoie la connection qui nous permettra de faire des requetes
-    public static Statement connectionBase() {
-        try {
-            //Chargement driver
-            System.out.println("DRIVER OK");
+	 public static Statement connectionBase() {
+	        try {
+	            //Chargement driver
+	            Class.forName("com.mysql.jdbc.Driver");
+	            System.out.println("DRIVER OK");
 
-            //Créer connection
-            String dbName = "atavola";
-            String dbIP = "localhost";
+	            //Créer connection
+	            String dbName = "atavola";
+	            String dbIP = "localhost";
+	            String dbUser = "root";
+	            String dbPwd = "root";
 
-            String url = "jdbc:mysql://" + dbIP + ":3306/" + dbName;
-            
-            System.out.println(url);
+	            String url = "jdbc:mysql://" + dbIP + ":3306/" + dbName;
+	            
+	            System.out.println(url);
 
-            Connection con = DriverManager.getConnection(url, dbUser, dbPwd);
-            System.out.println("Connection ok");
+	            Connection con = DriverManager.getConnection(url, dbUser, dbPwd);
+	            System.out.println("Connection ok");
 
-            //Etat de connection
-            Statement st = con.createStatement();
-            return st;
+	            //Etat de connection
+	            Statement st = con.createStatement();
+	            return st;
 
-        } catch (Exception e) {
-            System.out.println("Erreur " + e.getMessage());
-        }
-        return null;
-    }
+	        } catch (Exception e) {
+	            System.out.println("Erreur " + e.getMessage());
+	        }
+	        return null;
+	    }
+
 
     //methode qui prend une connection à la base pour ensuite envoyer les requetes de création de tables
     public static void creationTable(Statement st) {
@@ -1641,6 +1644,7 @@ public abstract class Back {
     	
     	return new Date(d1.getTime());
     }
+    
 }
 
 
