@@ -18,7 +18,7 @@ public class ReunionBis3Frame extends JFrame {
 	final static int WIDTH = 320;
 	final static int HEIGHT = 274;
 	
-	private ArrayList<JCheckBox> select; 
+	private ArrayList<JCheckBox> select = new ArrayList<JCheckBox>(); 
 	private ArrayList<Employe> listEmploye;
 	private ReunionBis2Frame f;
 	
@@ -52,6 +52,7 @@ public class ReunionBis3Frame extends JFrame {
 			String pn = this.listEmploye.get(i).getPrenom() + " " + this.listEmploye.get(i).getNom();
 			JCheckBox cb = new JCheckBox(pn);
 			cb.setSelected(true);
+			this.select.add(cb);
 			panel.add(cb);
 		}
 		
