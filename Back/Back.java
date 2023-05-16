@@ -1572,4 +1572,30 @@ public abstract class Back {
             ex.printStackTrace();
         }
     }
+    
+    public static boolean estOccupe(int id,String service) {
+    	ResultSet rs = null;
+    	try {
+    		String sql = "SELECT * FROM tables_prises WHERE id_table = "+id;
+    		sql += " AND service = "+(char)34 + service + (char)34;
+    		System.out.println(sql);
+    		rs = Back.connectionBase().executeQuery(sql);
+    		return rs.next();
+    	}catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+    	}
+    }
+    
+    
+    public static void deleteOccupe(int id, String service) {
+    	try {
+    		String sql = "DELETE FROM tables_prises WHERE id_table = "+id;
+    		sql += " AND service = "+(char)34 + service + (char)34;
+    		Back.connectionBase().executeUpdate(sql);
+
+    	}catch (SQLException ex) {
+            ex.printStackTrace();
+    	}
+    }
 }
