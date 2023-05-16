@@ -1645,6 +1645,55 @@ public abstract class Back {
     	return new Date(d1.getTime());
     }
     
+    
+    private static String getJour(java.util.Date date) {
+    	 int jour = date.getDay(); 
+    	 switch(jour) {
+         case 0 : return "Dimanche";
+         case 1 : return "Lundi";
+         case 2 : return "Mardi";
+         case 3 : return "Mercredi";
+         case 4 : return "Jeudi";
+         case 5 : return "Vendredi";
+         case 6 : return "Samedi";
+         default :
+             return "";
+    	 }
+    }
+    
+    private static	String  getMonth(java.util.Date date) {
+        int jour = date.getMonth();
+
+        switch(jour) {
+
+            case 0 : return "Janvier";
+            case 1 : return "Fevrier";
+            case 2 : return "Mars";
+            case 3 : return "Avril";
+            case 4 : return "Mai";
+            case 5 : return "Juin";
+            case 6 : return "Juillet";
+            case 7 : return "Août";
+            case 8 : return "Septembre";
+            case 9 : return "Octobre";
+            case 10 : return "Novembre";
+            case 11 : return "Decembre";
+
+            default :
+                System.out.println("Erreur");
+                break;
+        }
+        return "";
+    }
+    
+    public static String dateToString(Date date) {
+    	java.util.Date d = new java.util.Date(date.getTime());
+    	
+    	String res = getJour(d) +" " + d.getDate() + " "+ getMonth(d);
+    	
+    	return res;
+    	
+    }
 }
 
 
