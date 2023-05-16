@@ -1598,4 +1598,11 @@ public abstract class Back {
             ex.printStackTrace();
     	}
     }
+    
+    public static Date getAJD() {
+    	java.util.Date d1 = new java.util.Date();
+    	
+    	
+    	return new Date(d1.getTime());
+    }
 }
