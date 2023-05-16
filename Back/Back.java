@@ -1514,4 +1514,55 @@ public abstract class Back {
             ex.printStackTrace();
         }
     }
+    
+    
+    public static boolean estReserve(int id, String service){
+    	ResultSet rs = null;
+    	try {
+    		String sql = "SELECT * FROM reservations WHERE id_table = "+id;
+    		sql += " AND service = " + service;
+    		rs = Back.connectionBase().executeQuery(sql);
+            return (rs.next());
+    	}catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }  
+    }
+    
+    public static void retireReservation(int id, String service) {
+    	try {
+    		String sql = "DELETE FROM reservations WHERE id_table = "+id;
+    		sql += " AND service = "+ service;
+   
+    		Back.connectionBase().executeUpdate(sql);
+    	}catch (SQLException ex) {
+            ex.printStackTrace();
+        }  
+    }
+    public static void occupeTable(int id, String service) {
+    	try {
+    		if(estReserve(id,service)) {
+    			retireReservation(id,service);
+    		}
+    		
+    		String sql = "INSERT INTO tables_prises (id_table,service) VALUES (";
+    		sql += id + ", " + service + ")";
+    		
+    		Back.connectionBase().executeUpdate(sql);
+    		
+    	}catch (SQLException ex) {
+            ex.printStackTrace();
+        }  	
+    }
+    
+    
+    public static void reserveTable(int id, Date jour, String service, String nom_client) {
+    	try {
+    		String sql = "INSERT INTO reservations (id_table,service,jour,nom_client) VALUES (";
+    		sql += id + ", " + service + ", " + jour + ", " + nom_client + ")";
+    		Back.connectionBase().executeUpdate(sql);
+    	}catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
 }
