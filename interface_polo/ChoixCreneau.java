@@ -3,14 +3,19 @@ package interface_polo;
 import Front.Fonction.Creneau;
 
 import javax.swing.*;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
-public class ChoixCreneau extends JPanel {
+public class ChoixCreneau extends JPanel implements ActionListener {
 
     private JComboBox choixCreneau;
     private ArrayList<Creneau> c;
+    private ModifierReunion2Frame f2;
+    private ReunionBis2Frame f;
 
     public ChoixCreneau(ArrayList<Creneau> c){
         this.c = c;
@@ -18,6 +23,29 @@ public class ChoixCreneau extends JPanel {
         this.choixCreneau = new JComboBox(s1);
         this.add(this.choixCreneau);
     }
+    @SuppressWarnings("deprecation")
+    public ChoixCreneau(Creneau c,ModifierReunion2Frame f){
+        ArrayList<Creneau> temp = new ArrayList<Creneau>();
+
+
+        for (int i = 7; i<23 ; i++){
+            Date d1 = new Date(c.getDateDebut().getYear(),c.getDateDebut().getMonth()-1,c.getDateDebut().getDate(),i,0);
+            Date d2 = new Date(c.getDateFin().getYear(),c.getDateFin().getMonth()-1,c.getDateFin().getDate(),i+1,0);
+            Creneau h = new Creneau(d1,d2);
+            System.out.println(h);
+            temp.add(h);
+
+        }
+        System.out.println(temp.get(0).toString());
+        this.c = temp;
+        System.out.println(this.c);
+        String s1[] = this.getListCreneau();
+        this.choixCreneau = new JComboBox(s1);
+
+        this.choixCreneau.addActionListener(new RecupEmployeDispoUpdateListener(this,f));
+        this.add(this.choixCreneau);
+    }
+
     @SuppressWarnings("deprecation")
     public ChoixCreneau(Creneau c,ReunionBis2Frame f){
         ArrayList<Creneau> temp = new ArrayList<Creneau>();
@@ -66,5 +94,12 @@ public class ChoixCreneau extends JPanel {
         }
         return res;
     }
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		f.getScroll().revalidate();
+		f.getScroll().setPreferredSize(f.getPanel().getPreferredSize());
+		f.setNombre(Integer.parseInt(f.getNbEmployer().getText()));
+	}
 
 }

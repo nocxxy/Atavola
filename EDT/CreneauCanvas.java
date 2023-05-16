@@ -14,6 +14,7 @@ import Front.Fonction.Creneau;
 import Front.Fonction.Employe;
 import interface_package.RetirerIndispoFrame;
 import interface_polo.RetirerCreneauFrame;
+import interface_polo.RetirerReunionFrame;
 
 @SuppressWarnings("serial")
 public class CreneauCanvas extends Canvas implements MouseListener{
@@ -82,7 +83,8 @@ public class CreneauCanvas extends Canvas implements MouseListener{
 					RetirerCreneauFrame f = new RetirerCreneauFrame(Back.connectionBase(),this.creneaux);
 					f.setVisible(true);
 				} else if (reunion.size()!=0) {
-					System.out.println("test");
+					RetirerReunionFrame f = new RetirerReunionFrame(Back.connectionBase(),reunion);
+					f.setVisible(true);
 				}
 
 			}

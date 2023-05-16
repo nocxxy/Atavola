@@ -22,6 +22,7 @@ public class ModifierReunion2Frame extends JFrame implements Scrollable {
 	final static int HEIGHT = 310;
 	private JLabel nbEmployer = new JLabel();
 	private JLabel listeNomEmploye = new JLabel();
+	private ChoixCreneau creneau;
 
 	public JLabel getNbEmployer() {
 		return nbEmployer;
@@ -31,8 +32,10 @@ public class ModifierReunion2Frame extends JFrame implements Scrollable {
 		return listeNomEmploye;
 	}
 
+	private ModifierReunion1Frame f;
 	//Constructeur
 	public ModifierReunion2Frame(Statement st,Creneau c,ModifierReunion1Frame f) {
+		this.f = f;
 		this.setBounds(100,100,WIDTH,HEIGHT);
 		this.setTitle("A Tavola ! | Reunion2");
 		ImageIcon img = new ImageIcon("src/img/italie.png");
@@ -54,8 +57,8 @@ public class ModifierReunion2Frame extends JFrame implements Scrollable {
 		panel.add(question);
 		
 		//JComboBox créneaux
-		//ChoixCreneau creneau = new ChoixCreneau(c,this);
-		//panel.add(creneau);
+		 this.creneau = new ChoixCreneau(c,this);
+		panel.add(creneau);
 
 		JPanel pNbEmp = new JPanel();
 		JLabel nb = new JLabel("Nombres d'employés dispos : ");
@@ -75,8 +78,9 @@ public class ModifierReunion2Frame extends JFrame implements Scrollable {
 		GreenRoundButton suiv = new GreenRoundButton("➤","Green",75,30,30);
 		GreenRoundButton prec = new GreenRoundButton("⮜","Red",75,30,30);
 
+		suiv.addActionListener(new CreerReunionUpdate3Listener(st,this));
+		prec.addActionListener(new PrecedentListener(f,this));
 
-		
 		nav.add(prec);
 		nav.add(suiv);
 		
@@ -129,4 +133,13 @@ public class ModifierReunion2Frame extends JFrame implements Scrollable {
 	public boolean getScrollableTracksViewportHeight() {
 		// TODO Auto-generated method stub
 		return false;
-	}}
+	}
+
+	public ChoixCreneau getCreneau() {
+		return creneau;
+	}
+
+	public ModifierReunion1Frame getF() {
+		return f;
+	}
+}

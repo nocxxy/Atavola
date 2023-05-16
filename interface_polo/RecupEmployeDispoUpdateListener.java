@@ -9,26 +9,23 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class RecupEmployeDispoListener implements ActionListener {
+public class RecupEmployeDispoUpdateListener implements ActionListener {
 
-    private ChoixCreneau c ;
-    private ReunionBis2Frame f;
+    private ChoixCreneau c;
+    private ModifierReunion2Frame f;
 
-    RecupEmployeDispoListener(ChoixCreneau c , ReunionBis2Frame f){
+    public RecupEmployeDispoUpdateListener(ChoixCreneau c , ModifierReunion2Frame f){
         this.c = c;
-        this.f = f;
+        this.f=f;
     }
-
 
     private String afficheListeEmployer(ArrayList<Employe> listeE){
-        String res ="<html>";
+        String res ="";
         for (Employe e : listeE){
-            res+= (e.getPrenom() + " "+e.getNom()+"<br> ");
+            res+= (e.getPrenom() + " "+e.getNom()+",");
         }
-        res+="</html>";
         return res;
     }
-
     @SuppressWarnings("deprecation")
     private Date copyDate(Date d){
         int year = d.getYear();
@@ -38,6 +35,7 @@ public class RecupEmployeDispoListener implements ActionListener {
         int min = d.getMinutes();
         return new Date(year,month,day,hours,min);
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         Creneau temp = new Creneau(copyDate(this.c.getSelect().getDateDebut()),copyDate(this.c.getSelect().getDateFin()));

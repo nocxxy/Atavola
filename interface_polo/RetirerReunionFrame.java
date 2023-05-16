@@ -45,8 +45,8 @@ public class RetirerReunionFrame extends JFrame {
 		GreenRoundButton modifier = new GreenRoundButton("Modifier","Green",175,30,30);
 
 		cancel.addActionListener(new AnnulerListener(this));
-		//del.addActionListener(new RetirerCreneauListener(this,st));
-		//modifier.addActionListener(new TransiUpdateListener(st,this));
+		del.addActionListener(new RetirerReunionListener(this,st));
+		modifier.addActionListener(new TransiUpdateReunionListener(st,this));
 
 		panel.add(text);
 		panel.add(this.choix);
@@ -59,6 +59,10 @@ public class RetirerReunionFrame extends JFrame {
 		this.setLocationRelativeTo(null); 
 		
 		
+	}
+
+	public ArrayList<Creneau> getCreneau() {
+		return creneau;
 	}
 
 	public ChoixCreneau getChoix() {
