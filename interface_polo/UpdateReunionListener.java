@@ -39,7 +39,7 @@ public class UpdateReunionListener implements ActionListener {
         ArrayList<JCheckBox> s = this.f.getSelect();
         ArrayList<Employe> listE= this.f.getListEmploye();
         int id_reunion = this.f.getF().getF().getF().getCreneau().get(0).getReunion();
-        Back.updateReunion(this.st,id_reunion,listE,getDateSynthaxe(c.getDateDebut()),getDateSynthaxe(c.getDateFin()),this.f.getF().getF().getUrgent().isSelected());
+        Back.updateReunion(this.st,id_reunion,listE,getDateSynthaxe(c.getDateDebut()),getDateSynthaxe(c.getDateFin()));
         this.f.dispose();
     }
 }
