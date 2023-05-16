@@ -51,6 +51,7 @@ public class ReunionBis3Frame extends JFrame {
 		for(int i = 0; i<this.listEmploye.size();i++) {
 			String pn = this.listEmploye.get(i).getPrenom() + " " + this.listEmploye.get(i).getNom();
 			JCheckBox cb = new JCheckBox(pn);
+			cb.setSelected(true);
 			panel.add(cb);
 		}
 		

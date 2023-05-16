@@ -69,6 +69,10 @@ public class TablePanel extends RoundedPanel {
 			liberer.setBounds(20, 85, 110, 20);
 			this.add(liberer);
 			
+			RoundButtonV2 reserver = new RoundButtonV2("Attribuer","Red",80,20,15,12);
+			reserver.setBounds(120, 85, 110, 20);
+			this.add(reserver);
+			
 		}
 		
 		GreenRoundButton modifier = new GreenRoundButton("Modifier Table", "Gray", 95, 25, 15,12);
