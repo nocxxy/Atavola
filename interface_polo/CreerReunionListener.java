@@ -36,7 +36,15 @@ public class CreerReunionListener implements ActionListener {
         Creneau c = this.f.getF().getCreneau().getSelect();
         ArrayList<JCheckBox> s = this.f.getSelect();
         ArrayList<Employe> listE= this.f.getListEmploye();
-        Back.ajout_reunion(this.st,listE,getDateSynthaxe(c.getDateDebut()),getDateSynthaxe(c.getDateFin()),this.f.getF().getF().getUrgent().isSelected());
+        ArrayList<Employe> temp =new ArrayList<Employe>();
+
+        for(int i=0; i<listE.size();i++){
+            if(s.get(i).isSelected()){
+                temp.add(listE.get(i));
+            }
+        }
+
+        Back.ajout_reunion(this.st,temp,getDateSynthaxe(c.getDateDebut()),getDateSynthaxe(c.getDateFin()),this.f.getF().getF().getUrgent().isSelected());
         this.f.dispose();
 
     }
