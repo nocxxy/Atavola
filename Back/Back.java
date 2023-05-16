@@ -16,6 +16,7 @@ import java.util.Locale;
 
 import Front.Fonction.Creneau;
 import Front.Fonction.Employe;
+import Tables.Table;
 
 public abstract class Back {
     //methode permettant de se connecter à la base de donnée
@@ -23,14 +24,11 @@ public abstract class Back {
     public static Statement connectionBase() {
         try {
             //Chargement driver
-            Class.forName("com.mysql.jdbc.Driver");
             System.out.println("DRIVER OK");
 
             //Créer connection
             String dbName = "atavola";
             String dbIP = "localhost";
-            String dbUser = "root";
-            String dbPwd = "root";
 
             String url = "jdbc:mysql://" + dbIP + ":3306/" + dbName;
             
@@ -1528,7 +1526,7 @@ public abstract class Back {
             return false;
         }  
     }
-    
+
     public static void retireReservation(int id, String service) {
     	try {
     		String sql = "DELETE FROM reservations WHERE id_table = "+id;
@@ -1572,11 +1570,11 @@ public abstract class Back {
             ex.printStackTrace();
         }
     }
-    
+
     public static boolean estOccupe(int id,String service) {
     	ResultSet rs = null;
     	try {
-    		String sql = "SELECT * FROM tables_prises WHERE id_table = "+id;
+    		String sql = "SELECT * FROM Tables_prises WHERE id_table = "+id;
     		sql += " AND service = "+(char)34 + service + (char)34;
     		System.out.println(sql);
     		rs = Back.connectionBase().executeQuery(sql);
@@ -1589,13 +1587,53 @@ public abstract class Back {
     
     
     public static void deleteOccupe(int id, String service) {
-    	try {
-    		String sql = "DELETE FROM tables_prises WHERE id_table = "+id;
-    		sql += " AND service = "+(char)34 + service + (char)34;
-    		Back.connectionBase().executeUpdate(sql);
+        try {
+            String sql = "DELETE FROM tables_prises WHERE id_table = " + id;
+            sql += " AND service = " + (char) 34 + service + (char) 34;
+            Back.connectionBase().executeUpdate(sql);
 
-    	}catch (SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
-    	}
+        }
+    }
+    
+    /* cree la table */
+    public static void creeTable(int id, int numero, int nbPlaces) {
+        try {
+            //La requête
+            String sql = "INSERT INTO Tables (id,numero,nb_places) VALUES(";
+            sql += id + ",";
+            sql += numero + ",";
+            sql += nbPlaces;
+            sql += ")";
+
+            System.out.println(sql);
+
+            Back.connectionBase().executeUpdate(sql);
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /*libere la table*/
+    public static void libereTable(int id, String service) {
+        try {
+            if (estOccupe(id, service)) {
+                deleteOccupe(id, service);
+            }
+
+            String sql = "DELETE FROM Tables_prises WHERE id_table =" + id;
+            sql += " AND service = " + (char)34 + service + (char)34;
+
+            System.out.println(sql);
+
+            Back.connectionBase().executeUpdate(sql);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
     }
 }
+
+
