@@ -44,7 +44,7 @@ public class AjouterTableFrame extends JFrame {
 			this.nbPlace = new JTextField(20);
 			panel.add(this.nbPlace);
 			
-			GreenRoundButton add = new GreenRoundButton("Ajouter le créneau","Green",175,30,30);
+			GreenRoundButton add = new GreenRoundButton("Ajouter la table","Green",175,30,30);
 			GreenRoundButton cancel = new GreenRoundButton("Annuler","Red",175,30,30);
 
 			cancel.addActionListener(new AnnulerListener(this));
