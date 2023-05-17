@@ -14,6 +14,7 @@ public class Main {
 		ConnexionFrame c = new ConnexionFrame(st);
 		c.setVisible(true);
 
+		Back.updateTable(1,2,8);
 	}
 
 }

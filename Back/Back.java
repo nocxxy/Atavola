@@ -1699,6 +1699,27 @@ public abstract class Back {
         }
     }
 
+    public static void updateTable(int id, int numero, int nbPlaces) {
+        try {
+            //La requête
+            String sql = "UPDATE Tables SET numero = ";
+            sql += numero;
+            sql += ", nb_places = ";
+            sql += nbPlaces;
+            sql += " WHERE Tables.id = ";
+            sql += id;
+
+            System.out.println(sql);
+
+            Back.connectionBase().executeUpdate(sql);
+
+
+        } catch (SQLException ex) {
+            //Exceptions
+            ex.printStackTrace();
+        }
+    }
+    
     /*libere la table*/
     public static void libereTable(int id, String service) {
         try {
@@ -1827,7 +1848,8 @@ public abstract class Back {
 
             } catch (SQLException ex) {
                 ex.printStackTrace();
-        }
+
+            }
         return tables;
     }
     
