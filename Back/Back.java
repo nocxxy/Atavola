@@ -1003,7 +1003,10 @@ public abstract class Back {
      *
      * */
     public static void ajoutreunion (Statement st, ArrayList<Employe> e,String debut, String fin) {
-    		int indice = getIdLastReunion(st) +1;
+    	
+    	//Gestion de l'incrémentation
+    	
+    	int indice = getIdLastReunion(st) +1;
     		
     		for (Employe e1 :e) {
     			int id = e1.getId();
@@ -1016,11 +1019,12 @@ public abstract class Back {
     				}
     				int id_creneau = getIdCreneau(st,debut,fin,id);
             
-    				
+    				//si c'est la même réunion, on prend le même id
     				if (memeReunion(debut,fin)) {
     					indice = idMemeReunion(debut,fin);
     					insertionReunion(indice,id_creneau,id);
     				}else {
+    					//sinon on incrémente l'id
     					insertionReunion(indice,id_creneau,id);
     				}
     			}
@@ -1134,7 +1138,7 @@ public abstract class Back {
     public static ArrayList<Creneau> getCreneauxIndisp(Statement st, Date jour, int id){
     	ResultSet rs = null;
     	try {
-    		//Transformer la date util en date sql
+    		//Transformer la date en string
 			String jourStr = jour.getYear()+1900+"-"+ (jour.getMonth()+1)+"-"+jour.getDate();
     		String date =  (char)34 + jourStr  + (char)34;
     		
@@ -1147,6 +1151,7 @@ public abstract class Back {
     		sql += "AND id_employer = " + id;
 
     		
+    		//execution de la requête
     		rs = st.executeQuery(sql);
     		
     		
@@ -1265,18 +1270,25 @@ public abstract class Back {
     	}	
     }  
     
+    /*
+     * Méthode qui récupère les créneaux du jour donné en paramètre
+     * Prend un statement et le jour 
+     * Renvoie la liste des créneaux
+     *  
+     * */
     public static ArrayList<Creneau> getAllCreneau (Statement st, Date jour){
         try {
             //La requête sql
         	
         	
-        	
+        	//Transformer la date de début et de fin en string 
         	String jourdebut = jour.getYear()+1900+"-"+ (jour.getMonth()+1)+"-"+jour.getDate();
         	String jourfin = jour.getYear()+1900+"-"+ (jour.getMonth()+1)+"-"+(jour.getDate()+6);
     		
         	String debut =  (char)34 + jourdebut  + (char)34;
         	String fin = (char)34 + jourfin  + (char)34;
     		
+        	//la requête
             String sql = "SELECT * FROM Creneau WHERE DATE(date_heure_debut)  >= ";
             String query = sql + debut + " AND DATE (date_heure_fin) <= " +fin;
             query += " AND id NOT IN (SELECT id_creneau FROM Indisponible)";
@@ -1322,13 +1334,25 @@ public abstract class Back {
     }
     
    
-    
+   /*
+    * Méthode qui récupère les créneaux du jour 
+    * Prend un string jour 
+    * Renvoie la liste des créneaux 
+    * */ 
     public static ArrayList<Creneau> getAllCreneauDay (String jour){
+    	
+    	//la liste 
     	ArrayList<Creneau> res = new ArrayList();
+    	
+    	//le statement 
     	Statement st1 = Back.connectionBase();
     	try {
+    		
+    		//la requête
     		String sql = "SELECT * FROM Creneau WHERE DATE(date_heure_debut) = ";
     		sql+= jour ;
+    		
+    		//execution de la requête
     		ResultSet rs = st1.executeQuery(sql);
     		
     		while(rs.next()) {
@@ -1353,25 +1377,46 @@ public abstract class Back {
         }return res;
     }
     
+    /*
+     * Méthode qui récupère tous les employés disponbiles 
+     * Prend un creneau 
+     * Renvoie la liste des employés
+     * 
+     * */
     public static ArrayList<Employe> getEmployeDispo(Creneau creneau){
+    	
+    	//On récupère tous les employés
     	ArrayList<Employe> e = getAllEmployer(Back.connectionBase());
+    	
+    	//On initialise le résultat
     	ArrayList<Employe>res =new ArrayList<Employe>();
     	
     	for (Employe e1 : e) {
+    		//Si l'employé est disponible, on l'ajoute au résultat
     		if(estDispo(e1,creneau)) {
     			res.add(e1);
     		}
     	}return res;
     	
     }
+    
+    /*
+     * Méthode pour savoir si un employé est disponible à un créneau 
+     * Prend un employé, un créneau 
+     * Renvoie un booléen 
+     * */
     public static boolean estDispo(Employe e,Creneau c) {
+    	
+    	//On récupère la date de début
     	Date temp = new Date(c.getDateDebut().getTime());
+    	
+    	//On récupère les créneaux de l'employé à cette date de début
     	ArrayList<Creneau> creneaux = getCreneauxEmp(Back.connectionBase(),temp,e.getId());
         System.out.println(creneaux.toString());
     	boolean res=false;
     	int i = 0;
     	while(!res && i<creneaux.size()){    
-    		
+    		// Si le créneau n'est pas dans la liste, l'employé est disponible
     		if(c.estPasDedans(creneaux.get(i))) {
     			res =true;
     		}i++;
@@ -1382,13 +1427,20 @@ public abstract class Back {
     	return res;
     }
     
+    /*
+     * Méthode qui récupère les créneaux de réunion d'un employé du jour  
+     * Prend un statement, un jour et l'id de l'employé
+     * Renvoie la liste des créneaux 
+     * 
+     * */
     public static ArrayList<Creneau> getCreneauxReunion(Statement st, Date jour, int id){
     	ResultSet rs = null;
     	try {
-
+    		//transforme la date en string 
 			String jourStr = jour.getYear()+1900+"-"+ (jour.getMonth()+1)+"-"+jour.getDate();
     		String date =  (char)34 + jourStr  + (char)34;
     		
+    		//la requête 
     		String sql = "SELECT r.id,c.id,c.date_heure_debut,"
     				+ "c.date_heure_fin FROM Creneau c"
     				+ " JOIN Reunion r ON r.id_creneau = c.id"
@@ -1399,12 +1451,14 @@ public abstract class Back {
 
     		System.out.println(sql);
     		
+    		//execution de la requête
     		rs = st.executeQuery(sql);
     		
     		
     		ArrayList<Creneau> liste = new ArrayList();
         		
             while (rs.next()) {
+            	//on stcoke le résultat et on ajoute dans la liste
             	int id_reunion = rs.getInt("r.id");
             	int id_creneau = rs.getInt("c.id");
          
@@ -1460,13 +1514,22 @@ public abstract class Back {
             return false;
         }
     }
-
+    
+    /*
+     * Méthode qui met à jour une réunion 
+     * Prend un statement , l'id de la réunion , la liste des employés
+     * la date de debut et de fin 
+     * 
+     * */
     public static void updateReunion(Statement st, int id_reunion, ArrayList<Employe> e, String debut, String fin) {
        try {
+    	   //On itère la liste des employés
     	   for(Employe e1:e) {
     		   int idemploye = e1.getId();
     		   if(employeExiste(st,idemploye)) {
     	    		
+    			   //On met à jour le créneau de réunion 
+    			   
     	            String query = "UPDATE Creneau SET date_heure_debut = ";
     	            query+= (char)34 + debut + (char)34 + ",date_heure_fin = ";
     	            query+= (char)34 + fin + (char)34 ;
