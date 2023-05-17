@@ -24,14 +24,14 @@ public abstract class Back {
 	 public static Statement connectionBase() {
 	        try {
 	            //Chargement driver
-	            Class.forName("com.mysql.cj.jdbc.Driver");
+	            Class.forName("com.mysql.jdbc.Driver");
 	            System.out.println("DRIVER OK");
 
 	            //Créer connection
 	            String dbName = "atavola";
 	            String dbIP = "localhost";
-	            String dbUser = "atavola";
-	            String dbPwd = "9F0";
+	            String dbUser = "root";
+	            String dbPwd = "root";
 
 	            String url = "jdbc:mysql://" + dbIP + ":3306/" + dbName;
 	            
