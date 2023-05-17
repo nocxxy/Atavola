@@ -13,7 +13,6 @@ public class Main {
 		Statement st = Back.connectionBase();
 		ConnexionFrame c = new ConnexionFrame(st);
 		c.setVisible(true);
-		//Back.getTables(new Date(123,4,16),"midi_1");
 
 	}
 

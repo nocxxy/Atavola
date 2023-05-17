@@ -14,6 +14,9 @@ public class AjouterTableFrame extends JFrame {
 	//Attributs
 			final static int WIDTH = 300;
 			final static int HEIGHT = 320;
+
+			private JTextField numTable;
+			private JTextField nbPlace;
 			
 	//Constructeur
 		public AjouterTableFrame(Statement st) {
@@ -32,20 +35,20 @@ public class AjouterTableFrame extends JFrame {
 			JLabel text = new JLabel("Numéro de la Table: ");
 			panel.add(text);
 			
-			JTextField tText = new JTextField(20);
-			panel.add(tText);
+			this.numTable = new JTextField(20);
+			panel.add(this.numTable);
 			
 			JLabel table = new JLabel("Taille de la Table: ");
 			panel.add(table);
 			
-			JTextField tTaille = new JTextField(20);
-			panel.add(tTaille);
+			this.nbPlace = new JTextField(20);
+			panel.add(this.nbPlace);
 			
 			GreenRoundButton add = new GreenRoundButton("Ajouter le créneau","Green",175,30,30);
 			GreenRoundButton cancel = new GreenRoundButton("Annuler","Red",175,30,30);
 
 			cancel.addActionListener(new AnnulerListener(this));
-			//add.addActionListener(new CreationCreneauListener(st,this));
+			add.addActionListener(new CreationTableListener(this));
 			
 			panel.add(add);
 			panel.add(cancel);
@@ -59,4 +62,13 @@ public class AjouterTableFrame extends JFrame {
 			
 			
 
-		}}
+		}
+
+	public JTextField getNbPlace() {
+		return nbPlace;
+	}
+
+	public JTextField getNumTable() {
+		return numTable;
+	}
+}
