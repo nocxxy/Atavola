@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 
 import EDT.EDTPanel;
 import Front.Fonction.Employe;
+import Tables.TableGestionPanel;
 
 @SuppressWarnings("serial")
 public class MainContentContainer extends JPanel {
@@ -56,8 +57,7 @@ public class MainContentContainer extends JPanel {
 				if(layout.getLayoutComponent(BorderLayout.CENTER) != null) {
 					this.remove(layout.getLayoutComponent(BorderLayout.CENTER));
 				}
-				JPanel table = new JPanel();
-				table.setBackground(new Color(255,255,255));
+				JPanel table = new TableGestionPanel(st);
 				this.add(table,BorderLayout.CENTER);
 				break;
 			case "employe":
