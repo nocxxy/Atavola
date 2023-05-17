@@ -1518,11 +1518,16 @@ public abstract class Back {
     }
     
     
-    public static boolean estReserve(int id, String service){
+    public static boolean estReserve(int id, Date jour,String service){
     	ResultSet rs = null;
+    	String jourStr = jour.getYear()+1900+"-"+ (jour.getMonth()+1)+"-"+jour.getDate();
+ 		String date =  (char)34 + jourStr  + (char)34;
+ 		
     	try {
     		String sql = "SELECT * FROM Reservations WHERE id_table = "+id;
-    		sql += " AND service = " + (char)34 + service + (char)34 ;
+    		sql += " AND jour = " +  date;
+    		sql += " AND service = " +   (char)34 + service + (char)34 ;
+    		System.out.println(sql);
     		rs = Back.connectionBase().executeQuery(sql);
             return (rs.next());
     	}catch (SQLException ex) {
@@ -1530,7 +1535,19 @@ public abstract class Back {
             return false;
         }  
     }
-
+    
+    public static boolean estReserve(int id, String service){
+    	ResultSet rs = null;
+    	try {
+    		String sql = "SELECT * FROM Reservations WHERE id_table = "+id;
+    		rs = Back.connectionBase().executeQuery(sql);
+            return (rs.next());
+    	}catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }  
+    }
+    
     public static void retireReservation(int id, String service) {
     	try {
     		String sql = "DELETE FROM reservations WHERE id_table = "+id;
@@ -1700,6 +1717,10 @@ public abstract class Back {
     il faut verifier si la table est occupé ou reservée*/
     public static ArrayList<Table> getTables(Date jour, String service) {
         ResultSet rs = null;
+        
+        String jourStr = jour.getYear()+1900+"-"+ (jour.getMonth()+1)+"-"+jour.getDate();
+		String date =  (char)34 + jourStr  + (char)34;
+		
         ArrayList<Table> tables = new ArrayList<>();
         try {
             String sql = "SELECT * FROM Tables";
@@ -1715,17 +1736,21 @@ public abstract class Back {
                 // Vérifier si la table est occupée ou réservée
                 if (estOccupe(id, service)) {
                     table.setEtat("occup");
-                } else if (estReserve(id, service)) {
+                } else if (estReserve(id,jour,service)) {
                     String sql2 = "SELECT nom_client FROM Reservations WHERE service = ";
                     sql2 += (char) 34 + service + (char) 34;
-
+                    sql2 += " AND jour = ";
+                    sql2 += date;
+                    
                     ResultSet rs2 = Back.connectionBase().executeQuery(sql2);
 
                     while (rs2.next()) {
                         String nom = rs2.getString("nom_client");
                         table.setReservation(nom);
+                        
                     }
                     table.setEtat("reserv");
+                    
                 } else {
                     table.setEtat("libre");
                 }
@@ -1734,7 +1759,7 @@ public abstract class Back {
                 tables.add(table);
 
                 for(Table t : tables) {
-                    System.out.println(t.getEtat() + " " + t.getReservation() + " " + t.getId() + " " + t.getNbPlaces() + " " + t.getNbPlaces());
+                    System.out.println(t.getEtat() + " " + t.getReservation() + " " + t.getId() + " " + t.getNbPlaces() + " " + t.getNumero());
                 }
             }
 
