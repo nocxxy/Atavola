@@ -1830,6 +1830,28 @@ public abstract class Back {
         }
         return tables;
     }
+    
+    public static void updateTableReserve(int id,String service,Date jour,String nom_client) {
+    	
+    	String jourStr = jour.getYear()+1900+"-"+ (jour.getMonth()+1)+"-"+jour.getDate();
+		String date =  (char)34 + jourStr  + (char)34;
+		
+    	try {
+    		String sql = "UPDATE Reservations SET service = ";
+    		sql += (char) 34 + service + (char) 34 +
+    				" , jour = " + date + 
+    				", nom_client = " +
+    				(char) 34 +  nom_client+ (char) 34 ;
+    		sql += " WHERE id_table = " + id;
+    		Back.connectionBase().executeUpdate(sql);
+    		
+    		
+    		
+    		
+    	} catch (SQLException ex) {
+            ex.printStackTrace();
+    	}
+    }
 }
 
 
