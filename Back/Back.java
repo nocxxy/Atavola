@@ -1619,11 +1619,10 @@ public abstract class Back {
     }
     
     /* cree la table */
-    public static void creeTable(int id, int numero, int nbPlaces) {
+    public static void creeTable(int numero, int nbPlaces) {
         try {
             //La requête
-            String sql = "INSERT INTO Tables (id,numero,nb_places) VALUES(";
-            sql += id + ",";
+            String sql = "INSERT INTO Tables (numero,nb_places) VALUES(";
             sql += numero + ",";
             sql += nbPlaces;
             sql += ")";
