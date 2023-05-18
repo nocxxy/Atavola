@@ -254,4 +254,8 @@ public class TableGestionPanel extends JPanel{
 		this.service = service;
 	}
 	
+	public String getService() {
+		return this.service;
+	}
+	
 }
