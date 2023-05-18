@@ -17,6 +17,7 @@ import java.sql.Statement;
 
 import javax.swing.*;
 
+@SuppressWarnings("serial")
 public class ConnexionFrame extends JFrame implements KeyListener {
 	//Attributs
 	final static int WIDTH = 650;

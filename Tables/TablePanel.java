@@ -1,82 +1,151 @@
 package Tables;
 
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Statement;
 
-import interface_polo.GreenRoundButton;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
-import java.awt.*;
-
+@SuppressWarnings("serial")
 public class TablePanel extends RoundedPanel {
-	private int num;
-	private int nb;
-	private String etat;
+	private Table table;
+	private TableGestionPanel tgp;
+	private Statement st;
+	
+	public TablePanel(Table t, TableGestionPanel tgp, Statement st) {
+		super(15,Color.WHITE);
+		this.table = t;
+		this.tgp = tgp;
+		this.st = st;
+		this.setOpaque(false);
+		this.setLayout(new BorderLayout());
+		//this.setBackground(Color.WHITE);
+		
+		JPanel PanelHaut = new JPanel();
+		PanelHaut.setOpaque(false);
+		this.add(PanelHaut, BorderLayout.NORTH);
+		PanelHaut.setLayout(new BorderLayout(0, 0));
+		
+		JPanel PanelNumDispo = new JPanel();
+		PanelNumDispo.setOpaque(false);
+		PanelHaut.add(PanelNumDispo, BorderLayout.NORTH);
+		PanelNumDispo.setLayout(new BorderLayout(0, 0));
+		
+		JPanel PanelDispo = new JPanel();
+		PanelDispo.setOpaque(false);
+		PanelNumDispo.add(PanelDispo, BorderLayout.EAST);
+		
+		creeLabelEtat(PanelDispo);
+		
+		
+		JLabel LabelNumTable = new JLabel(" Table "+table.getNumero());
+		LabelNumTable.setFont(new Font("Nirmala UI", Font.BOLD, 14));
+		PanelNumDispo.add(LabelNumTable, BorderLayout.WEST);
+		
+		JPanel PlacesModifPanel = new JPanel();
+		PlacesModifPanel.setOpaque(false);
+		PanelHaut.add(PlacesModifPanel, BorderLayout.SOUTH);
+		PlacesModifPanel.setLayout(new BorderLayout(0, 0));
+		
+		JLabel LabelPlaces = new JLabel(" "+table.getNbPlaces()+" Places");
+		LabelPlaces.setForeground(new Color(82, 101, 129));
+		LabelPlaces.setFont(new Font("Tahoma", Font.BOLD, 10));
+		PlacesModifPanel.add(LabelPlaces);
+		
+		JButton BouttonModif = new JButton("Modifier table");
+		BouttonModif.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		BouttonModif.setBorderPainted(false);
+		BouttonModif.setFocusable(false);
+		BouttonModif.setOpaque(false);
+		BouttonModif.setForeground(new Color(82, 101, 129));
+		BouttonModif.setContentAreaFilled(false);
+		BouttonModif.setFont(new Font("Nirmala UI", Font.BOLD, 8));
+		PlacesModifPanel.add(BouttonModif, BorderLayout.EAST);
+		
+		JPanel BouttonsPanel = new JPanel();
+		BouttonsPanel.setOpaque(false);
+		BouttonsPanel.setBackground(new Color(255, 255, 255));
+		this.add(BouttonsPanel, BorderLayout.SOUTH);
+		BouttonsPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+		
+		creeBouttons(BouttonsPanel);
+	}
+	
+	private void creeLabelEtat(JPanel container) {
+		RoundedPanel Dispo;
+		JLabel DispoLabel;
+		
+		switch(table.getEtat()) {
+			case "libre":
+				Dispo = new RoundedPanel(25,new Color(30,148,20));
+				Dispo.setOpaque(false);
+				Dispo.setPreferredSize(new Dimension(105, 23));
+				container.add(Dispo);
 
-	public TablePanel(int radius, Color bgColor,int num,int nb,String etat) {
-		super(radius, bgColor);
-		this.num=num;
-		this.nb=nb;
-		this.etat=etat;
-		// TODO Auto-generated constructor stub
-		
-		JLabel numTable = new JLabel("Table " + num);
-		numTable.setBounds(22, 16, 95, 25);
-		numTable.setFont(new Font("Poppins", Font.PLAIN,20));
-		this.add(numTable);
-		
-		JLabel nbPlace = new JLabel(nb + " places");
-		nbPlace.setBounds(22, 35, 95, 25);
-		nbPlace.setForeground(Color.decode("#526581"));
-		nbPlace.setFont(new Font("Poppins", Font.BOLD,13));
-		this.add(nbPlace);
-		
-		if (etat == "Indisponible") {		
-		
-		RoundLabel indispo = new RoundLabel("Indisponible", "Red", 95, 25,30,13);
-		
-		indispo.setBounds(250, 20, 95, 25);
-		this.add(indispo);
-		
-		RoundButtonV2 liberer = new RoundButtonV2("Libérer","Green",80,20,15,12);
-		liberer.setBounds(20, 85, 110, 20);
-		this.add(liberer);
+				DispoLabel = new JLabel("Disponible");
+				DispoLabel.setFont(new Font("Nirmala UI", Font.BOLD, 10));
+				DispoLabel.setForeground(new Color(255, 255, 255));
+				Dispo.add(DispoLabel);
+				break;
+			case "occup":
+				Dispo = new RoundedPanel(25,new Color(156,25,27));
+				Dispo.setOpaque(false);
+				Dispo.setPreferredSize(new Dimension(105, 23));
+				container.add(Dispo);
+
+				DispoLabel = new JLabel("Indisponible");
+				DispoLabel.setFont(new Font("Nirmala UI", Font.BOLD, 10));
+				DispoLabel.setForeground(new Color(255, 255, 255));
+				Dispo.add(DispoLabel);
+				break;
+			case "reserv":
+				Dispo = new RoundedPanel(25,new Color(245,111,54));
+				Dispo.setOpaque(false);
+				Dispo.setPreferredSize(new Dimension(105, 23));
+				container.add(Dispo);
+
+				DispoLabel = new JLabel("Réservée");
+				DispoLabel.setFont(new Font("Nirmala UI", Font.BOLD, 10));
+				DispoLabel.setForeground(new Color(255, 255, 255));
+				Dispo.add(DispoLabel);
+				break;
 		}
-		else if(etat == "Disponible") {
-			
-			
-			RoundLabel indispo = new RoundLabel("Disponible", "Green", 95, 25,30,13);
-			
-			indispo.setBounds(250, 20, 95, 25);
-			this.add(indispo);
-			
-			
-			RoundButtonV2 liberer = new RoundButtonV2("Attribuer","Red",80,20,15,12);
-			liberer.setBounds(20, 85, 110, 20);
-			this.add(liberer);
-			
-			RoundButtonV2 reserver = new RoundButtonV2("Resever","Orange",80,20,15,12);
-			reserver.setBounds(120, 85, 110, 20);
-			this.add(reserver);
-			
+	}
+	
+	private void creeBouttons(JPanel container) {
+		RoundButtonV2 button;
+		switch(table.getEtat()) {
+			case "libre":
+				button = new RoundButtonV2("   Attribuer","Red",80,20,15,12);
+				button.setBounds(20, 85, 110, 20);
+				container.add(button);
+				
+				button = new RoundButtonV2("   Réserver","Orange",80,20,15,12);
+				button.setBounds(120, 85, 110, 20);
+				container.add(button);
+				break;
+			case "occup":
+				button = new RoundButtonV2("   Libérer","Green",80,20,15,12);
+				button.setBounds(20, 85, 110, 20);
+				this.add(button);
+				break;
+			case "reserv":
+				button = new RoundButtonV2("   Libérer","Green",80,20,15,12);
+				button.setBounds(20, 85, 110, 20);
+				this.add(button);
+				break;
 		}
-		else if (etat == "Reserve") {
-			
-			RoundLabel indispo = new RoundLabel("Reservé", "Orange", 95, 25,30,13);
-			
-			indispo.setBounds(250, 20, 95, 25);
-			this.add(indispo);
-			
-			RoundButtonV2 liberer = new RoundButtonV2("Libérer","Green",80,20,15,12);
-			liberer.setBounds(20, 85, 110, 20);
-			this.add(liberer);
-			
-		}
-		
-		GreenRoundButton modifier = new GreenRoundButton("Modifier Table", "Gray", 95, 25, 15,12);
-		modifier.setBounds(250, 55, 95, 25);
-		this.add(modifier);
-		
-		this.setLayout(null);
-		this.setPreferredSize(new Dimension(380,114));
+
 	}
 
 }
