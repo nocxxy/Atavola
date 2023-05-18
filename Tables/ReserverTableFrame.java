@@ -9,16 +9,19 @@ import interface_polo.GreenRoundButton;
 import java.awt.*;
 import java.sql.Statement;
 
-public class ModifierTableFrame extends JFrame {
+public class ReserverTableFrame extends JFrame {
 	
 	//Attributs
 			final static int WIDTH = 300;
-			final static int HEIGHT = 350;
+			final static int HEIGHT = 220;
+
+			private JTextField numTable;
+			private JTextField nbPlace;
 			
 	//Constructeur
-		public ModifierTableFrame(Statement st) {
+		public ReserverTableFrame(Statement st/*,TableGestionPanel tgp*/) {
 			this.setBounds(100,100,WIDTH,HEIGHT);
-			this.setTitle("A Tavola ! | Modifier Table");
+			this.setTitle("A Tavola ! | Reservation Table");
 			ImageIcon img = new ImageIcon("src/img/italie.png");
 			this.setIconImage(img.getImage());
 			this.setOpacity(1);
@@ -29,26 +32,18 @@ public class ModifierTableFrame extends JFrame {
 			JPanel panel = new JPanel();
 			panel.setLayout(new FlowLayout(FlowLayout.CENTER, 20000, 20));
 			
-			JLabel text = new JLabel("Numéro de la Table: ");
+			JLabel text = new JLabel("Nom de la réservation : ");
 			panel.add(text);
 			
-			JTextField tText = new JTextField(20);
-			panel.add(tText);
+			this.numTable = new JTextField(20);
+			panel.add(this.numTable);			
 			
-			JLabel table = new JLabel("Taille de la Table: ");
-			panel.add(table);
 			
-			JTextField tTaille = new JTextField(20);
-			panel.add(tTaille);
-			
-			RoundButtonV2 del = new RoundButtonV2("Supprimer la table","Red",175,30,30,15);
-			panel.add(del);
-			GreenRoundButton add = new GreenRoundButton("Ajouter le créneau","Green",175,30,30);
+			GreenRoundButton add = new GreenRoundButton("Réserver la table","Green",175,30,30);
 			GreenRoundButton cancel = new GreenRoundButton("Annuler","Red",175,30,30);
 
 			cancel.addActionListener(new AnnulerListener(this));
-			//add.addActionListener(new CreationCreneauListener(st,this));
-			
+			//add.addActionListener(new CreationTableListener(this,tgp));
 			
 			panel.add(add);
 			panel.add(cancel);
@@ -57,9 +52,19 @@ public class ModifierTableFrame extends JFrame {
 			this.getContentPane().add(panel,BorderLayout.CENTER);
 			this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			this.setResizable(false);
+			this.setUndecorated(true); //Suppression de la barre supérieure
 			this.setLocationRelativeTo(null); 
 			
 			
 			
 
-		}}
+		}
+
+	public JTextField getNbPlace() {
+		return nbPlace;
+	}
+
+	public JTextField getNumTable() {
+		return numTable;
+	}
+}
