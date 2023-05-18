@@ -94,7 +94,7 @@ public class TableGestionPanel extends JPanel{
 		ButtonContainer.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		GreenRoundButton AjouterTableButton = new GreenRoundButton("Ajouter Table", "Green", 100, 30, 8, 13);
-		AjouterTableButton.addActionListener(new AjouterTableListener(this.st));
+		AjouterTableButton.addActionListener(new AjouterTableListener(this.st,this));
 		ButtonContainer.add(AjouterTableButton);
 		
 		JPanel ServicesTablesContainer = new JPanel();

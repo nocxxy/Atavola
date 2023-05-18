@@ -9,9 +9,11 @@ import java.sql.Statement;
 public class CreationTableListener implements ActionListener {
 
     private AjouterTableFrame f;
+    private TableGestionPanel tgp;
 
-    public CreationTableListener(AjouterTableFrame f){
+    public CreationTableListener(AjouterTableFrame f,TableGestionPanel tgp){
         this.f=f;
+        this.tgp = tgp;
     }
 
     @Override
@@ -19,6 +21,7 @@ public class CreationTableListener implements ActionListener {
         int num = Integer.parseInt(this.f.getNumTable().getText());
         int nb = Integer.parseInt(this.f.getNbPlace().getText());
         Back.creeTable(num,nb);
+        tgp.creePanelTables();
         this.f.dispose();
     }
 }

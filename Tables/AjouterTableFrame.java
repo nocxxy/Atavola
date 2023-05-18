@@ -19,7 +19,7 @@ public class AjouterTableFrame extends JFrame {
 			private JTextField nbPlace;
 			
 	//Constructeur
-		public AjouterTableFrame(Statement st) {
+		public AjouterTableFrame(Statement st,TableGestionPanel tgp) {
 			this.setBounds(100,100,WIDTH,HEIGHT);
 			this.setTitle("A Tavola ! | Ajouter Table");
 			ImageIcon img = new ImageIcon("src/img/italie.png");
@@ -48,7 +48,7 @@ public class AjouterTableFrame extends JFrame {
 			GreenRoundButton cancel = new GreenRoundButton("Annuler","Red",175,30,30);
 
 			cancel.addActionListener(new AnnulerListener(this));
-			add.addActionListener(new CreationTableListener(this));
+			add.addActionListener(new CreationTableListener(this,tgp));
 			
 			panel.add(add);
 			panel.add(cancel);
