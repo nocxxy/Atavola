@@ -64,6 +64,7 @@ public class TablePanel extends RoundedPanel {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
+		
 		BouttonModif.setBorderPainted(false);
 		BouttonModif.setFocusable(false);
 		BouttonModif.setOpaque(false);
@@ -81,6 +82,10 @@ public class TablePanel extends RoundedPanel {
 		creeBouttons(BouttonsPanel);
 	}
 	
+	/* Procedure creeLabelEtat
+	 * cree l'etiquette d'etat de la table
+	 * puis l'ajoute dans le conteneur
+	 * */
 	private void creeLabelEtat(JPanel container) {
 		RoundedPanel Dispo;
 		JLabel DispoLabel;
@@ -122,6 +127,10 @@ public class TablePanel extends RoundedPanel {
 		}
 	}
 	
+	/* Procedure creeBouttons
+	 * cree les bouttons en fonction de l'etat
+	 * puis les ajoutes dans le container
+	 * */
 	private void creeBouttons(JPanel container) {
 		RoundButtonV2 button;
 		switch(table.getEtat()) {
