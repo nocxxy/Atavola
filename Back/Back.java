@@ -30,7 +30,7 @@ public abstract class Back {
 	            //Créer connection
 	            String dbName = "atavola";
 	            String dbIP = "localhost";
-	            String dbUser = "root";
+	            String dbUser = "roor";
 	            String dbPwd = "root";
 
 	            String url = "jdbc:mysql://" + dbIP + ":3306/" + dbName;

@@ -137,20 +137,24 @@ public class TablePanel extends RoundedPanel {
 			case "libre":
 				button = new RoundButtonV2("   Attribuer","Red",80,20,15,12);
 				button.setBounds(20, 85, 110, 20);
+				button.addActionListener(new OccuperTableListener(this.table,this.tgp));
 				container.add(button);
 				
 				button = new RoundButtonV2("   Réserver","Orange",80,20,15,12);
 				button.setBounds(120, 85, 110, 20);
+//				button.addActionListener(new ReserverListener(this.table,this.tgp));
 				container.add(button);
 				break;
 			case "occup":
 				button = new RoundButtonV2("   Libérer","Green",80,20,15,12);
 				button.setBounds(20, 85, 110, 20);
+				button.addActionListener(new LibererListener(this.table,this.tgp));
 				this.add(button);
 				break;
 			case "reserv":
 				button = new RoundButtonV2("   Libérer","Green",80,20,15,12);
 				button.setBounds(20, 85, 110, 20);
+				button.addActionListener(new LibererListener(this.table,this.tgp));
 				this.add(button);
 				break;
 		}
