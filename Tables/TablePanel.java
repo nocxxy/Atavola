@@ -104,6 +104,11 @@ public class TablePanel extends RoundedPanel {
 				Dispo.setOpaque(false);
 				Dispo.setPreferredSize(new Dimension(105, 23));
 				container.add(Dispo);
+				
+				DispoLabel = new JLabel("Indisponible");
+				DispoLabel.setFont(new Font("Nirmala UI", Font.BOLD, 10));
+				DispoLabel.setForeground(new Color(255, 255, 255));
+				Dispo.add(DispoLabel);
 				break;
 			case "reserv":
 				Dispo = new RoundedPanel(25,new Color(245,111,54));
