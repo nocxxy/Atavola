@@ -74,7 +74,7 @@ public class TablePanel extends RoundedPanel {
 		BouttonsPanel.setOpaque(false);
 		BouttonsPanel.setBackground(new Color(255, 255, 255));
 		this.add(BouttonsPanel, BorderLayout.SOUTH);
-		BouttonsPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+		BouttonsPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 20));
 		
 		creeBouttons(BouttonsPanel);
 	}
@@ -104,11 +104,6 @@ public class TablePanel extends RoundedPanel {
 				Dispo.setOpaque(false);
 				Dispo.setPreferredSize(new Dimension(105, 23));
 				container.add(Dispo);
-
-				DispoLabel = new JLabel("Indisponible");
-				DispoLabel.setFont(new Font("Nirmala UI", Font.BOLD, 10));
-				DispoLabel.setForeground(new Color(255, 255, 255));
-				Dispo.add(DispoLabel);
 				break;
 			case "reserv":
 				Dispo = new RoundedPanel(25,new Color(245,111,54));
@@ -146,13 +141,13 @@ public class TablePanel extends RoundedPanel {
 				button = new RoundButtonV2("   Libérer","Green",80,20,15,12);
 				button.setBounds(20, 85, 110, 20);
 				button.addActionListener(new LibererListener(this.table,this.tgp));
-				this.add(button);
+				container.add(button);
 				break;
 			case "reserv":
 				button = new RoundButtonV2("   Libérer","Green",80,20,15,12);
 				button.setBounds(20, 85, 110, 20);
 				button.addActionListener(new LibererListener(this.table,this.tgp));
-				this.add(button);
+				container.add(button);
 				break;
 		}
 
