@@ -116,7 +116,7 @@ public class TablePanel extends RoundedPanel {
 				Dispo.setPreferredSize(new Dimension(105, 23));
 				container.add(Dispo);
 
-				DispoLabel = new JLabel("Réservée");
+				DispoLabel = new JLabel("Réservée : "+table.getReservation());
 				DispoLabel.setFont(new Font("Nirmala UI", Font.BOLD, 10));
 				DispoLabel.setForeground(new Color(255, 255, 255));
 				Dispo.add(DispoLabel);
