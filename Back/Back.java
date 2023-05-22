@@ -1681,6 +1681,17 @@ public abstract class Back {
         }
     }
     
+    
+    public static void deleteReserve(int id, String service) {
+        try {
+            String sql = "DELETE FROM reservations WHERE id_table = " + id;
+            sql += " AND service = " + (char) 34 + service + (char) 34;
+            Back.connectionBase().executeUpdate(sql);
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
     /* cree la table */
     public static void creeTable(int numero, int nbPlaces) {
         try {
@@ -1722,20 +1733,13 @@ public abstract class Back {
     
     /*libere la table*/
     public static void libereTable(int id, String service) {
-        try {
             if (estOccupe(id, service)) {
                 deleteOccupe(id, service);
             }
-
-            String sql = "DELETE FROM Tables_prises WHERE id_table =" + id;
-            sql += " AND service = " + (char)34 + service + (char)34;
-
-            System.out.println(sql);
-
-            Back.connectionBase().executeUpdate(sql);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+            
+            if(estReserve(id,service)) {
+            	deleteReserve(id,service);
+            }        
 
     }
     
