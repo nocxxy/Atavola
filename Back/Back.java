@@ -30,7 +30,7 @@ public abstract class Back {
 	            //Créer connection
 	            String dbName = "atavola";
 	            String dbIP = "localhost";
-	            String dbUser = "roor";
+	            String dbUser = "root";
 	            String dbPwd = "root";
 
 	            String url = "jdbc:mysql://" + dbIP + ":3306/" + dbName;
@@ -1873,6 +1873,27 @@ public abstract class Back {
     	} catch (SQLException ex) {
             ex.printStackTrace();
     	}
+    }
+    
+    public static void deleteGen (int id, String table,String idTable) {
+    	try {
+    		String sql = "DELETE FROM ";
+    		sql += table;
+    		sql += " WHERE " + idTable + " = " +id;
+  
+    		Back.connectionBase().executeUpdate(sql);
+    		
+    	}catch (SQLException ex) {
+            ex.printStackTrace();
+    	}
+    }
+    
+    
+    
+    public static void deleteTable(int id) {
+    	deleteGen(id,"tables_prises","id_table");
+    	deleteGen(id,"reservations","id_table");
+    	deleteGen(id,"tables","id");
     }
 }
 
