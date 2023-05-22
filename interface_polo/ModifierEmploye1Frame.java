@@ -12,7 +12,7 @@ import javax.swing.*;
 public class ModifierEmploye1Frame extends JFrame {
 	//Attributs
     final static int WIDTH = 350;
-    final static int HEIGHT = 250;
+    final static int HEIGHT = 400;
 
     private JTextField nom = new JTextField();
     private JTextField prenom = new JTextField();
