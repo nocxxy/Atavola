@@ -60,10 +60,7 @@ public class TablePanel extends RoundedPanel {
 		PlacesModifPanel.add(LabelPlaces);
 		
 		JButton BouttonModif = new JButton("Modifier table");
-		BouttonModif.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		BouttonModif.addActionListener(new ModifierTableListener(this.table,this.tgp));
 		
 		BouttonModif.setBorderPainted(false);
 		BouttonModif.setFocusable(false);
@@ -142,7 +139,7 @@ public class TablePanel extends RoundedPanel {
 				
 				button = new RoundButtonV2("   Réserver","Orange",80,20,15,12);
 				button.setBounds(120, 85, 110, 20);
-//				button.addActionListener(new ReserverListener(this.table,this.tgp));
+				button.addActionListener(new ReserverListener(this.table,this.tgp));
 				container.add(button);
 				break;
 			case "occup":

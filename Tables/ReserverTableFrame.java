@@ -15,11 +15,14 @@ public class ReserverTableFrame extends JFrame {
 			final static int WIDTH = 300;
 			final static int HEIGHT = 220;
 
-			private JTextField numTable;
-			private JTextField nbPlace;
+			private JTextField resTable;
+			private Table table;
+			private TableGestionPanel tgp;
 			
 	//Constructeur
-		public ReserverTableFrame(Statement st/*,TableGestionPanel tgp*/) {
+		public ReserverTableFrame(Statement st,Table table,TableGestionPanel tgp) {
+			this.table = table;
+			this.tgp = tgp;
 			this.setBounds(100,100,WIDTH,HEIGHT);
 			this.setTitle("A Tavola ! | Reservation Table");
 			ImageIcon img = new ImageIcon("src/img/italie.png");
@@ -35,15 +38,15 @@ public class ReserverTableFrame extends JFrame {
 			JLabel text = new JLabel("Nom de la réservation : ");
 			panel.add(text);
 			
-			this.numTable = new JTextField(20);
-			panel.add(this.numTable);			
+			this.resTable = new JTextField(20);
+			panel.add(this.resTable);
 			
 			
 			GreenRoundButton add = new GreenRoundButton("Réserver la table","Green",175,30,30);
 			GreenRoundButton cancel = new GreenRoundButton("Annuler","Red",175,30,30);
 
 			cancel.addActionListener(new AnnulerListener(this));
-			//add.addActionListener(new CreationTableListener(this,tgp));
+			add.addActionListener(new CreationReservationListener(this));
 			
 			panel.add(add);
 			panel.add(cancel);
@@ -60,11 +63,15 @@ public class ReserverTableFrame extends JFrame {
 
 		}
 
-	public JTextField getNbPlace() {
-		return nbPlace;
+	public Table getTable() {
+		return table;
 	}
 
-	public JTextField getNumTable() {
-		return numTable;
+	public JTextField getResTable() {
+		return resTable;
+	}
+
+	public TableGestionPanel getTgp() {
+		return tgp;
 	}
 }
