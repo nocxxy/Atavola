@@ -30,8 +30,8 @@ public abstract class Back {
 	            //Créer connection
 	            String dbName = "atavola";
 	            String dbIP = "localhost";
-	            String dbUser = "elias";
-	            String dbPwd = "admin";
+	            String dbUser = "root";
+	            String dbPwd = "root";
 
 	            String url = "jdbc:mysql://" + dbIP + ":3306/" + dbName;
 	            
@@ -1846,11 +1846,13 @@ public abstract class Back {
                 if (estOccupe(id, service)) {
                     table.setEtat("occup");
                 } else if (estReserve(id,jour,service)) {
-                    String sql2 = "SELECT nom_client FROM Reservations WHERE service = ";
+                    String sql2 = "SELECT nom_client FROM Reservations WHERE id_table = "+id;
+                    sql2 += " AND service = ";
                     sql2 += (char) 34 + service + (char) 34;
                     sql2 += " AND jour = ";
                     sql2 += date;
                     
+              
                     ResultSet rs2 = Back.connectionBase().executeQuery(sql2);
 
                     while (rs2.next()) {
