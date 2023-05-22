@@ -155,7 +155,6 @@ public class TablePanel extends RoundedPanel {
 				container.add(button);
 				break;
 		}
-
 	}
 
 }

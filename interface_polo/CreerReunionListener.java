@@ -43,7 +43,6 @@ public class CreerReunionListener implements ActionListener {
                 temp.add(listE.get(i));
             }
         }
-
         Back.ajout_reunion(this.st,temp,getDateSynthaxe(c.getDateDebut()),getDateSynthaxe(c.getDateFin()),this.f.getF().getF().getUrgent().isSelected());
         this.f.dispose();
 
