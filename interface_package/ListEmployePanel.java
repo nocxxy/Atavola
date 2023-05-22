@@ -25,6 +25,8 @@ public class ListEmployePanel extends JPanel {
         //JButton addEmployer = new JButton("Ajouter Employer");
         GreenRoundButton addEmployer = new GreenRoundButton("Ajouter un Employé","Green", 200, 30, 15);
         addEmployer.addActionListener(new AddEmployerFrameListener(st));
+        GreenRoundButton modEmployer = new GreenRoundButton("Modifier un Employé","Green", 200, 30, 15);
+        modEmployer.addActionListener(new AddEmployerFrameListener(st));
         GreenRoundButton delEmployer = new GreenRoundButton("Supprimer un Employé","Red", 200, 30, 15);
 
         delEmployer.addActionListener(new ActionListener() {
@@ -37,6 +39,7 @@ public class ListEmployePanel extends JPanel {
 
         this.add(tableau);
         this.add(addEmployer);
+        this.add(modEmployer);
         this.add(delEmployer);
     }
 }
