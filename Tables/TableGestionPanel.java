@@ -257,5 +257,8 @@ public class TableGestionPanel extends JPanel{
 	public String getService() {
 		return this.service;
 	}
-	
+
+	public Date getAjd() {
+		return ajd;
+	}
 }
