@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import EDT.AjouterCreneauReunionListener;
+import EDT.EDTPanel;
 import interface_package.RoundJTextField;
 
 public class ReunionBis1Frame extends JFrame {
@@ -20,6 +21,7 @@ public class ReunionBis1Frame extends JFrame {
 			private JTextField m;
 			private JTextField a;
 			private JCheckBox urgent;
+			private EDTPanel edtpan;
 
 	public JTextField getD() {
 		return d;
@@ -38,12 +40,13 @@ public class ReunionBis1Frame extends JFrame {
 	}
 
 	//Constructeur
-			public ReunionBis1Frame(Statement st) {
+			public ReunionBis1Frame(Statement st,EDTPanel edtpan) {
 				this.setBounds(100,100,WIDTH,HEIGHT);
 				this.setTitle("A Tavola ! | Reunion1");
 				ImageIcon img = new ImageIcon("src/img/italie.png");
 				this.setIconImage(img.getImage());
 				this.setOpacity(1);
+				this.edtpan = edtpan;
 				
 				
 				/*
@@ -141,8 +144,8 @@ public class ReunionBis1Frame extends JFrame {
 				GreenRoundButton suiv = new GreenRoundButton("➤","Green",75,30,30);
 				GreenRoundButton prec = new GreenRoundButton("⮜","Red",75,30,30);
 
-				suiv.addActionListener(new CreerReunion2Listener(this,st));
-				prec.addActionListener(new AjouterCreneauReunionListener(st));
+				suiv.addActionListener(new CreerReunion2Listener(this,st,edtpan));
+				prec.addActionListener(new AjouterCreneauReunionListener(st,edtpan));
 				
 				nav.add(prec);
 				nav.add(suiv);

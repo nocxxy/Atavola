@@ -11,14 +11,16 @@ public class SignalerListener implements ActionListener {
 
     private Statement st;
     private Employe e;
-    public SignalerListener(Statement st, Employe e){
-
+	private EDTPanel edtpan;
+	
+    public SignalerListener(Statement st, Employe e,EDTPanel edtpan){
+    	this.edtpan = edtpan;
         this.st = st;
         this.e = e;
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        IndispoFrame f = new IndispoFrame(this.st,this.e);
+        IndispoFrame f = new IndispoFrame(this.st,this.e,edtpan);
         f.setVisible(true);
     }
 }

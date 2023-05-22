@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
+import EDT.EDTPanel;
 import Front.Fonction.Employe;
 import interface_package.RoundJTextField;
 
@@ -21,9 +22,10 @@ public class ReunionBis3Frame extends JFrame {
 	private ArrayList<JCheckBox> select = new ArrayList<JCheckBox>(); 
 	private ArrayList<Employe> listEmploye;
 	private ReunionBis2Frame f;
+	private EDTPanel edtpan;
 	
 	//Constructeur
-	public ReunionBis3Frame(Statement st,ArrayList<Employe> listEmploye,ReunionBis2Frame f) {
+	public ReunionBis3Frame(Statement st,ArrayList<Employe> listEmploye,ReunionBis2Frame f, EDTPanel edtpan) {
 		this.f = f;
 		this.listEmploye = listEmploye;
 		this.setBounds(100,100,WIDTH,HEIGHT);
@@ -31,6 +33,7 @@ public class ReunionBis3Frame extends JFrame {
 		ImageIcon img = new ImageIcon("src/img/italie.png");
 		this.setIconImage(img.getImage());
 		this.setOpacity(1);
+		this.edtpan = edtpan;
 		
 		
 		/*
@@ -62,7 +65,7 @@ public class ReunionBis3Frame extends JFrame {
 		GreenRoundButton suiv = new GreenRoundButton("➤","Green",75,30,30);
 		GreenRoundButton prec = new GreenRoundButton("⮜","Red",75,30,30);
 
-		suiv.addActionListener(new CreerReunionListener(st,this));
+		suiv.addActionListener(new CreerReunionListener(st,this,edtpan));
 		prec.addActionListener(new PrecedentListener(f,this));
 
 		nav.add(prec);

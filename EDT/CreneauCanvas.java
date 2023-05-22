@@ -23,14 +23,16 @@ public class CreneauCanvas extends Canvas implements MouseListener{
 	private ArrayList<Creneau> indispo;
 	private ArrayList<Creneau> reunion;
 	private Employe empConn;
+	private EDTPanel edtpan;
 	
-	public CreneauCanvas(Color color, ArrayList<Creneau> creneaux,  ArrayList<Creneau> indispo, ArrayList<Creneau> reunion, Employe empConn) {
+	public CreneauCanvas(EDTPanel edtpan, Color color, ArrayList<Creneau> creneaux,  ArrayList<Creneau> indispo, ArrayList<Creneau> reunion, Employe empConn) {
 		this.setBackground(new Color(255,255,255));
 		this.couleurEmp = color;
 		this.creneaux = creneaux;
 		this.empConn = empConn;
 		this.indispo = indispo;
 		this.reunion = reunion;
+		this.edtpan = edtpan;
 		addMouseListener(this);
 		System.out.println("------------------------------------------");
 		System.out.println(indispo);
@@ -80,7 +82,7 @@ public class CreneauCanvas extends Canvas implements MouseListener{
 			if(creneaux.size()!=0){
 				if(reunion.size()==0 && indispo.size()==0){
 					System.out.println("Modifie les creneaux du jour");
-					RetirerCreneauFrame f = new RetirerCreneauFrame(Back.connectionBase(),this.creneaux);
+					RetirerCreneauFrame f = new RetirerCreneauFrame(Back.connectionBase(),this.creneaux,edtpan);
 					f.setVisible(true);
 				} else if (reunion.size()!=0) {
 					RetirerReunionFrame f = new RetirerReunionFrame(Back.connectionBase(),reunion);

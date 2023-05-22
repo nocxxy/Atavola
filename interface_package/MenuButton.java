@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -25,6 +26,7 @@ public class MenuButton extends JButton{
 		//this.icon = new MenuButtonIcon(icon,this,20,20);
 		this.selected = selected;
 		this.menu = menu;
+		this.setOpaque(false);
 		
 		this.setText(texte);
 		this.setFocusPainted(false);
@@ -50,13 +52,21 @@ public class MenuButton extends JButton{
 		if(selected) {
 			this.setBackground(new Color(204, 56, 59));
 			this.setForeground(new Color(255, 255, 255));
+			this.repaint();
 			//this.setIcon(icon.getIcon());
 		} else {
 			this.setBackground(new Color(255, 255, 255));
 			this.setForeground(new Color(82, 101, 129));
 			//this.setIcon(icon.getIcon());
+			this.repaint();
 		}
 	};
+	
+    protected void paintComponent(Graphics g) {
+        g.setColor(getBackground());
+        g.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), 20, 20);
+        super.paintComponent(g);
+   }
 	
 	public void setSelected(boolean b) {
 		this.selected = b;

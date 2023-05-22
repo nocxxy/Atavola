@@ -6,6 +6,7 @@ import java.sql.Statement;
 import javax.swing.*;
 import javax.swing.border.Border;
 
+import EDT.EDTPanel;
 import interface_package.*;
 
 public class PoloPopUp extends JFrame {
@@ -13,9 +14,10 @@ public class PoloPopUp extends JFrame {
 	//Attributs
 	final static int WIDTH = 288;
 	final static int HEIGHT = 274;
+	private EDTPanel edtpan;
 	
 	//Constructeur
-	public PoloPopUp(Statement st) {
+	public PoloPopUp(Statement st,EDTPanel edtpan) {
 		this.setBounds(100,100,WIDTH,HEIGHT);
 		this.setTitle("A Tavola ! | PopUp");
 		ImageIcon img = new ImageIcon("src/img/italie.png");
@@ -37,8 +39,8 @@ public class PoloPopUp extends JFrame {
 		GreenRoundButton cancel = new GreenRoundButton("Annuler","Red",250,40,15);
 		
 		cancel.addActionListener(new AnnulerListener(this));
-		reunion.addActionListener(new CreerReunion1Listener(this,st));
-		creneau.addActionListener(new CreneauListener(this,st));
+		reunion.addActionListener(new CreerReunion1Listener(this,st,edtpan));
+		creneau.addActionListener(new CreneauListener(this,st,edtpan));
 		
 		panel.add(text);
 		panel.add(creneau);

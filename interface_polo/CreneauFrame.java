@@ -5,6 +5,7 @@ import java.awt.event.FocusListener;
 
 import javax.swing.*;
 
+import EDT.EDTPanel;
 import interface_package.AnnulerListener;
 
 import java.sql.Statement;
@@ -21,14 +22,16 @@ public class CreneauFrame extends JFrame {
 	private JTextField a;
 	private JTextField hd;
 	private JTextField hf;
+	private EDTPanel edtpan;
 	
 	//Constructeur
-	public CreneauFrame(Statement st) {
+	public CreneauFrame(Statement st,EDTPanel e) {
 		this.setBounds(100,100,WIDTH,HEIGHT);
 		this.setTitle("A Tavola ! | Créneau");
 		ImageIcon img = new ImageIcon("src/img/italie.png");
 		this.setIconImage(img.getImage());
 		this.setOpacity(1);
+		this.edtpan = e;
 		
 		/*
 		 * Panel Général qui va tout contenir
@@ -163,7 +166,7 @@ public class CreneauFrame extends JFrame {
 		GreenRoundButton cancel = new GreenRoundButton("Annuler","Red",175,30,30);
 
 		cancel.addActionListener(new AnnulerListener(this));
-		add.addActionListener(new CreationCreneauListener(st,this));
+		add.addActionListener(new CreationCreneauListener(st,this,edtpan));
 
 		panel.add(text);
 		panel.add(this.e);

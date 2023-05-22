@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
+import EDT.EDTPanel;
 import Front.Fonction.Creneau;
 import interface_package.RoundJTextField;
 
@@ -32,6 +33,7 @@ public class ReunionBis2Frame extends JFrame {
 	private JPanel panel;
 	
 	private int nombre=0;
+	private EDTPanel edtpan;
 
 	public JLabel getNbEmployer() {
 		return nbEmployer;
@@ -46,13 +48,14 @@ public class ReunionBis2Frame extends JFrame {
 	}
 
 	//Constructeur
-	public ReunionBis2Frame(Statement st,Creneau c,ReunionBis1Frame f) {
+	public ReunionBis2Frame(Statement st,Creneau c,ReunionBis1Frame f, EDTPanel edtpan) {
 		this.f = f;
 		this.setBounds(100,100,WIDTH,HEIGHT);
 		this.setTitle("A Tavola ! | Reunion2");
 		ImageIcon img = new ImageIcon("src/img/italie.png");
 		this.setIconImage(img.getImage());
 		this.setOpacity(1);
+		this.edtpan = edtpan;
 		
 		
 		/*
@@ -91,7 +94,7 @@ public class ReunionBis2Frame extends JFrame {
 		GreenRoundButton suiv = new GreenRoundButton("➤","Green",75,30,30);
 		GreenRoundButton prec = new GreenRoundButton("⮜","Red",75,30,30);
 
-		suiv.addActionListener(new CreerReunion3Listener(this,st));
+		suiv.addActionListener(new CreerReunion3Listener(this,st,edtpan));
 		prec.addActionListener(new PrecedentListener(f,this));
 
 

@@ -7,6 +7,7 @@ import java.sql.Statement;
 
 import javax.swing.*;
 
+import EDT.EDTPanel;
 import EDT.SignalerListener;
 import Front.Fonction.Employe;
 import interface_polo.GreenRoundButton;
@@ -29,6 +30,7 @@ public class IndispoFrame extends JFrame{
 
 
 		private  Employe e;
+		private EDTPanel edtpan;
 
 
 	//Getter
@@ -64,8 +66,9 @@ public class IndispoFrame extends JFrame{
 
 
 	//Constructeur
-		public IndispoFrame(Statement st, Employe e) {
+		public IndispoFrame(Statement st, Employe e,EDTPanel edtpan) {
 			this.e = e;
+			this.edtpan = edtpan;
 
 			this.setBounds(100,100,WIDTH,HEIGHT);
 			this.setTitle("A Tavola ! | Retirer Employe");
@@ -209,7 +212,7 @@ public class IndispoFrame extends JFrame{
 			GreenRoundButton add = new GreenRoundButton("Valider","Green",175,30,30);
 			GreenRoundButton cancel = new GreenRoundButton("Annuler","Red",175,30,30);
 
-			add.addActionListener(new SignalerIndisponibleListener(st,this));
+			add.addActionListener(new SignalerIndisponibleListener(st,this,edtpan));
 			cancel.addActionListener(new AnnulerListener(this));
 
 			panel.add(text);

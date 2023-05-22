@@ -97,8 +97,8 @@ public class MenuPanel extends JPanel {
 			//Creation des bouttons
 			MenuButton btnTable = new MenuButton("Gestion des tables", "maison",true,this);
 			this.selectedButton = "table";
-			MenuButton btnEdt = new MenuButton("Emplois du temps","utilisateur",false,this);
-			MenuButton btnEmploye = new MenuButton("Employés","utilisateur",false,this);
+			MenuButton btnEdt = new MenuButton("Emplois du temps","calendrier",false,this);
+			MenuButton btnEmploye = new MenuButton("Employés","user",false,this);
 			
 			//Actions des boutons
 			btnTable.addActionListener((ActionListener) new ActionListener() {

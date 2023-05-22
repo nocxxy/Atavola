@@ -1,6 +1,7 @@
 package interface_polo;
 
 import Back.Back;
+import EDT.EDTPanel;
 import Front.Fonction.Creneau;
 import interface_package.AnnulerListener;
 
@@ -20,7 +21,7 @@ public class RetirerCreneauFrame extends JFrame {
 	private ArrayList<Creneau> creneau;
 	
 	//Constructeur
-	public RetirerCreneauFrame(Statement st,ArrayList<Creneau> c) {
+	public RetirerCreneauFrame(Statement st,ArrayList<Creneau> c,EDTPanel edtpan) {
 		this.creneau = c;
 		this.setBounds(100,100,WIDTH,HEIGHT);
 		this.setTitle("A Tavola ! | Modifications Créneau");
@@ -45,7 +46,7 @@ public class RetirerCreneauFrame extends JFrame {
 		GreenRoundButton modifier = new GreenRoundButton("Modifier","Green",175,30,30);
 
 		cancel.addActionListener(new AnnulerListener(this));
-		del.addActionListener(new RetirerCreneauListener(this,st));
+		del.addActionListener(new RetirerCreneauListener(this,st,edtpan));
 		modifier.addActionListener(new TransiUpdateListener(st,this));
 
 		panel.add(text);

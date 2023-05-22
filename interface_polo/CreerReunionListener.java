@@ -1,6 +1,7 @@
 package interface_polo;
 
 import Back.Back;
+import EDT.EDTPanel;
 import Front.Fonction.Creneau;
 import Front.Fonction.Employe;
 
@@ -15,13 +16,16 @@ public class CreerReunionListener implements ActionListener {
 
     private Statement st;
     private ReunionBis3Frame f;
+	private EDTPanel edtpan;
 
-    public CreerReunionListener(Statement st, ReunionBis3Frame f){
+    public CreerReunionListener(Statement st, ReunionBis3Frame f, EDTPanel edtpan){
         this.f = f;
         this.st = st;
+        this.edtpan = edtpan;
     }
 
-    private String getDateSynthaxe(Date d){
+
+	private String getDateSynthaxe(Date d){
         int year = d.getYear() + 1900;
         int month = d.getMonth() +1;
         int day = d.getDate();
@@ -44,6 +48,8 @@ public class CreerReunionListener implements ActionListener {
             }
         }
         Back.ajout_reunion(this.st,temp,getDateSynthaxe(c.getDateDebut()),getDateSynthaxe(c.getDateFin()),this.f.getF().getF().getUrgent().isSelected());
+        edtpan.creePanelBas(edtpan.getEmpEDT());
+        edtpan.creeCreneauxEDT(edtpan.getEmpEDT(), edtpan.getEmpConn());
         this.f.dispose();
 
     }
