@@ -3,6 +3,7 @@ package interface_polo;
 import Back.Back;
 import interface_package.AnnulerListener;
 import interface_package.ConfirmerListener;
+import interface_package.UpdateEmployerFrameListener;
 
 import java.awt.*;
 import java.sql.Statement;
@@ -14,12 +15,14 @@ public class ModifierEmploye1Frame extends JFrame {
     final static int WIDTH = 350;
     final static int HEIGHT = 250;
 
+
+
     private JTextField nom = new JTextField();
     private JTextField prenom = new JTextField();
     private JTextField mdp = new JTextField();
     private Statement st;
 
-		private ChoixEmployer choix;
+	private ChoixEmployer choix;
 		
 		//Constructeur
 		public ModifierEmploye1Frame(Statement st) {
@@ -40,7 +43,7 @@ public class ModifierEmploye1Frame extends JFrame {
 			JLabel text = new JLabel("Quel employé souhaitez vous retirer ?");
 			
 			
-			this.choix= new ChoixEmployer(st);
+			this.choix= new ChoixEmployer(st,this);
 			
 			JLabel n = new JLabel("Nom :");
 	        JLabel p = new JLabel("Prenom :");
@@ -49,7 +52,7 @@ public class ModifierEmploye1Frame extends JFrame {
 			GreenRoundButton annuler = new GreenRoundButton("Annuler","Red",150,30,30);
 
 	        annuler.addActionListener(new AnnulerListener(this));
-	        //confirmer.addActionListener(new ConfirmerListener(this));
+	        confirmer.addActionListener(new UpdateEmployerListener(this));
 	        
 	        
 

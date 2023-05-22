@@ -19,6 +19,16 @@ public class ChoixEmployer extends JPanel {
         this.add(inputChoice);
     }
 
+
+    ChoixEmployer(Statement st,ModifierEmploye1Frame f){
+        ArrayList<Employe> listeEmployer = Back.getAllEmployer(st);
+        String s1[] = this.getListEmploye(listeEmployer);
+        JComboBox inputChoice = new JComboBox(s1);
+        inputChoice.addActionListener(new AfficheDonneEmployeListener(this,f));
+        this.inputChoice = inputChoice;
+        this.add(inputChoice);
+    }
+
     public String[] getListEmploye(ArrayList<Employe> l) {
         String nom;
         String temp[];

@@ -26,7 +26,7 @@ public class ListEmployePanel extends JPanel {
         GreenRoundButton addEmployer = new GreenRoundButton("Ajouter un Employé","Green", 200, 30, 15);
         addEmployer.addActionListener(new AddEmployerFrameListener(st));
         GreenRoundButton modEmployer = new GreenRoundButton("Modifier un Employé","Green", 200, 30, 15);
-        modEmployer.addActionListener(new AddEmployerFrameListener(st));
+        modEmployer.addActionListener(new UpdateEmployerFrameListener(st));
         GreenRoundButton delEmployer = new GreenRoundButton("Supprimer un Employé","Red", 200, 30, 15);
 
         delEmployer.addActionListener(new ActionListener() {
