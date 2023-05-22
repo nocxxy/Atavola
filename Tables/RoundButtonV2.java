@@ -30,7 +30,7 @@ public class RoundButtonV2 extends JButton {
 		this.setFocusPainted(false);
 		this.setFont(new Font("MontSerrat", Font.PLAIN, font));
 		this.setPreferredSize(new Dimension(width+10, height));
-		this.setMargin(new Insets(0, -50, 1, 0));
+		this.setMargin(new Insets(0,-3*(label.length())+(label.length())/2, 1, 0));
 		this.setContentAreaFilled(false);
 		this.setForeground(Color.decode("#000000"));
 		
@@ -66,7 +66,7 @@ public class RoundButtonV2 extends JButton {
     		g.setColor(Color.decode("#F56F36"));
     		this.setForeground(Color.black);
     	}
-    	g.fillOval(width -5, height/4, height/2, height/2);
+    	g.fillOval(width -width/10, height/4, height/2, height/2);
     	
          
          super.paintComponent(g);

@@ -23,7 +23,7 @@ public class TestTableFrame extends JFrame {
 			this.setOpacity(1);
 			this.setLayout(null);
 		
-			
+			/*
 			TablePanel test = new TablePanel(18, Color.WHITE,1,2,"Indisponible");
 			test.setBounds(10,10,380,114);
 			test.setOpaque(false);
@@ -38,6 +38,7 @@ public class TestTableFrame extends JFrame {
 			test2.setBounds(10,150,380,114);
 			test2.setOpaque(false);
 			this.getContentPane().add(test2);
+			*/
 		}
 
 }

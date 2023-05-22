@@ -1703,6 +1703,17 @@ public abstract class Back {
         }
     }
     
+    
+    public static void deleteReserve(int id, String service) {
+        try {
+            String sql = "DELETE FROM reservations WHERE id_table = " + id;
+            sql += " AND service = " + (char) 34 + service + (char) 34;
+            Back.connectionBase().executeUpdate(sql);
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
     /* cree la table */
     public static void creeTable(int numero, int nbPlaces) {
         try {
@@ -1744,20 +1755,13 @@ public abstract class Back {
     
     /*libere la table*/
     public static void libereTable(int id, String service) {
-        try {
             if (estOccupe(id, service)) {
                 deleteOccupe(id, service);
             }
-
-            String sql = "DELETE FROM Tables_prises WHERE id_table =" + id;
-            sql += " AND service = " + (char)34 + service + (char)34;
-
-            System.out.println(sql);
-
-            Back.connectionBase().executeUpdate(sql);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+            
+            if(estReserve(id,service)) {
+            	deleteReserve(id,service);
+            }        
 
     }
     
@@ -1873,6 +1877,49 @@ public abstract class Back {
 
             }
         return tables;
+    }
+    
+    public static void updateTableReserve(int id,String service,Date jour,String nom_client) {
+    	
+    	String jourStr = jour.getYear()+1900+"-"+ (jour.getMonth()+1)+"-"+jour.getDate();
+		String date =  (char)34 + jourStr  + (char)34;
+		
+    	try {
+    		String sql = "UPDATE Reservations SET service = ";
+    		sql += (char) 34 + service + (char) 34 +
+    				" , jour = " + date + 
+    				", nom_client = " +
+    				(char) 34 +  nom_client+ (char) 34 ;
+    		sql += " WHERE id_table = " + id;
+    		Back.connectionBase().executeUpdate(sql);
+    		
+    		
+    		
+    		
+    	} catch (SQLException ex) {
+            ex.printStackTrace();
+    	}
+    }
+    
+    public static void deleteGen (int id, String table,String idTable) {
+    	try {
+    		String sql = "DELETE FROM ";
+    		sql += table;
+    		sql += " WHERE " + idTable + " = " +id;
+  
+    		Back.connectionBase().executeUpdate(sql);
+    		
+    	}catch (SQLException ex) {
+            ex.printStackTrace();
+    	}
+    }
+    
+    
+    
+    public static void deleteTable(int id) {
+    	deleteGen(id,"tables_prises","id_table");
+    	deleteGen(id,"reservations","id_table");
+    	deleteGen(id,"tables","id");
     }
 }
 

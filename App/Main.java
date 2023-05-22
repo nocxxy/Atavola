@@ -13,8 +13,6 @@ public class Main {
 		Statement st = Back.connectionBase();
 		ConnexionFrame c = new ConnexionFrame(st);
 		c.setVisible(true);
-
-		Back.updateTable(1,2,8);
 	}
 
 }
