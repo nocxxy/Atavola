@@ -433,6 +433,28 @@ public abstract class Back {
 		    ex.printStackTrace();
 		}
     }
+
+    public static void updateEmployer(Statement st,int id,String nom,String prenom,String login,String mdp,String rang) {
+        try {
+            //La requête sql
+            String update = "UPDATE Employer SET nom = ";
+
+            String query = update +(char)34 + nom  + (char)34 +", prenom = ";
+            query += (char)34 + prenom +(char)34 +", login = ";
+            query += (char)34 + login +(char)34 +", mdp = ";
+            query += (char)34 + cryptePwd(mdp) +(char)34 +", rang =";
+            query += (char)34 + rang +(char)34;
+            query += "WHERE id = " + id;
+
+            System.out.println(query);
+            //Execution de la requête
+            st.executeUpdate(query);
+
+        } catch (SQLException ex) {
+            //Exceptions
+            ex.printStackTrace();
+        }
+    }
     
     public static String convertDatetoString(java.util.Date date){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
